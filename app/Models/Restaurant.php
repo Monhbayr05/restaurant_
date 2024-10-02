@@ -13,4 +13,10 @@ class Restaurant extends Model
         'slug',
         'location',
     ];
+    // public function menu(){
+
+    // }
+    // public function table(){
+
+    // }
 }

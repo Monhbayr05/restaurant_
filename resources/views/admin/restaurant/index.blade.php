@@ -6,13 +6,13 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Ресторан Оруулах</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Ресторан Жагсаалт</h6>
                         <div class="float-end">
                             <div class="create-page">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">
-                                    Ресторан үүсгэх
+                                    Ресторан бүртгэх
                                 </button>
 
                                 <!-- Modal -->
@@ -21,7 +21,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Шинэ Ресторан</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                             </div>
@@ -30,11 +30,11 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <div class="card-head">
+                                                                <!-- <div class="card-head">
                                                                     <h4 class="font-weight-light">
                                                                         Ресторан оруулах:
                                                                     </h4>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -99,6 +99,14 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!-- <div class="model-footer">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Хадгалах
+                                                </button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close
+                                                </button>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -184,10 +192,15 @@
                                                                 </div>
                                                             </form>
                                                         </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <!-- <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">
+                                                                Хадгалах
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close
+                                                            </button>
                                                             <!-- The "Save changes" button inside modal-footer is redundant since you already have a submit button in the form -->
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
