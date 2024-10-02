@@ -55,7 +55,7 @@
                                                                                    value="{{old('name')}}">
                                                                             @error('name')
                                                                             <small
-                                                                                class="text-danger">{{ $message }}</small>
+                                                                                class="text-danger">{{$message}}</small>
                                                                             @enderror
                                                                         </div>
                                                                         <div class="mb-3">
@@ -134,7 +134,7 @@
                                             {{ $item->location }}
                                         </td>
                                         <td>
-                                            {{ $item->created_at }}
+                                            {{ date('d-m-y',strtotime($item->created_at)) }}
                                         </td>
                                         <td class="editDelete">
                                             <!-- Edit Button -->
@@ -215,3 +215,4 @@
     <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 @endsection
+

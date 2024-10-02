@@ -54,6 +54,7 @@
 
 @yield('script')
 @yield('modal-script')
-
+@yield('dataTable-script')
+@yield('datatable-css')
 </body>
 </html>
