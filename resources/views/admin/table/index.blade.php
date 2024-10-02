@@ -6,13 +6,13 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Ресторан Оруулах</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Ширээ оруулах</h6>
                         <div class="float-end">
                             <div class="create-page">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal">
-                                    Ресторан үүсгэх
+                                    Ширээ үүсгэх
                                 </button>
 
                                 <!-- Modal -->
@@ -48,12 +48,16 @@
                                                                         @csrf
                                                                         <div class="mb-3">
                                                                             <label>Ресторан сонгох</label>
-                                                                            <input type="text"
-                                                                                   name="name"
-                                                                                   class="form-control"
-                                                                                   placeholder="Ресторан сонгох"
-                                                                                   value="{{old('name')}}">
-                                                                            @error('name')
+                                                                            <select name="restaurant_id"
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Ресторан сонго</option>
+                                                                                @foreach($restaurants as $restaurant)
+                                                                                    <option
+                                                                                        value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                            @error('restaurant_id')
                                                                             <small
                                                                                 class="text-danger">{{$message}}</small>
                                                                             @enderror
@@ -61,11 +65,11 @@
                                                                         <div class="mb-3">
                                                                             <label>Ширээ нэр</label>
                                                                             <input type="text"
-                                                                                   name="table-name"
+                                                                                   name="name"
                                                                                    class="form-control"
                                                                                    placeholder="Ширээ нэр"
-                                                                                   value="{{old('table-name')}}">
-                                                                            @error('table-name')
+                                                                                   value="{{old('name')}}">
+                                                                            @error('name')
                                                                             <small
                                                                                 class="text-danger">{{ $message }}</small>
                                                                             @enderror
@@ -94,37 +98,25 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <table id="example" class="table table-striped" style="width:100%">
+                        <table id="dataTable" class="table table-striped" style="width:100%">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Restaurant name</th>
+                                <th>Created At</th>
+                            </tr>
                             </thead>
                             <tbody>
+                            @foreach($tables as $table)
                                 <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011-04-25</td>
-                                    <td>$320,800</td>
+                                    <td>{{ $table->id }}</td>
+                                    <td>{{ $table->name }}</td>
+                                    <td>{{ $table->restaurant->name }}</td>
+                                    <td>{{ $table->created_at }}</td>
                                 </tr>
+                            @endforeach
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -132,12 +124,12 @@
         </div>
     </div>
 @endsection
-@section('dataTable-script')
-    <script src="{{ asset('admin/assets/js/datatable/datatable_bundle.min.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/datatable/datatable_jquery.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/datatable/dataTables.bootstrap5.js') }}"></script>
-    <script src="{{ asset('admin/assets/js/datatable/dataTables.js') }}"></script>
-@endsection
-@section('datatable-css')
-    <link href="">
+
+@section('script')
+    <script>
+        // Call the dataTables jQuery plugin
+        $(document).ready(function () {
+            $('#dataTable').DataTable();
+        });
+    </script>
 @endsection

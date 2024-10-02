@@ -13,4 +13,7 @@ class Restaurant extends Model
         'slug',
         'location',
     ];
+    public function tables(){
+        return $this->hasMany(Table::class);
+    }
 }
