@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\ProfileController;
@@ -42,8 +43,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::controller(RestaurantController::class)->group(function () {
        Route::get('admin/restaurant', 'index')
            ->name('admin.restaurant.index');
-       Route::get('admin/restaurant/create', 'create')
-           ->name('admin.restaurant.create');
        Route::post('admin/restaurant', 'store')
            ->name('admin.restaurant.store');
        Route::get('admin/restaurant/{slug}/edit','edit')
@@ -58,5 +57,21 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.table.index');
         Route::post('admin/table', 'store')
             ->name('admin.table.store');
+        Route::get('admin/table/{id}/edit','edit')
+            ->name('admin.table.edit');
+        Route::put('admin/table/{id}', 'update')
+            ->name('admin.table.update');
+        Route::delete('admin/table/{id}', 'destroy')
+            ->name('admin.table.delete');
+    });
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('admin/category', 'index')
+            ->name('admin.category.index');
+        Route::post('admin/category', 'store')
+            ->name('admin.category.store');
+        Route::put('admin/category/{id}', 'update')
+            ->name('admin.category.update');
+        Route::delete('admin/category/{id}', 'destroy')
+            ->name('admin.category.destroy');
     });
 });
