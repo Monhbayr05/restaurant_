@@ -12,9 +12,6 @@ class RestaurantController extends Controller
         $restaurants = Restaurant::query()->orderBy('id','asc')->get();
         return view('admin.restaurant.index',compact('restaurants'));
     }
-    public function create(){
-        return view('admin.restaurant.create');
-    }
     public function store(Request $request){
         $validatedData = $request->validate([
             'name'=>'required|max:100',

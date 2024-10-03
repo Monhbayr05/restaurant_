@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RestaurantController;
+use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
@@ -51,5 +52,11 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
            ->name('admin.restaurant.update');
        Route::delete('admin/restaurant/delete/{slug}', 'destroy')
            ->name('admin.restaurant.delete');
+    });
+    Route::controller(TableController::class)->group(function () {
+        Route::get('admin/table', 'index')
+            ->name('admin.table.index');
+        Route::post('admin/table', 'store')
+            ->name('admin.table.store');
     });
 });

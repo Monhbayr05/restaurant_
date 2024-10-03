@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class Table extends Model
 {
     use HasFactory;
-    Protected $fillable = [
+    protected $fillable = [
         'name',
-        'slug',
-        'location',
+        'restaurant_id',
     ];
-    public function tables(){
-        return $this->hasMany(Table::class);
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class);
     }
 }

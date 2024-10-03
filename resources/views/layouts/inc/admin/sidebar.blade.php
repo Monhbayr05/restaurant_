@@ -104,9 +104,15 @@
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('admin.table.index') }}">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="bi bi-bookmark-dash-fill"></i>
+            <span>Category</span></a>
     </li>
 
     <!-- Divider -->
