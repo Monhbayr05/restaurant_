@@ -110,7 +110,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('admin.category.index') }}">
             <i class="bi bi-bookmark-dash-fill"></i>
             <span>Category</span></a>
     </li>
