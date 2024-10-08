@@ -21,15 +21,9 @@ class ProductController extends Controller
     }
 
     // Store a newly created product
-    public function store(Request $request){
-        $validatedData = $request->validate([
-            'name' => 'required|max:100',
-            'slug' => 'required|unique:products|string|max:100',
-            'description' => 'required|string|max:1000',
-            'price' => 'required|numeric|min:0',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'quantity_limit' => 'required|integer|min:0',
-        ]);
+    public function store(ProductFormRequest $request){
+
+        $validatedData = $request->validated();
 
         // Handling thumbnail upload
         if ($request->hasFile('thumbnail')) {

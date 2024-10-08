@@ -31,6 +31,7 @@
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->slug }}</td>
                 <td>{{ $product->price }}</td>
+                <td>{{ $product->thumbnail }}</td>
                 <td>{{ $product->status ? 'Active' : 'Inactive' }}</td>
                 <td>
                     <a href="{{ route('admin.product.edit', $product->id) }}" class="btn btn-warning btn-sm">Edit</a>

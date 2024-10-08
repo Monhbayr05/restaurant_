@@ -90,6 +90,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         
         Route::post('admin/product', 'store')
             ->name('admin.product.store');
+
+        // Route::get('admin/products/image/{id}', 'image')->name('admin.product.image');
+        // Route::post('admin/products/image/{id}', 'storeImage')->name('admin.product.image.store');
+        // Route::delete('admin/products/image/{id}', 'imageDestroy')->name('admin.product.image.destroy');
         
         Route::get('admin/product/{slug}/edit', 'edit')
             ->name('admin.product.edit');
