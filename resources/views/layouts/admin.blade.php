@@ -16,18 +16,18 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/css/datatable/datatable.css') }}">
 </head>
 <body>
-<div class="layouts">
+<div id="wrapper">
     @include('layouts.inc.admin.sidebar')
-
-    <div class="d-flex flex-column w-100">
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
         @include('layouts.inc.admin.header')
-
-        @yield('content')
-
+            <div class="container-fluid">
+                    @yield('content')
+            </div>
+        </div>
         @include('layouts.inc.admin.footer')
     </div>
 </div>
-
 {{-- Scripts --}}
 <script src="{{ asset('admin/assets/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -37,6 +37,7 @@
 <script src="{{ asset('admin/assets/js/datatable/dataTables.bootstrap5.js') }}"></script>
 <script src="{{ asset('admin/assets/js/datatable/dataTables.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('admin/assets/js/sb-admin-2.min.js')}}"></script>
 
 @yield('script')
 @yield('dataTable-script')
