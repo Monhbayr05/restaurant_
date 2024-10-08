@@ -105,6 +105,7 @@
                                 <th>Name</th>
                                 <th>Restaurant name</th>
                                 <th>Created At</th>
+                                <th>Edit and Delete</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -114,6 +115,69 @@
                                     <td>{{ $table->name }}</td>
                                     <td>{{ $table->restaurant->name }}</td>
                                     <td>{{ $table->created_at }}</td>
+                                    <td class="editDelete">
+                                        <!-- Edit Button -->
+                                        <button type="button"
+                                                class="btn btn-primary"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#editModal{{ $table->id }}">
+                                            Өөрчлөх
+                                        </button>
+
+                                        <!-- Edit Modal -->
+                                        <div class="modal fade" id="editModal{{ $table->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $table->id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="editModalLabel{{ $table->id }}">Ресторан засах</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('admin.table.update', encrypt($table->id)) }}" method="POST" enctype="multipart/form-data">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <div class="mb-3">
+                                                                <label>Ширээний Нэр</label>
+                                                                <input type="text" name="name" class="form-control" placeholder="Name" value="{{ $table->name }}">
+                                                                @error('name')
+                                                                <small class="text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Ресторан сонгох</label>
+                                                                <select name="restaurant_id"
+                                                                        class="form-select"
+                                                                        aria-label="Default select example">
+                                                                    <option value="">Ресторан сонго</option>
+                                                                    @foreach($restaurants as $restaurant)
+                                                                        <option value="{{ $restaurant->id }}"
+                                                                            {{ old('restaurant_id') == $restaurant->id ? 'selected' : '' }}>
+                                                                            {{ $restaurant->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+
+                                                                @error('restaurant_id')
+                                                                <small
+                                                                    class="text-danger">{{$message}}</small>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Хадгалах</button>
+                                                                <!-- The "Save changes" button inside modal-footer is redundant since you already have a submit button in the form -->
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form action="{{ route('admin.table.delete', $table->id) }}" method="POST" onsubmit="return confirm('Устгахдаа итгэлтэй байна уу?')" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Устгах</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
@@ -37,6 +38,11 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+
+    Route::controller(AuthenticatedSessionController::class)->group(function(){
+        Route::post('admin/logout','destroy')
+            ->name('admin.logout');
+    });
     Route::get('admin/dashboard',function (){
         return view('admin.dashboard');
     })->name('admin.dashboard');
@@ -75,8 +81,8 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         Route::delete('admin/category/{id}', 'destroy')
             ->name('admin.category.destroy');
     });
-    Route::controller(AuthenticatedSessionController::class)->group(function(){
-       Route::post('admin/logout','destroy')
-           ->name('admin.logout');
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('admin/product', 'index')
+            ->name('admin.product.index');
     });
 });
