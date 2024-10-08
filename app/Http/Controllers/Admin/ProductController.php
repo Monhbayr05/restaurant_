@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Requests\ProductFormRequest;
 
 class ProductController extends Controller
 {
     // Display a listing of the products
     public function index(){
-        $products = Product::query()->orderBy('name', 'asc')->get();
+        $products = Product::query()->orderBy('name')->get();
         return view('admin.product.index', compact('products'));
     }
 
@@ -23,8 +24,8 @@ class ProductController extends Controller
     // Store a newly created product
     public function store(ProductFormRequest $request){
 
+ 
         $validatedData = $request->validated();
-
         // Handling thumbnail upload
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
@@ -38,7 +39,7 @@ class ProductController extends Controller
         }
 
 
-        $product = Product::query()->create([
+        $products = Product::query()->create([
             'name' => $validatedData['name'],
             'slug' => $validatedData['slug'],
             'description' => $validatedData['description'],
@@ -58,8 +59,8 @@ class ProductController extends Controller
                 $imageFile->move($uploadPath, $filename);
                 $finalImagePathName = $uploadPath . $fileName;
 
-                $product->productImages()->create([
-                    'product_id' => $product->id,
+                $products->productImages()->create([
+                    'product_id' => $products->id,
                     'image' => $finalImagePathName,
                 ]);
             }
@@ -71,13 +72,13 @@ class ProductController extends Controller
 
     public function image($id)
     {
-        $product = Product::query()->findOrFail($id);
-        return view('admin.product.image', compact('product'));
+        $products = Product::query()->findOrFail($id);
+        return view('admin.product.image', compact('products'));
     }
 
     public function storeImage(Request $request, $id)
     {
-        $product = Product::query()->findOrFail($id);
+        $products = Product::query()->findOrFail($id);
         if ($request->hasFile('image')) {
             $uploadPath = 'uploads/products/images/';
 
@@ -88,8 +89,8 @@ class ProductController extends Controller
                 $imageFile->move($uploadPath, $filename);
                 $finalImagePathName = $uploadPath . $filename;
 
-                $product->productImages()->create([
-                    'product_id' => $product->id,
+                $products->productImages()->create([
+                    'product_id' => $products->id,
                     'image' => $finalImagePathName,
                 ]);
             }
@@ -110,8 +111,8 @@ class ProductController extends Controller
 
     // Show the form for editing the specified product
     public function edit($id){
-        $product = Product::query()->findOrFail($id);
-        return view('admin.product.edit', compact('product'));
+        $products = Product::query()->findOrFail($id);
+        return view('admin.product.edit', compact('products'));
     }
 
     // Update the specified product
@@ -125,15 +126,15 @@ class ProductController extends Controller
             'quantity_limit' => 'required|integer|min:0',
         ]);
 
-        $product = Product::query()->findOrFail($id);
+        $products = Product::query()->findOrFail($id);
 
         // Handle thumbnail upload if there's a new one
         if ($request->hasFile('thumbnail')) {
             $path = $request->file('thumbnail')->store('thumbnails', 'public');
-            $product->update(['thumbnail' => $path]);
+            $products->update(['thumbnail' => $path]);
         }
 
-        $product->update([
+        $products->update([
             'name' => $validatedData['name'],
             'slug' => $validatedData['slug'],
             'description' => $validatedData['description'],
@@ -148,10 +149,10 @@ class ProductController extends Controller
 
     // Remove the specified product
     public function destroy($id){
-        $product = Product::query()->find($id);
+        $products = Product::query()->find($id);
 
-        if ($product) {
-            $product->delete();
+        if ($products) {
+            $products->delete();
             return redirect()->route('admin.product.index')
                 ->with('success', 'Product deleted successfully');
         }

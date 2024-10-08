@@ -85,10 +85,10 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         Route::get('admin/product', 'index')
             ->name('admin.product.index');
         
-        Route::get('admin/product', 'create')
+        Route::get('admin/product/create', 'create')
             ->name('admin.product.create');
         
-        Route::post('admin/product', 'store')
+        Route::post('admin/product/store', 'store')
             ->name('admin.product.store');
 
         // Route::get('admin/products/image/{id}', 'image')->name('admin.product.image');
