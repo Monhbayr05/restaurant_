@@ -1,10 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-    <div id="content-wrapper" class="d-flex flex-column">
-        <div id="content">
-            <div class="container-fluid">
-                <!-- DataTales Example -->
-                <div class="card shadow mb-4">
+<div class="card shadow mb-4">
                     <div class="card-header py-3">
                         <h6 class="m-0 font-weight-bold text-primary">Ангилал үүсгэх</h6>
                         <div class="float-end">
@@ -184,9 +180,6 @@
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('script')

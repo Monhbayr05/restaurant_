@@ -142,6 +142,9 @@
                                             {{ $item->location }}
                                         </td>
                                         <td>
+                                            {{ $item->phone_number }}
+                                        </td>
+                                        <td>
                                             {{ date('d-m-y',strtotime($item->created_at)) }}
                                         </td>
                                         <td class="editDelete">
