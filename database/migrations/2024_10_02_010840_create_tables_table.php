@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('restaurant_id')->nullable()
                 ->constrained('restaurants')->ondelete('set null');
             $table->string('name');
-            $table->string('qrcode');
+            $table->string('qrcode')->nullable();
             $table->timestamps();
         });
     }

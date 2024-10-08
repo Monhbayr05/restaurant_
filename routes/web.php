@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\ProfileController;
@@ -73,5 +75,9 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.category.update');
         Route::delete('admin/category/{id}', 'destroy')
             ->name('admin.category.destroy');
+    });
+    Route::controller(AuthenticatedSessionController::class)->group(function(){
+       Route::post('admin/logout','destroy')
+           ->name('admin.logout');
     });
 });
