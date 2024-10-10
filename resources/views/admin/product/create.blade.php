@@ -1,61 +1,164 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container">
-    <h1>Create Product</h1>
 
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add Products
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-primary btn-sm float-end">BACK</a>
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-warning">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
+                        </div>
+                    @endif
+                    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <!-- Tabs for different sections -->
+                        <ul class="nav nav-tabs" id="productTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#home-tab-pane" type="button" role="tab"
+                                        aria-controls="home-tab-pane" aria-selected="true">
+                                    Home
+                                </button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="details-tab" data-bs-toggle="tab"
+                                        data-bs-target="#details-tab-pane" type="button" role="tab"
+                                        aria-controls="details-tab-pane" aria-selected="false">
+                                    Details
+                                </button>
+                            </li>
+
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="image-tab" data-bs-toggle="tab"
+                                        data-bs-target="#image-tab-pane" type="button" role="tab"
+                                        aria-controls="image-tab-pane" aria-selected="false">
+                                    Product Image
+                                </button>
+                            </li>
+                        </ul>
+
+                        <!-- Tab content -->
+                        <div class="tab-content" id="productTabContent">
+                            <!-- Home Tab -->
+                            <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
+                                 aria-labelledby="home-tab">
+                                <!-- Category -->
+                                <div class="mb-3">
+                                    <label for="category_id" class="form-label">Category</label>
+                                    <select name="category_id" class="form-control" required>
+                                        <option>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <!-- Product Name -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Product Name</label>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                </div>
+
+                                <!-- Product Slug -->
+                                <div class="mb-3">
+                                    <label for="slug" class="form-label">Product Slug</label>
+                                    <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
+                                </div>
+
+                                <!-- Product Description -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- Details Tab -->
+                            <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
+                                 aria-labelledby="details-tab">
+                                <div class="row">
+                                    <!-- Sale Percent -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="sale_percent" class="form-label">Sale Percent</label>
+                                            <input type="number" name="sale_percent" class="form-control"
+                                                   value="{{ old('sale_percent') }}" max="100">
+                                        </div>
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="number" name="price" class="form-control"
+                                                   value="{{ old('price') }}" min="1">
+                                        </div>
+                                    </div>
+
+                                    <!-- Quantity -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="quantity" class="form-label">Quantity</label>
+                                            <input type="number" name="quantity" class="form-control"
+                                                   value="{{ old('quantity') }}" min="1">
+                                        </div>
+                                    </div>
+
+                                    <!-- Trending -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="trending">Trending</label>
+                                            <input type="checkbox" name="trending">
+                                        </div>
+                                    </div>
+
+                                    <!-- Status -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="status">Status</label>
+                                            <input type="checkbox" name="status">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Product Image Tab -->
+                            <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
+                                 aria-labelledby="image-tab">
+                                <!-- Thumbnail -->
+                                <div class="mb-3">
+                                    <label for="thumbnail">Upload Product Thumbnail</label>
+                                    <input type="file" name="thumbnail" class="form-control">
+                                </div>
+
+                                <!-- Product Images -->
+                                <div class="mb-3">
+                                    <label for="images">Upload Product Images</label>
+                                    <input type="file" name="image[]" class="form-control" multiple>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary float-end">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         </div>
-    @endif
+    </div>
 
-    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-
-        <div class="form-group mb-3">
-            <label for="name">Name</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="slug">Slug</label>
-            <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="description">Description</label>
-            <textarea name="description" class="form-control">{{ old('description') }}</textarea>
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="price">Price</label>
-            <input type="number" name="price" class="form-control" value="{{ old('price') }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="thumbnail">Thumbnail</label>
-            <input type="file" name="thumbnail" class="form-control">
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="quantity_limit">Quantity Limit</label>
-            <input type="number" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}">
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="status">Status</label>
-            <select name="status" class="form-control">
-                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Inactive</option>
-                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Active</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Create</button>
-    </form>
-</div>
 @endsection
