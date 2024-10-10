@@ -2,7 +2,7 @@
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between">
-        <h6 class="m-0 font-weight-bold text-primary">Ширээ оруулах</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Ширээ Жагсаалт</h6>
         <div class="float-end">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Ширээ үүсгэх
@@ -54,11 +54,10 @@
         <table id="dataTable" class="table table-striped" style="width:100%">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Restaurant name</th>
-                    <th>Created At</th>
-                    <th>Edit and Delete</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">ID</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Name</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Restaurant_ID</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Created_At</th>
                 </tr>
             </thead>
             <tbody>
