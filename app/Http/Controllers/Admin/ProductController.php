@@ -4,56 +4,71 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Http\Requests\ProductFormRequest;
+use App\Http\Requests\Auth\ProductFormRequest;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
     // Display a listing of the products
-    public function index(){
+    public function index()
+    {
         $products = Product::query()->orderBy('name')->get();
         return view('admin.product.index', compact('products'));
     }
 
-    public function create(){
+    public function create()
+    {
         $categories = Category::all();
         return view('admin.product.create', compact('categories'));
     }
 
     // Store a newly created product
-    public function store(ProductFormRequest $request){
+    public function store(Request $request)
+    {
 
- 
-        $validatedData = $request->validated();
-        // Handling thumbnail upload
+        $validatedData = $request -> validate([
+            'category_id' => 'required',
+            'name' => 'required',
+            'slug' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required',
+            'quantity_limit' => 'required',
+        ]);
+
+
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
-            $file->move('uploads/products/thumbnail', $filename);
+            $file->move('uploads/products/thumbnail/', $filename);
 
-            $validatedData['thumbnail'] = 'uploads/products/thumbnail' . $filename;
-        }else{
+            $validatedData['thumbnail'] = 'uploads/products/thumbnail/' . $filename;
+        } else {
             $validatedData['thumbnail'] = null;
         }
 
 
         $products = Product::query()->create([
+            'category_id' => $validatedData['category_id'],
             'name' => $validatedData['name'],
             'slug' => $validatedData['slug'],
             'description' => $validatedData['description'],
             'price' => $validatedData['price'],
             'thumbnail' => $validatedData['thumbnail'],
             'quantity_limit' => $validatedData['quantity_limit'],
-            'status' => $request->input('status', 0), // Default status is 0 if not provided
+            'status' => isset($validatedData['status']) ? $validatedData['status'] : 0,
         ]);
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $uploadPath = 'uploads/products/images';
 
             $i = 1;
-            foreach($requests->hasFile('image') as $imageFile){
+            foreach ($request->file('image') as $imageFile) {
                 $extension = $imageFile->getClientOriginalExtension();
                 $fileName = time() . $i++ . $extension;
                 $imageFile->move($uploadPath, $filename);
@@ -69,95 +84,145 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index')
             ->with('success', 'Product created successfully');
     }
+    public function edit($id)
+    {
+        $categories = Category::all();
+        $product = Product::findOrFail($id);
+
+        return view('admin.product.edit', compact('product','categories'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'category_id' => 'required',
+            'name' => 'required',
+            'slug' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'status' => 'required',
+            'quantity_limit' => 'required',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+
+        if ($request->hasFile('thumbnail')) {
+            $file = $request->file('thumbnail');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $file->move('uploads/products/thumbnail', $filename);
+
+            $validatedData['thumbnail'] = 'uploads/products/thumbnail/' . $filename;
+        } else {
+            $validatedData['thumbnail'] = $product->thumbnail;
+        }
+
+
+        $product->update([
+            'category_id' => $validatedData['category_id'],
+            'name' => $validatedData['name'],
+            'slug' => $validatedData['slug'],
+            'description' => $validatedData['description'],
+            'price' => $validatedData['price'],
+            'thumbnail' => $validatedData['thumbnail'],
+            'quantity_limit' => $validatedData['quantity_limit'],
+            'status' => isset($validatedData['status']) ? $validatedData['status'] : 0,
+        ]);
+
+
+        if ($request->hasFile('image')) {
+            $uploadPath = 'uploads/products/images';
+
+
+            foreach ($product->productImages as $image) {
+                $image->delete();
+            }
+
+            $i = 1;
+            foreach ($request->file('image') as $imageFile) {
+                $extension = $imageFile->getClientOriginalExtension();
+                $fileName = time() . $i++ . '.' . $extension;
+                $imageFile->move($uploadPath, $fileName);
+                $finalImagePathName = $uploadPath . '/' . $fileName;
+
+                $product->productImages()->create([
+                    'product_id' => $product->id,
+                    'image' => $finalImagePathName,
+                ]);
+            }
+        }
+
+        return redirect()->route('admin.product.index')
+            ->with('success', 'Product updated successfully');
+    }
+
 
     public function image($id)
     {
-        $products = Product::query()->findOrFail($id);
-        return view('admin.product.image', compact('products'));
+        $product = Product::query()->findOrFail($id);
+        return view('admin.product.image', compact('product'));
     }
 
     public function storeImage(Request $request, $id)
     {
-        $products = Product::query()->findOrFail($id);
+        $product = Product::query()->findOrFail($id);
+
+
         if ($request->hasFile('image')) {
             $uploadPath = 'uploads/products/images/';
 
             $i = 1;
             foreach ($request->file('image') as $imageFile) {
                 $extension = $imageFile->getClientOriginalExtension();
-                $filename = time() . $i++ . '.' . $extension;
-                $imageFile->move($uploadPath, $filename);
+                $filename = time() . $i++ . '.' . $extension; // filename-ыг зөв нэрлэ
+                $imageFile->move($uploadPath, $filename); // move функц
                 $finalImagePathName = $uploadPath . $filename;
 
-                $products->productImages()->create([
-                    'product_id' => $products->id,
+                $product->productImages()->create([
+                    'product_id' => $product->id,
                     'image' => $finalImagePathName,
                 ]);
             }
         }
-        return redirect()->back()->with('success', 'Image Deleted successfully.');
+
+        return redirect()->back()->with('success', 'Images uploaded successfully.'); // Мессежийг засах
     }
+
 
     public function imageDestroy($id)
     {
         $image = ProductImage::query()->findOrFail($id);
-        if(File::exists($image->image))
-        {
+
+        if (File::exists($image->image)) {
             File::delete($image->image);
         }
+
         $image->delete();
-        return redirect()->back()->with('message','Image deleted successfully.');
+
+        return redirect()->back()->with('message', 'Image deleted successfully.');
     }
+
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+
+        if ($product->productImages) {
+            foreach ($product->productImages as $image) {
+                if (File::exists($image->image)) {
+                    File::delete($image->image);
+                }
+                $image->delete();
+            }
+        }
+
+        $product->delete();
+
+        return redirect()->route('admin.product.index')->with('success', 'Product and all its images deleted successfully.');
+    }
+
 
     // Show the form for editing the specified product
-    public function edit($id){
-        $products = Product::query()->findOrFail($id);
-        return view('admin.product.edit', compact('products'));
-    }
 
-    // Update the specified product
-    public function update(Request $request, $id){
-        $validatedData = $request->validate([
-            'name' => 'required|max:100',
-            'slug' => 'required|unique:products,slug,' . $id . '|string|max:100',
-            'description' => 'required|string|max:1000',
-            'price' => 'required|numeric|min:0',
-            'thumbnail' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'quantity_limit' => 'required|integer|min:0',
-        ]);
-
-        $products = Product::query()->findOrFail($id);
-
-        // Handle thumbnail upload if there's a new one
-        if ($request->hasFile('thumbnail')) {
-            $path = $request->file('thumbnail')->store('thumbnails', 'public');
-            $products->update(['thumbnail' => $path]);
-        }
-
-        $products->update([
-            'name' => $validatedData['name'],
-            'slug' => $validatedData['slug'],
-            'description' => $validatedData['description'],
-            'price' => $validatedData['price'],
-            'quantity_limit' => $validatedData['quantity_limit'],
-            'status' => $request->input('status', 0), // Default status is 0 if not provided
-        ]);
-
-        return redirect()->route('admin.product.index')
-            ->with('success', 'Product updated successfully');
-    }
-
-    // Remove the specified product
-    public function destroy($id){
-        $products = Product::query()->find($id);
-
-        if ($products) {
-            $products->delete();
-            return redirect()->route('admin.product.index')
-                ->with('success', 'Product deleted successfully');
-        }
-
-        return redirect()->route('admin.product.index')
-            ->with('error', 'Product not found');
-    }
 }

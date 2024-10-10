@@ -39,32 +39,32 @@ require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 
-    Route::controller(AuthenticatedSessionController::class)->group(function(){
-        Route::post('admin/logout','destroy')
+    Route::controller(AuthenticatedSessionController::class)->group(function () {
+        Route::post('admin/logout', 'destroy')
             ->name('admin.logout');
     });
-    Route::get('admin/dashboard',function (){
+    Route::get('admin/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
     Route::controller(RestaurantController::class)->group(function () {
-       Route::get('admin/restaurant', 'index')
-           ->name('admin.restaurant.index');
-       Route::post('admin/restaurant', 'store')
-           ->name('admin.restaurant.store');
-       Route::get('admin/restaurant/{slug}/edit','edit')
-           ->name('admin.restaurant.edit');
-       Route::put('admin/restaurant/{slug}', 'update')
-           ->name('admin.restaurant.update');
-       Route::delete('admin/restaurant/delete/{slug}', 'destroy')
-           ->name('admin.restaurant.delete');
+        Route::get('admin/restaurant', 'index')
+            ->name('admin.restaurant.index');
+        Route::post('admin/restaurant', 'store')
+            ->name('admin.restaurant.store');
+        Route::get('admin/restaurant/{slug}/edit', 'edit')
+            ->name('admin.restaurant.edit');
+        Route::put('admin/restaurant/{slug}', 'update')
+            ->name('admin.restaurant.update');
+        Route::delete('admin/restaurant/delete/{slug}', 'destroy')
+            ->name('admin.restaurant.delete');
     });
     Route::controller(TableController::class)->group(function () {
         Route::get('admin/table', 'index')
             ->name('admin.table.index');
         Route::post('admin/table', 'store')
             ->name('admin.table.store');
-        Route::get('admin/table/{id}/edit','edit')
+        Route::get('admin/table/{id}/edit', 'edit')
             ->name('admin.table.edit');
         Route::put('admin/table/{id}', 'update')
             ->name('admin.table.update');
@@ -84,23 +84,26 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('admin/product', 'index')
             ->name('admin.product.index');
-        
         Route::get('admin/product/create', 'create')
             ->name('admin.product.create');
-        
         Route::post('admin/product/store', 'store')
             ->name('admin.product.store');
 
-        // Route::get('admin/products/image/{id}', 'image')->name('admin.product.image');
-        // Route::post('admin/products/image/{id}', 'storeImage')->name('admin.product.image.store');
-        // Route::delete('admin/products/image/{id}', 'imageDestroy')->name('admin.product.image.destroy');
-        
-        Route::get('admin/product/{slug}/edit', 'edit')
+
+        Route::get('admin/products/{id}/image', 'image')
+            ->name('admin.product.image');
+        Route::post('admin/product/{id}/images', 'storeImage')
+            ->name('admin.product.storeImage');
+
+        Route::delete('admin/products/image/{id}', 'imageDestroy')
+            ->name('admin.product.imageDestroy');
+
+        Route::get('admin/product/{id}/edit', 'edit')
             ->name('admin.product.edit');
-        
-        Route::put('admin/product/{slug}', 'update')
+
+        Route::put('admin/product/{id}', 'update')
             ->name('admin.product.update');
-        
+
         Route::delete('admin/product/delete/{slug}', 'destroy')
             ->name('admin.product.delete');
     });
