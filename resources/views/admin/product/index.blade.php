@@ -6,10 +6,12 @@
             <div class="col-12">
                 <div class="card my-4">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
+                        <div
+                            class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center">
                             <h6 class="text-white text-capitalize ps-2 mb-0">All Products</h6>
 
-                            <a href="{{route('admin.product.create')}}" class="btn bg-gradient-primary btn-sm mb-0 me-3">
+                            <a href="{{route('admin.product.create')}}"
+                               class="btn bg-gradient-primary btn-sm mb-0 me-3">
                                 +&nbsp; New Product
                             </a>
                         </div>
@@ -21,22 +23,44 @@
                                 <thead>
                                 <tr>
 
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10"> Name</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10 ">Slug</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Description</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Thumbnail</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Price</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Sale_percent</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Quantity</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Status</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Trending</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Created Date</th>
-                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Edit, Image and Delete</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Name
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10 ">
+                                        Slug
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Description
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Thumbnail
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Price
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Sale_percent
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Quantity
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Status
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Trending
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Created Date
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">
+                                        Edit, Image and Delete
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach ($products as $item )
+                                @foreach ($products as $item )
                                     <tr>
 
 
@@ -61,7 +85,9 @@
 
                                         <td>
                                             <div>
-                                                <img src="{{asset($item->thumbnail)}}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
+                                                <img src="{{asset($item->thumbnail)}}"
+                                                     class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
+                                                     width="150px" height="100px">
                                             </div>
                                         </td>
 
@@ -99,29 +125,28 @@
                                         </td>
 
 
-
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$item->created_at}}</span>
+                                            <span
+                                                class="text-secondary text-xs font-weight-bold">{{$item->created_at}}</span>
                                         </td>
 
 
-
-
-
-
                                         <td class="align-middle">
-                                            <a href="{{ route('admin.product.edit',  $item->id) }}" class="btn btn-info" data-toggle="tooltip" width='60px'>
+                                            <a href="{{ route('admin.product.edit',  $item->id) }}" class="btn btn-info"
+                                               data-toggle="tooltip" width='60px'>
                                                 Edit
                                             </a>
 
-                                            <a href="{{ route('admin.product.image',  ['id'=> $item->id]) }}" class="btn btn-primary" data-toggle="tooltip" width='60px'>
+                                            <a href="{{ route('admin.product.image',  ['id'=> $item->id]) }}"
+                                               class="btn btn-primary" data-toggle="tooltip" width='60px'>
                                                 Image
                                             </a>
 
-                                            <form action="{{route('admin.product.delete', $item->id)}}" method="POST" onsubmit="return confirm('Are you sure to Delete this Data?')">
+                                            <form action="{{route('admin.product.delete', $item->id)}}" method="POST"
+                                                  onsubmit="return confirm('Are you sure to Delete this Data?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button  type="submit" class="btn btn-primary" width='60px'>
+                                                <button type="submit" class="btn btn-primary" width='60px'>
                                                     Delete
                                                 </button>
                                             </form>
@@ -129,7 +154,7 @@
 
 
                                     </tr>
-                                    @endforeach
+                                @endforeach
 
                                 </tbody>
                             </table>

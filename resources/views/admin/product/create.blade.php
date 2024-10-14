@@ -16,7 +16,21 @@
 
     <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-
+        <div class="form-group mb-3">
+            <select name="category_id"
+                    class="form-select"
+                    aria-label="Default select example">
+                <option>Category Select</option>
+                @foreach($categories as $category)
+                    <option
+                        value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+            @error('category_id')
+            <small
+                class="text-danger">{{$message}}</small>
+            @enderror
+        </div>
         <div class="form-group mb-3">
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control" value="{{ old('name') }}">
