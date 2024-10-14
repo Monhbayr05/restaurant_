@@ -13,6 +13,8 @@
 
     <link rel="stylesheet" href="{{ asset('admin/assets/css/sb-admin_2.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('admin/assets/css/sb-admin_2.min.css') }}">
+
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
 
 
