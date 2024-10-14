@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
+Route::get('QR/{qr}', [TableController::class, 'getTable']);
+
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
@@ -64,6 +66,9 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.table.index');
         Route::post('admin/table', 'store')
             ->name('admin.table.store');
+
+
+
         Route::get('admin/table/{id}/edit', 'edit')
             ->name('admin.table.edit');
         Route::put('admin/table/{id}', 'update')
@@ -101,7 +106,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         Route::get('admin/product/{id}/edit', 'edit')
             ->name('admin.product.edit');
 
-        Route::put('admin/product/{id}', 'update')
+        Route::put('admin/product/{id}/update', 'update')
             ->name('admin.product.update');
 
         Route::delete('admin/product/delete/{slug}', 'destroy')

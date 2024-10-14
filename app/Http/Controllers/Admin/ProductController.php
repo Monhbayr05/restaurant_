@@ -36,7 +36,7 @@ class ProductController extends Controller
             'description' => 'required',
             'price' => 'required',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'status' => 'required',
+            'status' =>'nullable',
             'quantity_limit' => 'required',
         ]);
 
@@ -61,25 +61,25 @@ class ProductController extends Controller
             'price' => $validatedData['price'],
             'thumbnail' => $validatedData['thumbnail'],
             'quantity_limit' => $validatedData['quantity_limit'],
-            'status' => isset($validatedData['status']) ? $validatedData['status'] : 0,
+            'status' =>$request->status == true ? 1 : 0,
         ]);
 
-        if ($request->hasFile('image')) {
-            $uploadPath = 'uploads/products/images';
-
-            $i = 1;
-            foreach ($request->file('image') as $imageFile) {
-                $extension = $imageFile->getClientOriginalExtension();
-                $fileName = time() . $i++ . $extension;
-                $imageFile->move($uploadPath, $filename);
-                $finalImagePathName = $uploadPath . $fileName;
-
-                $products->productImages()->create([
-                    'product_id' => $products->id,
-                    'image' => $finalImagePathName,
-                ]);
-            }
-        }
+//        if ($request->hasFile('image')) {
+//            $uploadPath = 'uploads/products/images';
+//
+//            $i = 1;
+//            foreach ($request->file('image') as $imageFile) {
+//                $extension = $imageFile->getClientOriginalExtension();
+//                $fileName = time() . $i++ . $extension;
+//                $imageFile->move($uploadPath, $filename);
+//                $finalImagePathName = $uploadPath . $fileName;
+//
+//                $products->productImages()->create([
+//                    'product_id' => $products->id,
+//                    'image' => $finalImagePathName,
+//                ]);
+//            }
+//        }
 
         return redirect()->route('admin.product.index')
             ->with('success', 'Product created successfully');
@@ -162,6 +162,7 @@ class ProductController extends Controller
     public function image($id)
     {
         $product = Product::query()->findOrFail($id);
+//        dd($product);
         return view('admin.product.image', compact('product'));
     }
 

@@ -48,7 +48,7 @@
                                 </td>
                                 <td><p class="text-xs font-weight-bold mb-0">{{ $item->slug }}</p></td>
                                 <td><p class="text-xs font-weight-bold mb-0">{{ $item->description }}</p></td>
-                                <td><div><img src="{{ asset($item->thumbnail) }}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1"></div></td>
+                                <td><div><img src="{{ asset($item->thumbnail) }}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1" width="150px"></div></td>
                                 <td><p class="text-xs text-center font-weight-bold mb-0">{{ $item->price }}</p></td>
                                 <td><p class="text-xs text-center font-weight-bold mb-0">{{ $item->sale_percent }}</p></td>
                                 <td><p class="text-xs text-center font-weight-bold mb-0">{{ $item->quantity }}</p></td>
@@ -59,13 +59,6 @@
                                         <span class="badge badge-sm bg-gradient-primary">Идэвхгүй</span>
                                     @else
                                         <span class="badge badge-sm bg-gradient-warning">Бусад</span>
-                                    @endif
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                    @if ($item->trending == 1)
-                                        <span class="badge badge-sm bg-gradient-success">Эрэлттэй</span>
-                                    @else
-                                        <span class="badge badge-sm bg-gradient-warning">Эрэлттэй бус</span>
                                     @endif
                                 </td>
                                 <td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold">{{ $item->created_at }}</span></td>

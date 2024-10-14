@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -77,10 +76,17 @@
                                     <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
                                 </div>
 
+{{--                                quantity limit--}}
+                                <div class="mb-3">
+                                    <label for="quantity_limit" class="form-label">Quantity Limit</label>
+                                    <input type="text" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}">
+                                </div>
+
                                 <!-- Product Description -->
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                    <textarea name="description"
+                                              class="form-control">{{ old('description') }}</textarea>
                                 </div>
                             </div>
 
@@ -115,37 +121,25 @@
                                         </div>
                                     </div>
 
-                                    <!-- Trending -->
-                                    <div class="col-md-4">
-                                        <div class="mb-3">
-                                            <label for="trending">Trending</label>
-                                            <input type="checkbox" name="trending">
-                                        </div>
-                                    </div>
+
 
                                     <!-- Status -->
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="status">Status</label>
-                                            <input type="checkbox" name="status">
+                                            <label>Is Public or Private</label>
+                                            <input type="checkbox" name="status" {{old('status') ? 'checked' : ''}}>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Product Image Tab -->
                             <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
                                  aria-labelledby="image-tab">
                                 <!-- Thumbnail -->
                                 <div class="mb-3">
                                     <label for="thumbnail">Upload Product Thumbnail</label>
                                     <input type="file" name="thumbnail" class="form-control">
-                                </div>
-
-                                <!-- Product Images -->
-                                <div class="mb-3">
-                                    <label for="images">Upload Product Images</label>
-                                    <input type="file" name="image[]" class="form-control" multiple>
                                 </div>
                             </div>
                         </div>

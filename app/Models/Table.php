@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Table extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name',
-        'restaurant_id',
-    ];
+
+    protected $guarded = [];
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class);

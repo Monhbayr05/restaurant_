@@ -57,6 +57,8 @@
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">ID</th>
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Name</th>
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Restaurant_ID</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Code</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">QR</th>
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Created_At</th>
                 </tr>
             </thead>
@@ -66,6 +68,8 @@
                         <td>{{ $table->id }}</td>
                         <td>{{ $table->name }}</td>
                         <td>{{ $table->restaurant->name }}</td>
+                        <td>{{ $table->qrcode }}</td>
+                        <td>{!! $table->qr_image !!} </td>
                         <td>{{ $table->created_at }}</td>
                         <td class="editDelete">
                             <!-- Edit Button -->
