@@ -87,7 +87,7 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->name }}</td>
-                    <td>{{ $item->restaurant->name }}</td>
+                    <td>{{ $item->restaurant?->name ?? 'Ресторан байхгүй байна' }}</td>
                     <td>{{ $item->created_at }}</td>
                     <td class="editDelete">
                         <!-- Edit Button -->

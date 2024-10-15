@@ -60,6 +60,7 @@
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Code</th>
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">QR</th>
                     <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Created_At</th>
+                    <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Edit and Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,7 +68,7 @@
                     <tr>
                         <td>{{ $table->id }}</td>
                         <td>{{ $table->name }}</td>
-                        <td>{{ $table->restaurant->name }}</td>
+                        <td>{{ $item->restaurant?->name ?? 'Ресторан байхгүй байна' }}</td>
                         <td>{{ $table->qrcode }}</td>
                         <td>{!! $table->qr_image !!} </td>
                         <td>{{ $table->created_at }}</td>
@@ -141,4 +142,6 @@
             $('#dataTable').DataTable();
         });
     </script>
+    <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 @endsection
