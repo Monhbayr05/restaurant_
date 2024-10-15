@@ -17,9 +17,16 @@ export default function Login({ status, canResetPassword }) {
         e.preventDefault();
 
         post(route('login'), {
-            onFinish: () => reset('password'),
+            onFinish: () => {
+                reset('password');
+                // Force a full reload if the user is admin
+                if (window.location.pathname === '/admin/dashboard') {
+                    window.location.href = '/admin/dashboard';
+                }
+            },
         });
     };
+
 
     return (
         <GuestLayout>
