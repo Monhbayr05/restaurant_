@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
         }
         else
         {
-            return redirect()->route('dashboard');
+            return redirect()->intended();
         }
 
     }
