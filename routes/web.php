@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
         ->name('profile.destroy');
 });
 
-Route::get('QR/{qr}', [TableController::class, 'getTable']);
+Route::get('QR/{qr}', [TableController::class, 'getTable'])->middleware('auth');
 
 require __DIR__ . '/auth.php';
 
@@ -113,3 +113,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.product.delete');
     });
 });
+
+
+

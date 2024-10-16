@@ -8,6 +8,7 @@ use App\Models\Restaurant;
 use App\Models\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController extends Controller
@@ -34,7 +35,7 @@ class TableController extends Controller
 
         $content = 'http://13.115.248.34/QR/' . $incString;
 
-        $qr = QrCode::size(50)->generate($content);
+        $qr = QrCode::size(50)->margin(0)->generate($content);
 
         Table::query()->create([
             'name' => $validateData['name'],
@@ -54,7 +55,7 @@ class TableController extends Controller
         $table = Table::query()->where('qrcode', $qr)->first();
         $products = Product::all();
 
-        return view('products', compact('table', 'products'));
+        return Inertia::render('User/User');
     }
 
     public function update(Request $request, $id)

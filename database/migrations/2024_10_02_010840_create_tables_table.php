@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tables', function (Blueprint $table) {
             $table->id();
             $table->foreignId('restaurant_id')->nullable()
-                ->constrained('restaurants')->ondelete('set null');
+                ->constrained('restaurants')->ondelete('cascade');
             $table->string('name');
 
             $table->string('qrcode')->unique();
