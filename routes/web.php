@@ -113,3 +113,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.product.delete');
     });
 });
+
+
+

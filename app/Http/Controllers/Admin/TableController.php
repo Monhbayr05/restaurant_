@@ -8,6 +8,7 @@ use App\Models\Restaurant;
 use App\Models\Table;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController extends Controller
@@ -54,7 +55,7 @@ class TableController extends Controller
         $table = Table::query()->where('qrcode', $qr)->first();
         $products = Product::all();
 
-        return view('products', compact('table', 'products'));
+        return Inertia::render('User/User');
     }
 
     public function update(Request $request, $id)
