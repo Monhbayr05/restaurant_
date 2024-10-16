@@ -116,9 +116,9 @@
                         <!-- Quantity -->
                         <div class="col-md-4">
                             <div class="mb-3">
-                                <label>Тоо хэмжээ</label>
-                                <input type="number" name="quantity" class="form-control" placeholder="Тоо хэмжээ" value="{{ old('quantity', $product->quantity) }}">
-                                @error('quantity')
+                                <label>Тооны Хязгаар</label>
+                                <input type="number" name="quantity_limit" class="form-control" placeholder="Тоо хэмжээ" value="{{ old('quantity_limit', $product->quantity_limit) }}">
+                                @error('quantity_limit')
                                 <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>

@@ -35,7 +35,7 @@ class TableController extends Controller
 
         $content = 'http://13.115.248.34/QR/' . $incString;
 
-        $qr = QrCode::size(50)->margin(0)->generate($content);
+        $qr = QrCode::size(300)->margin(0)->generate($content);
 
         Table::query()->create([
             'name' => $validateData['name'],
@@ -55,7 +55,7 @@ class TableController extends Controller
         $table = Table::query()->where('qrcode', $qr)->first();
         $products = Product::all();
 
-        return Inertia::render('User/User');
+        return view('products', compact('table', 'products'));
     }
 
     public function update(Request $request, $id)

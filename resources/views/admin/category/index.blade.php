@@ -88,7 +88,13 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->name }}</td>
-                        <td>{{ $item->restaurant->name }}</td>
+                        <td>
+                            @if($item->restaurant)
+                                {{ $item->restaurant->name }}
+                            @else
+                                Restaurant not found
+                            @endif
+                        </td>
                         <td>{{ $item->created_at }}</td>
                         <td class="Action">
                             <div class="dropdown">
@@ -110,7 +116,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            
+
 
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">

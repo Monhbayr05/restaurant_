@@ -97,7 +97,7 @@
                                     </ul>
                                 </div>
                                 <!-- Edit Button -->
-                                
+
 
                                 <!-- QR Code Modal -->
                                 <div class="modal fade" id="QrModal{{ $table->id }}" tabindex="-1" aria-labelledby="QrModalLabel{{ $table->id }}" aria-hidden="true">

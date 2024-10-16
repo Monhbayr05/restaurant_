@@ -71,12 +71,6 @@
                         <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
                     </div>
 
-                    <!-- Quantity Limit -->
-                    <div class="mb-3">
-                        <label for="quantity_limit" class="form-label">Тооны Хязгаар</label>
-                        <input type="text" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}">
-                    </div>
-
                     <!-- Product Description -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Тодорхойлолт</label>
@@ -108,10 +102,10 @@
 
                         <!-- Quantity -->
                         <div class="col-md-4">
+                            <!-- Quantity Limit -->
                             <div class="mb-3">
-                                <label for="quantity" class="form-label">Тоо хэмжээ</label>
-                                <input type="number" name="quantity" class="form-control"
-                                       value="{{ old('quantity') }}" min="1">
+                                <label for="quantity_limit" class="form-label">Тооны Хязгаар</label>
+                                <input type="number" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}">
                             </div>
                         </div>
 
