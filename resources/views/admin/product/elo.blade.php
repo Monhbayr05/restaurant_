@@ -1,121 +1,158 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Шинэ Бүтээгдэхүүн</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12"></div>
+@extends('layouts.admin')
+
+@section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add Products
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-primary btn-sm float-end">BACK</a>
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    @if ($errors->any())
+                        <div class="alert alert-warning">
+                            @foreach ($errors->all() as $error)
+                                <div>{{ $error }}</div>
+                            @endforeach
                         </div>
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card-body">
-                                    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <!-- Product Name -->
-                                        <div class="mb-3">
-                                            <label>Бүтээгдэхүүн нэр</label>
-                                            <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}">
-                                            @error('name')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                    @endif
+                    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
 
-                                        <!-- Slug -->
-                                        <div class="mb-3">
-                                            <label>Товчлол</label>
-                                            <input type="text" name="slug" class="form-control" placeholder="Товчлол" value="{{ old('slug') }}">
-                                            @error('slug')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                        <!-- Tabs for different sections -->
+                        <ul class="nav nav-tabs" id="productTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                        data-bs-target="#home-tab-pane" type="button" role="tab"
+                                        aria-controls="home-tab-pane" aria-selected="true">
+                                    Home
+                                </button>
+                            </li>
 
-                                        <!-- Description -->
-                                        <div class="mb-3">
-                                            <label>Тайлбар</label>
-                                            <textarea name="description" class="form-control" placeholder="Description">{{ old('description') }}</textarea>
-                                            @error('description')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="details-tab" data-bs-toggle="tab"
+                                        data-bs-target="#details-tab-pane" type="button" role="tab"
+                                        aria-controls="details-tab-pane" aria-selected="false">
+                                    Details
+                                </button>
+                            </li>
 
-                                        <!-- Thumbnail (Image Upload) -->
-                                        <div class="mb-3">
-                                            <label>Зураг</label>
-                                            <input type="file" name="thumbnail" class="form-control">
-                                            @error('thumbnail')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="image-tab" data-bs-toggle="tab"
+                                        data-bs-target="#image-tab-pane" type="button" role="tab"
+                                        aria-controls="image-tab-pane" aria-selected="false">
+                                    Product Image
+                                </button>
+                            </li>
+                        </ul>
 
-                                        <!-- Price -->
-                                        <div class="mb-3">
-                                            <label>Үнэ</label>
-                                            <input type="number" name="price" class="form-control" placeholder="Үнэ" value="{{ old('price') }}">
-                                            @error('price')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                        <!-- Tab content -->
+                        <div class="tab-content" id="productTabContent">
+                            <!-- Home Tab -->
+                            <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
+                                 aria-labelledby="home-tab">
+                                <!-- Category -->
+                                <div class="mb-3">
+                                    <label for="category_id" class="form-label">Category</label>
+                                    <select name="category_id" class="form-control" required>
+                                        <option>Select Category</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                                        <!-- Sale Percent -->
-                                        <div class="mb-3">
-                                            <label>Хямдралын хувь</label>
-                                            <input type="number" name="sale_percent" class="form-control" placeholder="Хямдралын хувь" value="{{ old('sale_percent') }}">
-                                            @error('sale_percent')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                                <!-- Product Name -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Product Name</label>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                                </div>
 
-                                        <!-- Quantity -->
-                                        <div class="mb-3">
-                                            <label>Тоо хэмжээ</label>
-                                            <input type="number" name="quantity" class="form-control" placeholder="Тоо хэмжээ" value="{{ old('quantity') }}">
-                                            @error('quantity')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                                <!-- Product Slug -->
+                                <div class="mb-3">
+                                    <label for="slug" class="form-label">Product Slug</label>
+                                    <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
+                                </div>
 
-                                        <!-- Status (Active/Inactive) -->
-                                        <div class="mb-3">
-                                            <label>Статус</label>
-                                            <select name="status" class="form-control">
-                                                <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Идэвхтэй</option>
-                                                <option value="1" {{ old('status') == '1' ? 'selected' : '' }}>Идэвхгүй</option>
-                                            </select>
-                                            @error('status')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+{{--                                quantity limit--}}
+                                <div class="mb-3">
+                                    <label for="quantity_limit" class="form-label">Quantity Limit</label>
+                                    <input type="text" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}">
+                                </div>
 
-                                        <!-- Trending -->
-                                        <div class="mb-3">
-                                            <label>Эрэлттэй эсэх</label>
-                                            <select name="trending" class="form-control">
-                                                <option value="1" {{ old('trending') == '1' ? 'selected' : '' }}>Эрэлттэй</option>
-                                                <option value="0" {{ old('trending') == '0' ? 'selected' : '' }}>Эрэлттэй бус</option>
-                                            </select>
-                                            @error('trending')
-                                            <small class="text-danger">{{ $message }}</small>
-                                            @enderror
-                                        </div>
+                                <!-- Product Description -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea name="description"
+                                              class="form-control">{{ old('description') }}</textarea>
+                                </div>
+                            </div>
 
-                                        <div class="mb-2">
-                                            <button type="submit" class="btn btn-primary">Хадгалах</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <!-- Details Tab -->
+                            <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
+                                 aria-labelledby="details-tab">
+                                <div class="row">
+                                    <!-- Sale Percent -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="sale_percent" class="form-label">Sale Percent</label>
+                                            <input type="number" name="sale_percent" class="form-control"
+                                                   value="{{ old('sale_percent') }}" max="100">
                                         </div>
-                                    </form>
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="number" name="price" class="form-control"
+                                                   value="{{ old('price') }}" min="1">
+                                        </div>
+                                    </div>
+
+                                    <!-- Quantity -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="quantity" class="form-label">Quantity</label>
+                                            <input type="number" name="quantity" class="form-control"
+                                                   value="{{ old('quantity') }}" min="1">
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Status -->
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="status">Status</label>
+                                            <label>Is Public or Private</label>
+                                            <input type="checkbox" name="status" {{old('status') ? 'checked' : ''}}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
+                                 aria-labelledby="image-tab">
+                                <!-- Thumbnail -->
+                                <div class="mb-3">
+                                    <label for="thumbnail">Upload Product Thumbnail</label>
+                                    <input type="file" name="thumbnail" class="form-control">
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary float-end">Submit</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+@endsection

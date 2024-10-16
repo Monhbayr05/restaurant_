@@ -7,7 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Http\Requests\Auth\ProductFormRequest;
+// use App\Http\Requests\Auth\ProductFormRequest;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller

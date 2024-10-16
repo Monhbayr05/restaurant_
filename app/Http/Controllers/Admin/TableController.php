@@ -34,7 +34,7 @@ class TableController extends Controller
 
         $content = 'http://13.115.248.34/QR/' . $incString;
 
-        $qr = QrCode::size(300)->generate($content);
+        $qr = QrCode::size(50)->generate($content);
 
         Table::query()->create([
             'name' => $validateData['name'],

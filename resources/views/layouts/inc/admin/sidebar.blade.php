@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Admin</div>
+        <div class="sidebar-brand-text mx-3">АДМИН</div>
     </a>
 
     <!-- Divider -->
@@ -16,103 +16,34 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{route('admin.dashboard')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
+            <span>Хяналтын самбар</span>
         </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Interface
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse"
-           data-target="#collapseTwo"
-           aria-expanded="true" aria-controls="collapseTwo">
-            <span>Menu</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="{{route('admin.product.index')}}">Меню харах</a>
-                <a class="collapse-item" href=""></a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#"
-           data-toggle="collapse"
-           data-target="#collapseUtilities"
-           aria-expanded="true"
-           aria-controls="collapseUtilities">
-            <span>Utilities</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="">Colors</a>
-                <a class="collapse-item" href="">Borders</a>
-                <a class="collapse-item" href="">Animations</a>
-                <a class="collapse-item" href="">Other</a>
-            </div>
-        </div>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-           aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="">Login</a>
-                <a class="collapse-item" href="">Register</a>
-                <a class="collapse-item" href="">Forgot Password</a>
-                <div class="collapse-divider"></div>
-                <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="">404 Page</a>
-                <a class="collapse-item" href="">Blank Page</a>
-            </div>
-        </div>
     </li>
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
         <a class="nav-link" href="{{Route('admin.restaurant.index')}}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Restaurant</span></a>
+            <span>Ресторан</span></a>
     </li>
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.table.index') }}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
+            <span>Ширээ</span></a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.category.index') }}">
             <i class="bi bi-bookmark-dash-fill"></i>
-            <span>Category</span></a>
+            <span>Категори</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.product.index') }}">
+            <i class="bi bi-bookmark-dash-fill"></i>
+            <span>Бүтээгдэхүүн</span></a>
     </li>
 
 

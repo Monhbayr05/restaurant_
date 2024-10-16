@@ -17,7 +17,14 @@ export default function Login({ status, canResetPassword }) {
         e.preventDefault();
 
         post(route('login'), {
-            onFinish: () => reset('password'),
+            onSuccess: () => {
+                reset('password');
+                // Redirect directly to admin dashboard after successful login
+                window.location.href = '/admin/dashboard';
+            },
+            onError: () => {
+                console.log('Login failed, check the errors');
+            },
         });
     };
 

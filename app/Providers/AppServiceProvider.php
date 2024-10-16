@@ -25,14 +25,3 @@ class AppServiceProvider extends ServiceProvider
         Vite::prefetch(concurrency: 3);
     }
 }
-class RouteServiceProvider extends ServiceProvider
-{
-    /**
-     * The path to the "home" route for your application.
-     *
-     * @var string
-     */
-    public const HOME = '/';
-
-    // ...
-}
