@@ -39,7 +39,7 @@
                             <img src="{{ asset($item->thumbnail) }}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1" width="150px">
                         </td>
                         <td>{{ $item->price }}</td>
-                        <td>{{ $item->quantity }}</td>
+                        <td>{{ $item->quantity_limit }}</td>
                         <td>
                             @if ($item->status == 0)
                                 <span class="badge badge-sm bg-gradient-success">Ил</span>
@@ -103,7 +103,7 @@
 
                                     <div class="tab-content" id="productTabContent">
                                         <div class="tab-pane fade show active border p-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
-                                            
+
                                             <div class="mb-3">
                                                 <label for="name" class="form-label">Бүтээгдэхүүний Нэр</label>
                                                 <h6 class="form-control">{{ $item->name }}</h6>
@@ -116,7 +116,7 @@
 
                                             <div class="mb-3">
                                                 <label for="quantity_limit" class="form-label">Тооны Хязгаар</label>
-                                                <h6 class="form-control">{{ $item->quantity }}</h6>
+                                                <h6 class="form-control">{{ $item->quantity_limit }}</h6>
                                             </div>
 
                                             <div class="mb-3">
@@ -178,7 +178,7 @@
 
 
 
-    
+
                                 </div>
                             </div>
                         </div>
