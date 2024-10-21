@@ -49,11 +49,17 @@ class TableController extends Controller
             ->with('success','Table created successfully');
     }
 
-    public function getTable($qr)
+    public function getTable($qr,Request $request)
     {
+
+        $ipAddress = $request->ip();
+        session(['user_ip' => $ipAddress]);
+        dd($ipAddress);
+
         $qr = decrypt($qr);
         $table = Table::query()->where('qrcode', $qr)->first();
         $products = Product::all();
+
 
         return view('products', compact('table', 'products'));
     }
