@@ -13,7 +13,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController extends Controller
 {
-    Public function index()
+    public function index()
     {
         $restaurants = Restaurant::all();
         $tables = Table::query()->orderby('id')->get();
@@ -54,14 +54,13 @@ class TableController extends Controller
 
         $ipAddress = $request->ip();
         session(['user_ip' => $ipAddress]);
-        dd($ipAddress);
 
         $qr = decrypt($qr);
         $table = Table::query()->where('qrcode', $qr)->first();
         $products = Product::all();
 
 
-        return view('products', compact('table', 'products'));
+        return view('user.products', compact('table', 'products'));
     }
 
     public function update(Request $request, $id)
