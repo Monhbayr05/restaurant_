@@ -15,11 +15,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         <>
             <Head title="Welcome" />
             <div className=" min-h-screen bg-black text-black/50 dark:bg-black dark:text-white/50 text-[#F4D7BE]">
-                <img
-                    id="background"
-                    className="absolute -left-20 top-0 max-w-[877px]"
-                    src="https://laravel.com/assets/img/welcome/background."
-                />
+                
                 <div className="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                     <div className="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                         <header className="grid grid-cols-2 items-center gap-2 py-6 lg:grid-cols-3">
@@ -46,10 +42,11 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         </Link>
                                         <Link
                                             style={{ color: '#f79e6e' }} 
-                                            href={route('register')}
+                                            href={route('order')}
+                                            active={route().current('order')}
                                             className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
                                         >
-                                            Register
+                                            Order
                                         </Link>
                                     </>
                                 )}
@@ -121,5 +118,3 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
         </>
     );
 }
-
-

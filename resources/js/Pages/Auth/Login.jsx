@@ -17,23 +17,23 @@ export default function Login({ status, canResetPassword }) {
         e.preventDefault();
 
         post(route('login'), {
-            onFinish: () => {
+            onSuccess: () => {
                 reset('password');
-                // Force a full reload if the user is admin
-                if (window.location.pathname === '/admin/dashboard') {
-                    window.location.href = '/admin/dashboard';
-                }
+                // Redirect directly to admin dashboard after successful login
+                window.location.href = '/admin/dashboard';
+            },
+            onError: () => {
+                console.log('Login failed, check the errors');
             },
         });
     };
-
 
     return (
         <GuestLayout>
             <Head title="Log in" />
 
             {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
+                <div className="mb-4 text-sm font-medium text-white">
                     {status}
                 </div>
             )}

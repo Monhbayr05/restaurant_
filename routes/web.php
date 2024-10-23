@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\OrderController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -40,6 +42,7 @@ Route::get('QR/{qr}', [TableController::class, 'getTable'])->middleware('auth');
 require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
+
 
     Route::controller(AuthenticatedSessionController::class)->group(function () {
         Route::post('admin/logout', 'destroy')
@@ -115,4 +118,5 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 });
 
 
-
+Route::get('/order', [OrderController::class, 'show'])->name('order');
+Route::post('/order/submit', [OrderController::class, 'submit'])->name('order.submit');

@@ -23,7 +23,7 @@
     <!-- Nav Item - Charts -->
     <li class="nav-item">
         <a class="nav-link" href="{{Route('admin.restaurant.index')}}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="bi bi-menu-up"></i>
             <span>Ресторан</span></a>
     </li>
 
