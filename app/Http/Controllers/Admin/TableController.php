@@ -13,7 +13,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TableController extends Controller
 {
-    Public function index()
+    public function index()
     {
         $restaurants = Restaurant::all();
         $tables = Table::query()->orderby('id')->get();
@@ -23,7 +23,6 @@ class TableController extends Controller
 
     public function store(Request $request)
     {
-
         $validateData = $request->validate([
             'name'=>'required',
             'restaurant_id'=>'required',
@@ -33,7 +32,7 @@ class TableController extends Controller
 
         $incString = encrypt($randomString);
 
-        $content = 'http://13.115.248.34/QR/' . $incString;
+        $content = 'http://127.0.0.1:8000/products/' . $incString;
 
         $qr = QrCode::size(300)->margin(0)->generate($content);
 
@@ -49,13 +48,20 @@ class TableController extends Controller
             ->with('success','Table created successfully');
     }
 
-    public function getTable($qr)
+    public function getTable($qr,Request $request)
     {
-        $qr = decrypt($qr);
-        $table = Table::query()->where('qrcode', $qr)->first();
         $products = Product::all();
 
-        return view('products', compact('table', 'products'));
+        $ipAddress = $request->ip();
+        session(['user_ip' => $ipAddress]);
+        dd($ipAddress);
+
+        $qr = decrypt($qr);
+        $table = Table::query()->where('qrcode', $qr)->first();
+
+
+        return view('user.products',
+            compact('table', 'products'));
     }
 
     public function update(Request $request, $id)

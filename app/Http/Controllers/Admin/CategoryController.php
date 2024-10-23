@@ -36,7 +36,7 @@ class CategoryController extends Controller
 
         $category_id = decrypt($id);
         $category = Category::query()->find($category_id);
-        
+
         $category->update([
             'name'=>$validatedData['name'],
             'restaurant_id'=>$validatedData['restaurant_id'],
