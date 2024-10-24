@@ -6,7 +6,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -70,7 +70,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.table.index');
         Route::post('admin/table', 'store')
             ->name('admin.table.store');
-
 
 
         Route::get('admin/table/{id}/edit', 'edit')

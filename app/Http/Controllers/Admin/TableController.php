@@ -24,8 +24,8 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'name'=>'required',
-            'restaurant_id'=>'required',
+            'name' => 'required',
+            'restaurant_id' => 'required',
         ]);
 
         $randomString = Str::random(16);
@@ -45,53 +45,54 @@ class TableController extends Controller
 
 
         return redirect()->route('admin.table.index')
-            ->with('success','Table created successfully');
+            ->with('success', 'Table created successfully');
     }
 
-    public function getTable($qr,Request $request)
+    public function getTable($qr, Request $request)
     {
         $products = Product::all();
 
         $ipAddress = $request->ip();
         session(['user_ip' => $ipAddress]);
-        dd($ipAddress);
 
         $qr = decrypt($qr);
         $table = Table::query()->where('qrcode', $qr)->first();
 
 
-        return view('user.products',
-            compact('table', 'products'));
+        return Inertia::render(
+            'Pages.Order',[
+                'table' => $table,
+                'products' => $products,
+            ],
+        );
     }
 
     public function update(Request $request, $id)
     {
         $id = decrypt($id);
         $validateData = $request->validate([
-            'name'=>'required',
-            'restaurant_id'=>'required',
+            'name' => 'required',
+            'restaurant_id' => 'required',
         ]);
         Table::query()->findOrFail($id)->update([
-           'name'=>$validateData['name'],
-           'restaurant_id'=>$validateData['restaurant_id'],
+            'name' => $validateData['name'],
+            'restaurant_id' => $validateData['restaurant_id'],
         ]);
         return redirect()->route('admin.table.index')
-            ->with('success','Table updated successfully');
+            ->with('success', 'Table updated successfully');
     }
+
     public function destroy($id)
     {
         $table = Table::query()->findOrFail($id);
 
-        if($table)
-        {
+        if ($table) {
             $table->delete();
             return redirect()->route('admin.table.index')
-                ->with('success','Table deleted successfully');
-        }
-        else
-        {
+                ->with('success', 'Table deleted successfully');
+        } else {
             return redirect()->route('admin.table.index')
-                ->with('error','Table not found');
+                ->with('error', 'Table not found');
         }
     }
 }
