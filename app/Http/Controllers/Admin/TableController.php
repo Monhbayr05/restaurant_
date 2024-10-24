@@ -32,7 +32,7 @@ class TableController extends Controller
 
         $incString = encrypt($randomString);
 
-        $content = 'http://127.0.0.1:8000/products/' . $incString;
+        $content = 'http://13.115.248.34/QR/' . $incString;
 
         $qr = QrCode::size(300)->margin(0)->generate($content);
 
