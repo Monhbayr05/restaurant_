@@ -60,7 +60,7 @@ class TableController extends Controller
 
 
         return Inertia::render(
-            'Pages.Order',[
+            'Order',[
                 'table' => $table,
                 'products' => $products,
             ],
