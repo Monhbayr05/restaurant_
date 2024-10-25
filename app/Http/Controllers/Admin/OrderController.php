@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -11,8 +13,15 @@ class OrderController extends Controller
 {
     public function show()
     {
-        return Inertia::render('Order');
+        $categories = Category::all();
+        $products = Product::all();
+
+        return Inertia::render('Order', [
+            'categories' => $categories,
+            'products' => $products
+        ]);
     }
+
 
     public function submit(Request $request)
     {

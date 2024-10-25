@@ -52,12 +52,8 @@ class TableController extends Controller
     {
         $products = Product::all();
 
-        $ipAddress = $request->ip();
-        session(['user_ip' => $ipAddress]);
-
         $qr = decrypt($qr);
         $table = Table::query()->where('qrcode', $qr)->first();
-
 
         return Inertia::render(
             'Order',[
