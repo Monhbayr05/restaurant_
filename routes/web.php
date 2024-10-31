@@ -2,17 +2,16 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// use App\Http\Middleware\AdminMiddleware;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -117,6 +116,11 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
     });
 });
 
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/order', 'show')->name('order');
+    Route::post('/order/store',  'order')->name('order.store');
+    Route::get('/order/checkout', 'show')->name('order.index');
+});
 
-Route::get('/order', [OrderController::class, 'show'])->name('order');
-Route::post('/order/submit', [OrderController::class, 'submit'])->name('order.submit');
+
+

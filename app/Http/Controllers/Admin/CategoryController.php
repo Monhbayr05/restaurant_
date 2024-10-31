@@ -22,6 +22,7 @@ class CategoryController extends Controller
             'name' => 'required',
             'restaurant_id' => 'required',
         ]);
+
         Category::query()->create([
             'name' => $validatedData['name'],
             'restaurant_id' => $validatedData['restaurant_id'],

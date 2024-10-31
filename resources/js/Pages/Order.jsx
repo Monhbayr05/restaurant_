@@ -49,6 +49,8 @@ const Order = ({ categories, products }) => {
 
         console.log('Payment data:', paymentData);
         alert('Proceeding with payment...');
+
+        window.location.href = '/order/checkout';
     };
 
     return (

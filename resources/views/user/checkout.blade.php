@@ -1,3 +1,4 @@
+<!-- resources/views/checkout.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
 </head>
 <body>
-<form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="address">
@@ -16,7 +17,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="text">
-                        Yuugaa awah geed baina ?!
+                        Food Bazalt
                     </div>
 
                     <div class="form-row">
@@ -48,14 +49,12 @@
                             <label for="">Харшилтай эсэх</label>
                         </div>
                     </div>
-
-
                     <input type="hidden" name="cart_items" id="cartItemsInput">
+
                 </div>
             </div>
         </div>
     </div>
-
     <div class="orders">
         <div class="container">
             <div class="row">
@@ -68,8 +67,7 @@
 
                     <script>
                         const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-
+                        console.log(localStorage.getItem("cart"));
 
                         function displayCartItems() {
                             const cartContainer = document.getElementById("cartItems");
@@ -82,28 +80,27 @@
                                 itemElement.className = "cart-item";
 
                                 itemElement.innerHTML = `
-                                    <h4>${item.name}</h4>
-                                    <p>${item.price.toFixed(2)}₮ x ${item.quantity}</p>
-                                `;
+                <h4>${item.name}</h4>
+                <p>${item.price.toFixed(2)}₮ x ${item.quantity}</p>
+            `;
 
                                 total += item.price * item.quantity;
 
                                 cartContainer.appendChild(itemElement);
+                                document.getElementById("cartItemsInput").value = JSON.stringify(cartItems);
                             });
 
                             document.getElementById("totalAmount").textContent = `Total: ${total.toFixed(2)}₮`;
-
-
-                            document.getElementById("cartItemsInput").value = JSON.stringify(cartItems);
                         }
 
 
-                        document.addEventListener("DOMContentLoaded", function() {
-                            displayCartItems();
-                        });
+
+                        displayCartItems();
                     </script>
 
-                    <button type="submit" class="btn btn-primary">Захиалах</button>
+                    <button class="btn btn-primary" type="submit">
+                        Захиалах
+                    </button>
                 </div>
             </div>
         </div>

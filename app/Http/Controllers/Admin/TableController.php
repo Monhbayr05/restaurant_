@@ -54,7 +54,6 @@ class TableController extends Controller
 
         $qr = decrypt($qr);
         $table = Table::query()->where('qrcode', $qr)->first();
-
         return Inertia::render(
             'Order',[
                 'table' => $table,
