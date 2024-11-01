@@ -29,7 +29,7 @@ class RestaurantController extends Controller
             'location' => $validatedData['location'],
         ]);
         return redirect()->route('admin.restaurant.index')
-            ->with('success', 'restaurant created successfully');
+            ->with('success', 'Ресторан амжилттай үүслээ.');
     }
 
     public function edit($id)
@@ -53,7 +53,7 @@ class RestaurantController extends Controller
             'location' => $validatedData['location'],
         ]);
         return redirect()->route('admin.restaurant.index')
-            ->with('success', 'restaurant updated successfully');
+            ->with('success', 'Ресторан амжилттай шинэчлэгдлээ.');
     }
 
     public function destroy($id)
@@ -63,10 +63,10 @@ class RestaurantController extends Controller
         if ($restaurant) {
             $restaurant->delete();
             return redirect()->route('admin.restaurant.index')
-                ->with('success', 'Restaurant deleted successfully');
+                ->with('delete', 'Ресторан амжилттай устлаа.');
         }
 
         return redirect()->route('admin.restaurant.index')
-            ->with('error', 'Restaurant not found');
+            ->with('error', 'Ресторан олдсонгүй');
     }
 }

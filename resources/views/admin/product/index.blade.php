@@ -15,7 +15,7 @@
     </div>
     <div class="card-body">
         <div class="table responsive">
-            <table class="table table-bordered align-items-center" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-striped align-items-center" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">ID</th>
@@ -63,11 +63,11 @@
                                         <a href="{{ route('admin.product.image', ['id' => $item->id]) }}" class="dropdown-item btn-primary p-2" data-toggle="tooltip">Зураг</a>
                                     </li>
                                     <li>
-                                        <form action="{{ route('admin.product.delete', $item->id) }}" method="POST" onsubmit="return confirm('Устгахдаа итгэлтэй байна уу?')" style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="dropdown-item text-danger">Устгах</button>
-                                        </form>
+                                    <form id="delete-form" action="{{ route('admin.product.delete', $item->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" id="delete-button" class="dropdown-item text-danger">Устгах</button>
+                                    </form>
                                     </li>
                                     <li>
                                         <button type="button" class="dropdown-item btn-primary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">
@@ -145,6 +145,40 @@
                                                 @endif
                                             </div>
                                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -160,4 +194,42 @@
 @section('script')
 <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+<script>
+
+    function delay(seconds) {
+        return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    }
+
+    document.getElementById('delete-button').addEventListener('click', async function(event) {
+
+
+        const result = await Swal.fire({
+            title: "Та итгэлтэй байна уу?",
+            text: "Та үүнийг буцааж авах боломжгүй болно!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Тийм, устгах!"
+        });
+
+        if (result.isConfirmed) {
+            await delay(1.5); 
+            document.getElementById('delete-form').submit();
+        }
+    });
+
+
+    @if(Session::has('delete'))
+        (async () => {
+            await delay(1);
+            Swal.fire({
+                title: "Устгасан!",
+                text: "{{ session('delete') }}",
+                icon: "success",
+                confirmButtonText: "Ойлголоо"
+            });
+        })();
+    @endif
+</script>
 @endsection

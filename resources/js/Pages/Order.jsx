@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 const Order = ({ categories, products }) => {
     const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
+    const [activeCategory, setActiveCategory] = useState('All');
+    
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const handleAddToCart = (product) => {
@@ -53,27 +55,43 @@ const Order = ({ categories, products }) => {
         window.location.href = '/order/checkout';
     };
 
+    // Category Filtering
+    const filteredProducts = activeCategory === 'All' 
+        ? products 
+        : products.filter(product => product.category === activeCategory);
+
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             {/* Category Selection */}
             <div className="flex justify-center mb-6">
+                <button
+                    onClick={() => setActiveCategory('All')}
+                    className={`px-4 py-2 rounded-full mx-2 ${
+                        activeCategory === 'All' ? 'bg-green-400 text-white' : 'bg-gray-100 text-gray-800'
+                    }`}
+                >
+                    All
+                </button>
                 {categories.map((category, index) => (
-                    <button key={index}
-                            className="px-4 py-2 bg-gray-100 rounded-full mx-2 text-gray-800 hover:bg-green-200 focus:bg-green-400">
+                <button key={index}
+                            onClick={() => setActiveCategory(category.name)}
+                            className={`px-4 py-2 rounded-full mx-2 ${
+                                activeCategory === category.name ? 'bg-green-400 text-white' : 'bg-gray-100 text-gray-800'
+                            } hover:bg-green-200 focus:bg-green-400`}>
                         {category.name}
-                    </button>
+                </button>
                 ))}
             </div>
 
             <div className="flex justify-between">
                 {/* Product Grid */}
                 <div className="grid grid-cols-3 gap-6">
-                    {products.map((product) => (
+                    {filteredProducts.map((product) => (
                         <div key={product.id}
-                             className="border rounded-lg p-4 shadow-md text-center hover:shadow-lg transition">
+                            className="border rounded-lg p-4 shadow-md text-center hover:shadow-lg transition">
                             <div className="h-32 bg-gray-100 mb-4">
                                 <img src={product.thumbnail} alt={product.name}
-                                     className="w-full h-full object-cover"/>
+                                    className="w-full h-full object-cover" loading="lazy"/>
                             </div>
                             <h3 className="font-bold mb-2">{product.name}</h3>
                             <p className="text-lg font-semibold mb-4">{product.price.toFixed(2)}₮</p>

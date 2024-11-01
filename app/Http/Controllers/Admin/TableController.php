@@ -45,7 +45,7 @@ class TableController extends Controller
 
 
         return redirect()->route('admin.table.index')
-            ->with('success', 'Table created successfully');
+            ->with('success', 'Ширээ амжилттай үүслээ.');
     }
 
     public function getTable($qr, Request $request)
@@ -74,20 +74,21 @@ class TableController extends Controller
             'restaurant_id' => $validateData['restaurant_id'],
         ]);
         return redirect()->route('admin.table.index')
-            ->with('success', 'Table updated successfully');
+            ->with('success', 'Ширээ амжилттай шинэчлэгдлээ.');
     }
 
     public function destroy($id)
     {
         $table = Table::query()->findOrFail($id);
 
-        if ($table) {
+        if ($table) 
+        {
             $table->delete();
             return redirect()->route('admin.table.index')
-                ->with('success', 'Table deleted successfully');
+                ->with('delete', 'Ширээ амжилттай устлаа.');
         } else {
             return redirect()->route('admin.table.index')
-                ->with('error', 'Table not found');
+                ->with('error', 'Ширээ олдсонгүй.');
         }
     }
 }
