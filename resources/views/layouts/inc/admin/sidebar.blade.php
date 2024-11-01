@@ -46,6 +46,12 @@
             <span>Бүтээгдэхүүн</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="bi bi-bookmark-dash-fill"></i>
+            <span>Захиалга</span></a>
+    </li>
+
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

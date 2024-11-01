@@ -119,7 +119,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
 Route::controller(OrderController::class)->group(function () {
     Route::get('/order', 'show')->name('order');
     Route::post('/order/store',  'order')->name('order.store');
-    Route::get('/order/checkout', 'show')->name('order.index');
+    Route::get('/order/checkout', 'index')->name('order.index');
 });
 
 

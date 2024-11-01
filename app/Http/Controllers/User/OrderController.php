@@ -52,7 +52,7 @@ class OrderController extends Controller
             'allergies' => $validatedData['notes'],
         ]);
 
-        return redirect()->route('order.index')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
+        return redirect()->route('order')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
 
     public function show()
