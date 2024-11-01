@@ -81,7 +81,7 @@ class ProductController extends Controller
 //        }
 
         return redirect()->route('admin.product.index')
-            ->with('success', 'Product created successfully');
+            ->with('success', 'Бүтээгдэхүүн амжилттай үүслээ.');
     }
     public function edit($id)
     {
@@ -94,7 +94,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'category_id' => 'required',
+            'category_id' => 'required|integer',
             'name' => 'required',
             'slug' => 'required',
             'description' => 'required',
@@ -154,7 +154,7 @@ class ProductController extends Controller
         }
 
         return redirect()->route('admin.product.index')
-            ->with('success', 'Product updated successfully');
+            ->with('success', 'Бүтээгдэхүүн амжилттай шинэчлэгдлээ.');
     }
 
 
@@ -187,7 +187,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Images uploaded successfully.'); // Мессежийг засах
+        return redirect()->back()->with('success', 'Зураг амжилттай байршлаа.'); // Мессежийг засах
     }
 
 
@@ -201,7 +201,7 @@ class ProductController extends Controller
 
         $image->delete();
 
-        return redirect()->back()->with('message', 'Image deleted successfully.');
+        return redirect()->back()->with('delete', 'Зураг амжилттай устлаа.');
     }
 
     public function destroy($id)
@@ -219,7 +219,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('admin.product.index')->with('success', 'Product and all its images deleted successfully.');
+        return redirect()->route('admin.product.index')->with('delete', 'Бүтээгдэхүүн болон бүх зураг амжилттай устгагдлаа.');
     }
 
 

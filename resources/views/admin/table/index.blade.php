@@ -83,10 +83,10 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <form action="{{ route('admin.table.delete', $table->id) }}" method="POST" onsubmit="return confirm('Устгахдаа итгэлтэй байна уу?')" style="display: inline-block;">
+                                            <form id="delete-table-form-{{ $table->id }}" action="{{ route('admin.table.delete', $table->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-danger dropdown-item " >Устгах</button>
+                                                <button type="button" class="text-danger dropdown-item delete-button" data-id="{{ $table->id }}">Устгах</button>
                                             </form>
                                         </li>
                                         <li>
@@ -184,4 +184,52 @@
     <!-- <script src="{{asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script> -->
 
     <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+
+    <script>
+        function delay(seconds) {
+            return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+        }
+
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', async function(event) {
+                event.preventDefault(); 
+                const id = event.target.getAttribute('data-id');
+                console.log("Attempting to delete item with ID:", id); 
+                
+                const result = await Swal.fire({
+                    title: "Та итгэлтэй байна уу?",
+                    text: "Та үүнийг буцааж авах боломжгүй болно!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Тийм, устгах!"
+                });
+
+                if (result.isConfirmed) {
+                    await delay(1.5);
+                    const form = document.getElementById(`delete-table-form-${id}`);
+                    if (form) {
+                        form.submit();
+                    } else {
+                        console.error("Form not found for ID:", id); 
+                    }
+                }
+            });
+        });
+
+
+
+        @if(Session::has('delete'))
+            (async () => {
+                await delay(0.5); 
+                Swal.fire({
+                    title: "Устгасан!",
+                    text: "{{ session('delete') }}",
+                    icon: "success",
+                    confirmButtonText: "Ойлголоо"
+                });
+            })();
+        @endif
+    </script>
 @endsection

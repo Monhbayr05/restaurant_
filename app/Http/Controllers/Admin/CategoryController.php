@@ -28,7 +28,7 @@ class CategoryController extends Controller
             'restaurant_id' => $validatedData['restaurant_id'],
         ]);
         return redirect()->route('admin.category.index')
-            ->with('success', 'Category created successfully.');
+            ->with('success', 'Категори амжилттай үүслээ.');
     }
 
     public function update(Request $request, $id)
@@ -46,19 +46,21 @@ class CategoryController extends Controller
             'restaurant_id' => $validatedData['restaurant_id'],
         ]);
         return redirect()->route('admin.category.index')
-            ->with('success', 'Category updated successfully.');
+            ->with('success', 'Категори амжилттай шинэчлэгдлээ.');
     }
 
     public function destroy($id)
     {
         $category = Category::query()->find($id);
-        if ($category) {
+        if ($category) 
+        {
             $category->delete();
             return redirect()->route('admin.category.index')
-                ->with('success', 'Category deleted successfully.');
-        } else {
+            ->with('delete', 'Категори амжилттай устлаа.');
+        }
+        else {
             return redirect()->route('admin.category.index')
-                ->with('error', 'Category not found.');
+                ->with('error', 'Категори олдсонгүй.');
         }
     }
 }

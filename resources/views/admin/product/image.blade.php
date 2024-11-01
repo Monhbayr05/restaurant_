@@ -42,10 +42,10 @@
                         <div class="card">
                             <img src="{{ asset($image->image) }}" class="card-img-top" alt="Бүтээгдэхүүний Зураг" width="250px" height="200px">
                             <div class="card-body">
-                                <form action="{{ route('admin.product.imageDestroy', $image->id) }}" method="POST" enctype="multipart/form-data">
+                                <button type="button" class="btn btn-danger delete-image-button" data-id="{{ $image->id }}">Устгах</button>
+                                <form id="delete-image-form-{{ $image->id }}" action="{{ route('admin.product.imageDestroy', $image->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Устгах</button>
                                 </form>
                             </div>
                         </div>
@@ -57,4 +57,48 @@
         </div>
 
     </div>
+@endsection
+@section('script')
+<script>
+    // Delay function to simulate waiting before the form submits
+    function delay(seconds) {
+        return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    }
+
+    // Add event listener for each delete button
+    document.querySelectorAll('.delete-image-button').forEach(button => {
+        button.addEventListener('click', async function(event) {
+            const id = event.target.getAttribute('data-id');
+            
+            // SweetAlert confirmation dialog
+            const result = await Swal.fire({
+                title: "Та итгэлтэй байна уу?",
+                text: "Та энэ зургийг устгахыг хүсч байна уу?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Тийм, устгах!"
+            });
+
+            // If confirmed, submit the form
+            if (result.isConfirmed) {
+                await delay(1.5); // Optional delay before form submission
+                document.getElementById(`delete-image-form-${id}`).submit();
+            }
+        });
+    });
+    @if(Session::has('delete'))
+        (async () => {
+            await delay(0.5);
+            Swal.fire({
+                title: "Устгасан!",
+                text: "{{ session('delete') }}",
+                icon: "success",
+                confirmButtonText: "Ойлголоо"
+            });
+        })();
+    @endif
+</script>
+
 @endsection
