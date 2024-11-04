@@ -51,28 +51,36 @@
                             @endif
                         </td>
                         <td>{{ $item->created_at }}</td>
-                        <td>
-                            <div class="dropdown">
+                        <td class="editDelete justify-content-center">
+                            <div class="dropdown dropstart">
                                 <button class="btn btn-white dropdown-toggle border-primary text-primary border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Үйлдэл
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-black fade">
-                                    <li>
-                                        <a href="{{ route('admin.product.edit', $item->id) }}" class="dropdown-item btn-primary p-2" data-toggle="tooltip">Засах</a>
+                                    <li class="d-flex align-items-center text-left me-3">
+                                        <a href="{{ route('admin.product.edit', $item->id) }}" class="dropdown-item text-primary p-2" data-toggle="tooltip" >
+                                            <i class="fas fa-edit mr-2"></i>Өөрчлөх
+                                        </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ route('admin.product.image', ['id' => $item->id]) }}" class="dropdown-item btn-primary p-2" data-toggle="tooltip">Зураг</a>
+                                    <li class="d-flex align-items-center text-left me-3">
+                                        <a href="{{ route('admin.product.image', ['id' => $item->id]) }}" class="dropdown-item text-success p-2" data-toggle="tooltip">
+                                            <i class="fas fa-image mr-2"></i>
+                                            Зураг нэмэх
+                                        </a>
                                     </li>
-                                    <li>
-                                    <form id="delete-form" action="{{ route('admin.product.delete', $item->id) }}" method="POST" style="display:inline;">
+                                    <li class="d-flex align-items-center text-left me-3">
+                                    <form id="delete-form" action="{{ route('admin.product.delete', $item->id) }}" method="POST" style="display:inline; width:100%">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" id="delete-button" class="dropdown-item text-danger">Устгах</button>
+                                        <button type="button" id="delete-button" class="dropdown-item text-danger p-2">
+                                            <i class="fas fa-trash-alt mr-2"></i>Устгах
+                                        </button>
                                     </form>
                                     </li>
-                                    <li>
+                                    <li class="d-flex align-items-center text-left me-3">
                                         <button type="button" class="dropdown-item btn-primary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $item->id }}">
-                                            Дэлгэрэнгүй үзэх
+                                            <i class="fas fa-ellipsis-v mr-2"></i>
+                                            Дэлгэрэнгүй 
                                         </button>
                                     </li>
                                 </ul>

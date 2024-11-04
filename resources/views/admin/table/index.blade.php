@@ -71,27 +71,29 @@
                             <td>{{ $table->created_at }}</td>
                             <td class="Action">
 
-                                <div class="dropdown">
+                                <div class="dropdown dropstart">
                                     <button class="btn btn-white dropdown-toggle border-primary border-2 text-primary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Үйлдэл
                                     </button>
 
-                                    <ul class="dropdown-menu dropdown-menu-black">
-                                        <li>
-                                            <button type="button" class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $table->id }}">
-                                                Өөрчлөх
+                                    <ul class="dropdown-menu dropdown-menu-left list-inline">
+                                        <li class="d-flex align-items-center text-left me-3">
+                                            <button type="button" class="dropdown-item text-primary p-2" data-bs-toggle="modal" data-bs-target="#editModal{{ $table->id }}">
+                                                <i class="fas fa-edit mr-2"></i>Өөрчлөх
                                             </button>
                                         </li>
-                                        <li>
-                                            <form id="delete-table-form-{{ $table->id }}" action="{{ route('admin.table.delete', $table->id) }}" method="POST" style="display: inline-block;">
+                                        <li class="d-flex align-items-center text-left me-3">
+                                            <form id="delete-table-form-{{ $table->id }}" action="{{ route('admin.table.delete', $table->id) }}" method="POST" style="display: inline-block; width:100%;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="text-danger dropdown-item delete-button" data-id="{{ $table->id }}">Устгах</button>
+                                                <button type="button" class="text-danger dropdown-item delete-button p-2" data-id="{{ $table->id }}">
+                                                    <i class="fas fa-trash-alt mr-2"></i>Устгах
+                                                </button>
                                             </form>
                                         </li>
-                                        <li>
-                                            <button type="button" class="dropdown-item text-black " data-bs-toggle="modal" data-bs-target="#QrModal{{ $table->id }}">
-                                                QR
+                                        <li class="d-flex align-items-center text-left me-3">
+                                            <button type="button" class="dropdown-item text-black p-2" data-bs-toggle="modal" data-bs-target="#QrModal{{ $table->id }}">
+                                                <i class="fas fa-qrcode mr-2"></i> QR
                                             </button>
                                         </li>
                                     </ul>

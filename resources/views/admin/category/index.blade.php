@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+    div.dataTables_wrapper{
+        flex-direction:column!important;
+    }
+    </style>
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary d-inline fs-5">Ангилал Жагсаалт</h6>
@@ -74,6 +79,7 @@
     <div class="card-body">
         <div class="table responsive">
             <table id="dataTable" class="table table-bordered align-items-center" width="100%"  cellspacing="0">
+                <div id="combinedContainer" class="d-flex justify-content-between mb-3"></div>
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">ID</th>
@@ -96,22 +102,24 @@
                             @endif
                         </td>
                         <td>{{ $item->created_at }}</td>
-                        <td class="Action">
-                            <div class="dropdown">
+                        <td class="editDelete justify-content-center">
+                            <div class="dropdown dropstart">
                                 <button class="btn btn-white dropdown-toggle border-primary text-primary border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Үйлдэл
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-black">
-                                    <li>
+                                <ul class="dropdown-menu dropdown-menu-black ">
+                                    <li class="d-flex align-items-center text-left me-3">
                                         <button type="button" class="dropdown-item btn-primary p-2" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
-                                            Өөрчлөх
+                                            <i class="fas fa-edit mr-2"></i>Өөрчлөх
                                         </button>
                                     </li>
-                                    <li>
-                                    <form id="delete-form-{{ $item->id }}" action="{{ route('admin.category.destroy', $item->id) }}" method="POST" style="display:inline-block">
+                                    <li class="d-flex align-items-center text-left me-3">
+                                    <form id="delete-form-{{ $item->id }}" action="{{ route('admin.category.destroy', $item->id) }}" method="POST" style="display:inline-block width:100%;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" class="dropdown-item text-danger delete-button" data-id="{{ $item->id }}">Устгах</button>
+                                        <button type="button" class="dropdown-item text-danger delete-button p-2" data-id="{{ $item->id }}">
+                                            <i class="fas fa-trash-alt mr-2"></i>Устгах
+                                        </button>
                                     </form>
                                     </li>
                                 </ul>
@@ -160,10 +168,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <i class="fas fa-trash-alt"></i>
-                            </div>
-
                         </td>
                     </tr>
                     @endforeach
@@ -180,7 +184,23 @@
 @section('dataTable-script')
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the elements
+        const dataTableLength = document.getElementById('dataTable_length');
+        const dataTableFilter = document.getElementById('dataTable_filter');
+        
+        // Create a new container div if not already created
+        const combinedContainer = document.getElementById('combinedContainer');
+
+        // Move both elements into the new container
+        combinedContainer.appendChild(dataTableLength);
+        combinedContainer.appendChild(dataTableFilter);
+    });
+</script>
+
+<script>
     // Call the dataTables jQuery plugin
+    
     $(document).ready(function () {
         $('#dataTable').DataTable();
     });

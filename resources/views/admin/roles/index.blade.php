@@ -2,12 +2,12 @@
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary d-inline fs-5">Ресторан Жагсаалт</h6>
+            <h6 class="m-0 font-weight-bold text-primary d-inline fs-5">Хэрэглэгчид Жагсаалт</h6>
             <div class="float-end">
                 <div class="create-page">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-primary p-2 " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        +&nbsp; Ресторан Нэмэх
+                        +&nbsp; Хэрэглэгч Нэмэх
                     </button>
 
                     <!-- Modal -->
@@ -15,7 +15,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ресторан үүсгэх</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Хэрэглэгч үүсгэх</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body p-2">
@@ -102,23 +102,21 @@
                             <td>{{ date('d-m-y', strtotime($item->created_at)) }}</td>
                             <td class="editDelete justify-content-center">
                                 <!-- Edit Button -->
-                                <div class="dropdown dropstart">
+                                <div class="dropdown">
                                     <button class="btn btn-white dropdown-toggle border-primary text-primary border-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Үйлдэл
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-black">
-                                        <li class="d-flex align-items-center text-left me-3">
+                                        <li>
                                             <button type="button" class="dropdown-item btn-primary p-2" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id }}">
-                                                <i class="fas fa-edit mr-2"></i>Өөрчлөх
+                                                Өөрчлөх
                                             </button>
                                         </li>
-                                        <li class="d-flex align-items-center text-left me-3">
-                                            <form id="delete-restaurant-form-{{ $item->id }}" action="{{ route('admin.restaurant.delete', $item->id) }}" method="POST" style="display: inline-block; width:100%;">
+                                        <li>
+                                            <form id="delete-restaurant-form-{{ $item->id }}" action="{{ route('admin.restaurant.delete', $item->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="dropdown-item text-danger delete-restaurant-button p-2" data-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash-alt mr-2"></i>Устгах
-                                                </button>
+                                                <button type="button" class="dropdown-item text-danger delete-restaurant-button" data-id="{{ $item->id }}">Устгах</button>
                                             </form>
                                         </li>
                                     </ul>

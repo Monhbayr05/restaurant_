@@ -313,3 +313,13 @@
 
     </div>
 @endsection
+@section('script')
+<!-- Chart -->
+<script src="{{ asset('admin/asset/vendor/chart.js/Chart.min.js') }} "></script>
+
+<!-- Charts  -->
+<script src="{{ asset('admin/assets/js/demo/chart-area-demo.js') }}"></script>
+<script src="{{ asset('admin/assets/js/demo/chart-pie-demo.js') }}"></script>
+<script src="{{ asset('admin/assets/js/demo/chart-bar-demo.js') }}"></script>
+
+@endsection
