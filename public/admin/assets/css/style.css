@@ -359,7 +359,7 @@ template {
 }
 
 .h6,h6 {
-    font-size: 1rem
+    font-size: 1rem;
 }
 
 .lead {
@@ -4058,12 +4058,19 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 }
 
 .navbar {
-    position: relative;
+    position: -webkit-sticky;
+    top:0.3rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: .5rem 1rem
+    padding: .5rem 1rem;
+    margin: 0 .5rem;
+    border-radius: 20px;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #e3e6f0;
+    margin-bottom: 3rem;
 }
 
 .navbar .container,.navbar .container-fluid,.navbar .container-lg,.navbar .container-md,.navbar .container-sm,.navbar .container-xl {
@@ -4459,7 +4466,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
     background-color: #fff;
     background-clip: border-box;
     border: 1px solid #e3e6f0;
-    border-radius: .35rem
+    margin: 0 20px 0 20px;
 }
 
 .card>hr {
@@ -4515,11 +4522,20 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
     margin-left: 1.25rem
 }
 
+
+
 .card-header {
     padding: .75rem 1.25rem;
+    
     margin-bottom: 0;
-    background-color: #f8f9fc;
-    border-bottom: 1px solid #e3e6f0
+    background: linear-gradient(to right, lightblue, white);
+    border-bottom: 1px solid #e3e6f0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.card-header h6{
+    color: #fff;
 }
 
 .card-header:first-child {
@@ -10470,7 +10486,12 @@ a:focus {
 
 .sidebar {
     width: 6.5rem;
-    min-height: 100vh
+    min-height: 100vh;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+    border: 1px solid --blue;
+    background-clip: border-box;
+    background: linear-gradient(to top, lightblue, blue);
 }
 
 .sidebar .nav-item {

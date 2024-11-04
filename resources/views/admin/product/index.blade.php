@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h6 class="m-0 font-weight-bold text-primary d-inline fs-5">Бүтээгдэхүүн Жагсаалт</h6>
@@ -15,7 +16,7 @@
     </div>
     <div class="card-body">
         <div class="table responsive">
-            <table class="table table-bordered table-striped align-items-center" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered align-items-center" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">ID</th>
@@ -145,40 +146,7 @@
                                                 @endif
                                             </div>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -190,46 +158,50 @@
     </div>
 </div>
 @endsection
-
 @section('script')
-<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
-<script>
+@if (Session::has('delete'))
+    
+    <script>
 
-    function delay(seconds) {
-        return new Promise(resolve => setTimeout(resolve, seconds * 1000));
-    }
+        function delay(seconds) {
+            return new Promise(resolve => setTimeout(resolve, seconds * 1000));
+        }
 
-    document.getElementById('delete-button').addEventListener('click', async function(event) {
+        document.getElementById('delete-button').addEventListener('click', async function(event) {
 
 
-        const result = await Swal.fire({
-            title: "Та итгэлтэй байна уу?",
-            text: "Та үүнийг буцааж авах боломжгүй болно!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Тийм, устгах!"
+            const result = await Swal.fire({
+                title: "Та итгэлтэй байна уу?",
+                text: "Та үүнийг буцааж авах боломжгүй болно!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Тийм, устгах!"
+            });
+
+            if (result.isConfirmed) {
+                await delay(1.5); 
+                document.getElementById('delete-form').submit();
+            }
         });
 
-        if (result.isConfirmed) {
-            await delay(1.5); 
-            document.getElementById('delete-form').submit();
-        }
-    });
 
-
-    @if(Session::has('delete'))
-        (async () => {
-            await delay(1);
-            Swal.fire({
-                title: "Устгасан!",
-                text: "{{ session('delete') }}",
-                icon: "success",
-                confirmButtonText: "Ойлголоо"
-            });
-        })();
-    @endif
-</script>
+        @if(session('delete'))
+            (async () => {
+                await delay(0.5);
+                Swal.fire({
+                    title: "Устгасан!",
+                    text: "{{ session('delete') }}",
+                    icon: "success",
+                    confirmButtonText: "Ойлголоо"
+                });
+            })();
+        @endif
+    </script>
+@endif
+@endsection
+@section('dataTable-script')
+<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
 @endsection

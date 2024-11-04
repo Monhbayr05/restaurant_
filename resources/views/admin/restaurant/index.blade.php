@@ -180,15 +180,8 @@
         </div>
     </div>
 @endsection
-<!-- @section('modal-script')
 
-@endsection -->
 @section('script')
-    <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-    <!-- <script src="{{asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script> -->
-
-    <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
-
     <script>
         function delay(seconds) {
             return new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -230,5 +223,9 @@
     </script>
 
 
+@endsection
+@section('dataTable-script')
+<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
 @endsection
 
