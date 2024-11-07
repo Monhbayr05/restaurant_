@@ -123,9 +123,9 @@ Route::controller(RoleController::class)->group(function () {
 });
 
 Route::middleware(['auth', ChefMiddleware::class])->group(function () {
-    Route::get('chef/dashboard', function () {
-        return view('chef.dashboard');
-    })->name('chef.dashboard');
+    Route::get('chef/index', function () {
+        return view('chef.index');
+    })->name('chef.index');
 });
 
 Route::controller(OrderController::class)->group(function () {
