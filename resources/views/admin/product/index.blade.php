@@ -72,7 +72,7 @@
                                     <form id="delete-form" action="{{ route('admin.product.delete', $item->id) }}" method="POST" style="display:inline; width:100%">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" id="delete-button" class="dropdown-item text-danger p-2">
+                                        <button type="submit" id="delete-button" class="dropdown-item text-danger p-2">
                                             <i class="fas fa-trash-alt mr-2"></i>Устгах
                                         </button>
                                     </form>
@@ -166,50 +166,80 @@
     </div>
 </div>
 @endsection
-@section('script')
-@if (Session::has('delete'))
-    
-    <script>
 
+@section('dataTable-script')
+<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+@endsection
+
+
+@section('alert')
+@if (Session::has('success'))
+    <script>
+        Swal.fire({
+            title: " Амжилттай!",
+            text: "{{ Session::get('success') }}",
+            icon: "success"
+        });
+    </script>
+@endif
+
+@if (Session::has('error'))
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "{{ Session::get('error') }}!",
+        });
+    </script>
+@endif
+
+
+
+@if (Session::has('delete'))
+    <script>
+        // Utility function to add a delay (optional, for visual effect)
         function delay(seconds) {
             return new Promise(resolve => setTimeout(resolve, seconds * 1000));
         }
 
-        document.getElementById('delete-button').addEventListener('click', async function(event) {
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listener to the form instead of the button to catch the submit event
+            document.getElementById('delete-form').addEventListener('submit', async function(event) {
+                event.preventDefault(); // Prevent immediate form submission
 
+                // SweetAlert confirmation
+                const result = await Swal.fire({
+                    title: "Та итгэлтэй байна уу?",
+                    text: "Та үүнийг буцааж авах боломжгүй болно!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Тийм, устгах!"
+                });
 
-            const result = await Swal.fire({
-                title: "Та итгэлтэй байна уу?",
-                text: "Та үүнийг буцааж авах боломжгүй болно!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Тийм, устгах!"
+                // If confirmed, delay (optional) and submit the form
+                if (result.isConfirmed) {
+                    await delay(1.5); // Optional delay
+                    this.submit(); // Submit the form
+                }
             });
 
-            if (result.isConfirmed) {
-                await delay(1.5); 
-                document.getElementById('delete-form').submit();
-            }
+            // Display success alert if session has 'delete'
+            @if(session('delete'))
+                (async () => {
+                    await delay(1); // Optional delay
+                    Swal.fire({
+                        title: "Устгасан!",
+                        text: "{{ session('delete') }}",
+                        icon: "success",
+                        confirmButtonText: "Ойлголоо"
+                    });
+                })();
+            @endif
         });
-
-
-        @if(session('delete'))
-            (async () => {
-                await delay(0.5);
-                Swal.fire({
-                    title: "Устгасан!",
-                    text: "{{ session('delete') }}",
-                    icon: "success",
-                    confirmButtonText: "Ойлголоо"
-                });
-            })();
-        @endif
     </script>
+
 @endif
-@endsection
-@section('dataTable-script')
-<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
 @endsection

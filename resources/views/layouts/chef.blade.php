@@ -42,7 +42,7 @@
         <div id="content">
         @include('layouts.inc.chef.header')
             <div class="container-fluid">
-                    @yield('content')
+                @yield('chef')
             </div>
         </div>
         @include('layouts.inc.chef.footer')

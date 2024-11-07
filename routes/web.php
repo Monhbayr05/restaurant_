@@ -13,7 +13,7 @@ use App\Http\Middleware\ChefMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\Admin\TestController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -133,6 +133,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('/order/store',  'order')->name('order.store');
     Route::get('/order/checkout', 'index')->name('order.index');
 });
+
 
 
 

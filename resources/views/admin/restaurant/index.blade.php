@@ -113,10 +113,10 @@
                                             </button>
                                         </li>
                                         <li class="d-flex align-items-center text-left me-3">
-                                            <form id="delete-restaurant-form-{{ $item->id }}" action="{{ route('admin.restaurant.delete', $item->id) }}" method="POST" style="display: inline-block; width:100%;">
+                                            <form action="{{ route('admin.restaurant.delete', $item->id) }}" method="POST" style="display: inline-block; width:100%;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" class="dropdown-item text-danger delete-restaurant-button p-2" data-id="{{ $item->id }}">
+                                                <button id="delete-button" type="submit" class="dropdown-item text-danger p-2">
                                                     <i class="fas fa-trash-alt mr-2"></i>Устгах
                                                 </button>
                                             </form>
@@ -183,35 +183,61 @@
     </div>
 @endsection
 
-@section('script')
+@section('dataTable-script')
+<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+@endsection
+
+@section('alert')
+@if (Session::has('success'))
+    <script>
+        Swal.fire({
+            title: " Амжилттай!",
+            text: "{{ Session::get('success') }}",
+            icon: "success"
+        });
+    </script>
+@endif
+
+@if (Session::has('error'))
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "{{ Session::get('error') }}!",
+        });
+    </script>
+@endif
+
+
+
+@if (Session::has('delete'))
     <script>
         function delay(seconds) {
             return new Promise(resolve => setTimeout(resolve, seconds * 1000));
         }
 
+        document.getElementById('delete-button').addEventListener('click', async function(event) {
 
-        document.querySelectorAll('.delete-restaurant-button').forEach(button => {
-            button.addEventListener('click', async function(event) {
-                const id = event.target.getAttribute('data-id');
-                
-                const result = await Swal.fire({
-                    title: "Та итгэлтэй байна уу?",
-                    text: "Та үүнийг буцааж авах боломжгүй болно!",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Тийм, устгах!"
-                });
 
-                if (result.isConfirmed) {
-                    await delay(1.5); 
-                    document.getElementById(`delete-restaurant-form-${id}`).submit();
-                }
+            const result = await Swal.fire({
+                title: "Та итгэлтэй байна уу?",
+                text: "Та үүнийг буцааж авах боломжгүй болно!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Тийм, устгах!"
             });
+
+            if (result.isConfirmed) {
+                await delay(1.5); 
+                document.getElementById('delete-form').submit();
+            }
         });
 
-        @if(Session::has('delete'))
+
+        @if(session('delete'))
             (async () => {
                 await delay(0.5);
                 Swal.fire({
@@ -223,11 +249,6 @@
             })();
         @endif
     </script>
-
-
-@endsection
-@section('dataTable-script')
-<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+@endif
 @endsection
 

@@ -32,9 +32,6 @@
 
 
 
-
-
-
 </head>
 <body>
 <div id="wrapper">
@@ -65,13 +62,13 @@
 <script src="{{ asset('admin/assets/js/sb-admin-2.min.js')}}"></script>
 
 <!-- Page level plugins -->
-<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+<!-- <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script> -->
 <script src="{{ asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
 
 
 <!-- Page level custom scripts -->
-<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+<!-- <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script> -->
 
 <!-- real datatable  -->
 <!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>  -->
@@ -91,72 +88,12 @@
 
 
 
-<!-- sweetalerts  -->
-
-@if (Session::has('success'))
-    <script>
-        Swal.fire({
-            title: " Амжилттай!",
-            text: "{{ Session::get('success') }}",
-            icon: "success"
-        });
-    </script>
-@endif
-
-@if (Session::has('error'))
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "{{ Session::get('error') }}!",
-        });
-    </script>
-@endif
-
-@if (Session::has('delete'))
-    
-    <script>
-
-        function delay(seconds) {
-            return new Promise(resolve => setTimeout(resolve, seconds * 1000));
-        }
-
-        document.getElementById('delete-button').addEventListener('click', async function(event) {
-
-
-            const result = await Swal.fire({
-                title: "Та итгэлтэй байна уу?",
-                text: "Та үүнийг буцааж авах боломжгүй болно!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Тийм, устгах!"
-            });
-
-            if (result.isConfirmed) {
-                await delay(1.5); 
-                document.getElementById('delete-form').submit();
-            }
-        });
-
-
-        @if(session('delete'))
-            (async () => {
-                await delay(0.5);
-                Swal.fire({
-                    title: "Устгасан!",
-                    text: "{{ session('delete') }}",
-                    icon: "success",
-                    confirmButtonText: "Ойлголоо"
-                });
-            })();
-        @endif
-    </script>
-@endif
 
 
 
+
+
+@yield('alert')
 @yield('dataTable-script')
 </body>
 </html>
