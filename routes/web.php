@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RestaurantController;
 use App\Http\Controllers\Admin\TableController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ChefMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -42,8 +44,6 @@ require __DIR__ . '/auth.php';
 
 
 Route::middleware(['auth', AdminMiddleware::class])->group(function () {
-
-
     Route::controller(AuthenticatedSessionController::class)->group(function () {
         Route::post('admin/logout', 'destroy')
             ->name('admin.logout');
@@ -114,6 +114,18 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         Route::delete('admin/product/delete/{slug}', 'destroy')
             ->name('admin.product.delete');
     });
+});
+
+Route::controller(RoleController::class)->group(function () {
+    Route::get('role/index', 'index')->name('role.index');
+    Route::get('role/create', 'create')->name('role.create');
+    Route::post('role/store', 'store')->name('role.store');
+});
+
+Route::middleware(['auth', ChefMiddleware::class])->group(function () {
+    Route::get('chef/dashboard', function () {
+        return view('chef.dashboard');
+    })->name('chef.dashboard');
 });
 
 Route::controller(OrderController::class)->group(function () {

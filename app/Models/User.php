@@ -47,14 +47,22 @@ class User extends Authenticatable
         ];
     }
 
+    public function isAdmin()
+    {
+        return $this->role->name === "admin";
+    }
+    public function isChef()
+    {
+        return $this->role->name === "chef";
+    }
+
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function isAdmin()
+    public function restaurant()
     {
-        return $this->role->name ==="admin";
+        return $this->belongsTo(Restaurant::class);
     }
-    
 }

@@ -38,7 +38,7 @@
 
     <!-- users  -->
     <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('role.index') }}">
             <i class="fas fa-user-tie"></i>
             <span>Хэрэглэгчид</span></a>
     </li>

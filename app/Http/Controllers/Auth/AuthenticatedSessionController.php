@@ -27,22 +27,39 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    
+
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
         $request->session()->regenerate();
-    
+
         $user = Auth::user();
-    
+
+
         if ($user->isAdmin()) {
             return redirect('admin/dashboard');
-        } else {
-            // Redirect to a route that renders the React component for the user dashboard
-            return redirect()->route('dashboard'); // Adjust to your route
+        }
+        elseif ($user->isChef()){
+            return redirect('chef/dashboard');
+        }
+        else{
+            return redirect('dashboard');
         }
     }
-    
+
+//    public function chefStore(LoginRequest $request): RedirectResponse{
+//
+//        $request->authenticate();
+//        $request->session()->regenerate();
+//        $user = Auth::user();
+//
+//        if ($user->isChef()) {
+//            return redirect()->route('chef.dashboard');
+//        } else {
+//            return redirect()->route('dashboard');
+//        }
+//    }
+
 
     /**
      * Destroy an authenticated session.

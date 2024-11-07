@@ -3,12 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware extends Middleware
+class ChefMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,13 +16,11 @@ class AdminMiddleware extends Middleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (Auth::check()) {
-            if (Auth::user()->isAdmin()) {
+        if(Auth::check()){
+            if(Auth::user()->isChef()){
                 return $next($request);
             }
         }
-
-        return redirect('/')->with('status', 'You are Not admin');
+        return redirect('/')->with('You are not Chef');
     }
 }
