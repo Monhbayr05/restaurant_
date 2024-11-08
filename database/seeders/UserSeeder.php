@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'name' => 'user',
         ]);
 
+
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
