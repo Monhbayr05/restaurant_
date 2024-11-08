@@ -22,6 +22,10 @@ class UserSeeder extends Seeder
             'name' => 'user',
         ]);
 
+        DB::table('role')->insert([
+            'name' => 'chef',
+        ]);
+
 
         DB::table('users')->insert([
             'name' => 'admin',
