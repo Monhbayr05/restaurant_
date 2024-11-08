@@ -13,7 +13,6 @@ use App\Http\Middleware\ChefMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\Admin\TestController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -120,6 +119,7 @@ Route::controller(RoleController::class)->group(function () {
     Route::get('role/index', 'index')->name('role.index');
     Route::get('role/create', 'create')->name('role.create');
     Route::post('role/store', 'store')->name('role.store');
+    Route::delete('role/delete/{id}', 'destroy')->name('role.destroy');
 });
 
 Route::middleware(['auth', ChefMiddleware::class])->group(function () {

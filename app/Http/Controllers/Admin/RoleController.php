@@ -48,5 +48,10 @@ class RoleController extends Controller
 
         return redirect()->route('role.index')->with('success', 'Role created successfully');
     }
-
+    public function destroy($id)
+    {
+        $users=User::query()->find($id);
+        $users->delete();
+        return redirect()->route('role.index')->with('success', 'Role deleted successfully');
+    }
 }
