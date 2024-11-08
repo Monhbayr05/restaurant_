@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const Order = ({ categories, products }) => {
     const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
     const [activeCategory, setActiveCategory] = useState('All');
-    
+
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const handleAddToCart = (product) => {
@@ -21,6 +21,9 @@ const Order = ({ categories, products }) => {
             localStorage.setItem('cart', JSON.stringify(newCart));
         }
     };
+
+
+
 
     const handleRemoveFromCart = (product) => {
         const existingItem = cartItems.find(item => item.id === product.id);
@@ -56,8 +59,8 @@ const Order = ({ categories, products }) => {
     };
 
     // Category Filtering
-    const filteredProducts = activeCategory === 'All' 
-        ? products 
+    const filteredProducts = activeCategory === 'All'
+        ? products
         : products.filter(product => product.category === activeCategory);
 
     return (

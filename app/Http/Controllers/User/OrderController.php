@@ -57,6 +57,9 @@ class OrderController extends Controller
 
     public function show()
     {
+
+
+
         $categories = Category::all();
         $products = Product::all();
 

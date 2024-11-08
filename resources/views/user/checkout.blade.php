@@ -12,6 +12,10 @@
 <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+
+
+
+
     <div class="address">
         <div class="container">
             <div class="row">

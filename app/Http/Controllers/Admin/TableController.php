@@ -81,7 +81,7 @@ class TableController extends Controller
     {
         $table = Table::query()->findOrFail($id);
 
-        if ($table) 
+        if ($table)
         {
             $table->delete();
             return redirect()->route('admin.table.index')
