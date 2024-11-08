@@ -14,11 +14,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('roles')->insert([
+        DB::table('role')->insert([
            'name' => 'admin',
         ]);
 
-        DB::table('roles')->insert([
+        DB::table('role')->insert([
             'name' => 'user',
         ]);
 
