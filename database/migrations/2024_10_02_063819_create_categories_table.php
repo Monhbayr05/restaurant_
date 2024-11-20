@@ -18,6 +18,7 @@ return new class extends Migration
                 ->nullable()
                 ->constrained('restaurants')
                 ->onDelete('set null');
+            $table->string('thumbnail');
             $table->timestamps();
         });
     }

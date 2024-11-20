@@ -59,6 +59,13 @@
                                                             <small class="text-danger">{{ $message }}</small>
                                                             @enderror
                                                         </div>
+                                                        <div class="mb-3">
+                                                            <label>Зураг</label>
+                                                            <input type="file" name="thumbnail" class="form-control"/>
+                                                            @error('thumbnail')
+                                                                <small class="text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
                                                         <div class="mb-2">
                                                             <button type="submit" class="btn btn-primary">Хадгалах</button>
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -85,6 +92,7 @@
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">ID</th>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Нэр</th>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Салбарын нэр</th>
+                        <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Зураг</th>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Үүсгэсэн огноо</th>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Үйлдлүүд</th>
                     </tr>
@@ -94,6 +102,9 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->name }}</td>
+                        <td>
+                            <img src="{{ asset($item->thumbnail) }}" class="avatar avatar-sm me-3 border-radius-lg" alt="user1" width="150px" height="150px">
+                        </td>
                         <td>
                             @if($item->restaurant)
                                 {{ $item->restaurant->name }}
@@ -114,7 +125,7 @@
                                         </button>
                                     </li>
                                     <li class="d-flex align-items-center text-left me-3">
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.category.destroy', $item->id) }}" method="POST" style="display:inline-block width:100%;">
+                                        <form id="delete-form-{{ $item->id }}" action="{{ route('admin.category.destroy', $item->id) }}" method="POST" style="display:inline-block; width:100%";>
                                             @csrf
                                             @method('DELETE')
                                         <button id="delete-button" type="submit" class="dropdown-item text-danger delete-button p-2" data-id="{{ $item->id }}">
@@ -229,7 +240,7 @@
             });
 
             if (result.isConfirmed) {
-                await delay(1.5); 
+                await delay(1.5);
                 document.getElementById('delete-form').submit();
             }
         });

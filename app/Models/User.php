@@ -57,6 +57,9 @@ class User extends Authenticatable
         return $this->role->name === "chef";
     }
 
+    public function isManager(){
+        return $this->role->name === "manager";
+    }
     public function role()
     {
         return $this->belongsTo(Role::class);
