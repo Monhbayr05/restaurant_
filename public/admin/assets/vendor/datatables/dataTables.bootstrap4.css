@@ -86,6 +86,7 @@ div.dataTables_wrapper div.dataTables_info,
 div.dataTables_wrapper div.dataTables_paginate {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 }
 /* Flex container for the info and pagination sections */
 div.dataTables_wrapper div.dataTables_info_paginate {
@@ -117,7 +118,6 @@ div.dataTables_wrapper div.dataTables_info {
 }
 div.dataTables_wrapper div.dataTables_paginate {
   margin: 0;
-
   text-align: right;
 }
 div.dataTables_wrapper div.dataTables_paginate ul.pagination {

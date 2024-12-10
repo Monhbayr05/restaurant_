@@ -83,35 +83,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                 
                             </div>
                         </main>
-
-                        {/* Footer */}
-                        <footer className="py-4">
-                            <div className="navbar sticky flex justify-around w-full text-center text-lg text-[#f79e6e] not-italic border border-[#f7c109] rounded-3xl p-4">
-                                <ul className="flex space-x-8">
-                                    <li>
-                                        <a href="" className="transition-transform duration-200 transform hover:scale-110">
-                                            <i className="bi bi-house-door-fill text-2xl text-[#f79e6e] not-italic"> HOME</i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" className="transition-transform duration-200 transform hover:scale-110">
-                                            <i className="bi bi-wallet2 text-2xl text-[#f79e6e] not-italic"> ХЭТЭВЧ</i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" className="transition-transform duration-200 transform hover:scale-110">
-                                            <i class="bi bi-bell text-2xl text-[#f79e6e] not-italic"> МЭДЭГДЭЛ</i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="" className="transition-transform duration-200 transform hover:scale-110">
-                                            <i class="bi bi-gear text-2xl text-[#f79e6e] not-italic"> ТОХИРГОО</i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </footer>
-
                     </div>
                 </div>
             </div>
