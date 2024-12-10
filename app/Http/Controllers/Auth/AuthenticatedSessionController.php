@@ -33,14 +33,22 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        $user = Auth::user();
+        return $this->redirectToDashboard(Auth::user());
 
 
+
+    }
+
+    public function redirectToDashboard($user): RedirectResponse
+    {
         if ($user->isAdmin()) {
             return redirect('admin/dashboard');
         }
         elseif ($user->isChef()){
             return redirect('chef/dashboard');
+        }
+        elseif ($user->isManager()){
+            return redirect('manager/dashboard');
         }
         else{
             return redirect('dashboard');

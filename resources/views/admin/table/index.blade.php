@@ -225,7 +225,7 @@
             });
 
             if (result.isConfirmed) {
-                await delay(1.5); 
+                await delay(1.5);
                 document.getElementById('delete-form').submit();
             }
         });

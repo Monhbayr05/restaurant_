@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class ProductFormRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductFormRequest extends FormRequest
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'quantity_limit' => 'required|integer|min:0',
             'status' => 'nullable',
-            'image.*' => 'required|image|max:2048'
+            'image.*' => 'nullable|image|max:2048'
         ];
 
     }

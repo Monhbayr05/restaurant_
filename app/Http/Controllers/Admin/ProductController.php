@@ -63,23 +63,6 @@ class ProductController extends Controller
             'status' =>$request->status == true ? 1 : 0,
         ]);
 
-//        if ($request->hasFile('image')) {
-//            $uploadPath = 'uploads/products/images';
-//
-//            $i = 1;
-//            foreach ($request->file('image') as $imageFile) {
-//                $extension = $imageFile->getClientOriginalExtension();
-//                $fileName = time() . $i++ . $extension;
-//                $imageFile->move($uploadPath, $filename);
-//                $finalImagePathName = $uploadPath . $fileName;
-//
-//                $products->productImages()->create([
-//                    'product_id' => $products->id,
-//                    'image' => $finalImagePathName,
-//                ]);
-//            }
-//        }
-
         return redirect()->route('admin.product.index')
             ->with('success', 'Бүтээгдэхүүн амжилттай үүслээ.');
     }
@@ -176,8 +159,8 @@ class ProductController extends Controller
             $i = 1;
             foreach ($request->file('image') as $imageFile) {
                 $extension = $imageFile->getClientOriginalExtension();
-                $filename = time() . $i++ . '.' . $extension; // filename-ыг зөв нэрлэ
-                $imageFile->move($uploadPath, $filename); // move функц
+                $filename = time() . $i++ . '.' . $extension;
+                $imageFile->move($uploadPath, $filename);
                 $finalImagePathName = $uploadPath . $filename;
 
                 $product->productImages()->create([
@@ -187,7 +170,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Зураг амжилттай байршлаа.'); // Мессежийг засах
+        return redirect()->back()->with('success', 'Зураг амжилттай байршлаа.');
     }
 
 

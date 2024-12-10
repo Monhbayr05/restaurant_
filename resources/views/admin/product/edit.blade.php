@@ -64,7 +64,7 @@
                         <label>Бүтээгдэхүүн нэр</label>
                         <input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name', $product->name) }}">
                         @error('name')
-                        <small class="text-danger">{{ $message }}</small>
+                            <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
 

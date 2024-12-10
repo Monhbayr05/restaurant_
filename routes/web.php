@@ -10,6 +10,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\ChefMiddleware;
+use App\Http\Middleware\ManagerMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -126,6 +127,12 @@ Route::middleware(['auth', ChefMiddleware::class])->group(function () {
     Route::get('chef/index', function () {
         return view('chef.index');
     })->name('chef.index');
+});
+
+Route::middleware(['auth', ManagerMiddleware::class])->group(function () {
+   Route::get('manager/dashboard', function () {
+      return view('manager.dashboard');
+   })->name('manager.dashboard');
 });
 
 Route::controller(OrderController::class)->group(function () {
