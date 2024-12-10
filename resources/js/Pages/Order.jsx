@@ -229,9 +229,8 @@ const Order = ({ categories, products }) => {
                     <p className="text-sm text-gray-500 mt-2">Min. order $0.00</p>
                     <button className="text-green-500 text-sm underline mt-2">I have a coupon</button>
                 </div>
-            </div>
-        </div>
-    );
-};
+        </div>           
+    )
+}
 
 export default Order;

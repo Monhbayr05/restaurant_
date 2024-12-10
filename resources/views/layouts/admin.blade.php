@@ -21,7 +21,7 @@
 
 
     <!-- bootstrap 4  -->
-    <!-- <link rel="stylesheet" href="{{ asset('admin/assets/vendor/datatables/dataTables.bootstrap4.css')}}"> -->
+    <link rel="stylesheet" href="{{ asset('admin/assets/vendor/datatables/dataTables.bootstrap4.css')}}">
 
     <!-- bootstrap 5  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -62,7 +62,7 @@
 <script src="{{ asset('admin/assets/js/sb-admin-2.min.js')}}"></script>
 
 <!-- Page level plugins -->
-<!-- <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script> -->
+<script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 
 <!-- eniig commentloson  -->
 <script src="{{ asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
@@ -70,24 +70,20 @@
 
 
 <!-- Page level custom scripts -->
-<!-- <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script> -->
+<script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
 
 <!-- real datatable  -->
-<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>  -->
-<!-- <script src="{{ asset('admin/assets/js/datatable/datatable_bundle.min.js') }}"></script> -->
-<!-- <script src="{{ asset('admin/assets/js/datatable/datatable_jquery.js') }}"></script> -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> 
+<script src="{{ asset('admin/assets/js/datatable/datatable_bundle.min.js') }}"></script>
+<script src="{{ asset('admin/assets/js/datatable/datatable_jquery.js') }}"></script>
 
 <!-- eniig bas  -->
-<!-- <script src="{{ asset('admin/assets/js/datatable/dataTables.bootstrap5.js') }}"></script>
+<script src="{{ asset('admin/assets/js/datatable/dataTables.bootstrap5.js') }}"></script>
 <script src="{{ asset('admin/assets/js/datatable/dataTables.js') }}"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
 
-<!-- bulma oruulj irsen -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bulma.min.js"></script>
 
 
 <!-- sweetalert  -->
