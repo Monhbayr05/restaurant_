@@ -48,9 +48,10 @@ class TableController extends Controller
             ->with('success', 'Ширээ амжилттай үүслээ.');
     }
 
-    public function getTable($qr, Request $request)
+    public function getTable($qr)
     {
         $products = Product::all();
+
 
         $qr = decrypt($qr);
         $table = Table::query()->where('qrcode', $qr)->first();
