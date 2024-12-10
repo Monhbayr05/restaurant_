@@ -141,6 +141,3 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/order/checkout', 'index')->name('order.index');
 });
 
-
-
-

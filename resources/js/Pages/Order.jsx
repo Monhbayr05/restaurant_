@@ -64,49 +64,136 @@ const Order = ({ categories, products }) => {
         : products.filter(product => product.category === activeCategory);
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6">
-            {/* Category Selection */}
-            <div className="flex justify-center mb-6">
-                <button
-                    onClick={() => setActiveCategory('All')}
-                    className={`px-4 py-2 rounded-full mx-2 ${
-                        activeCategory === 'All' ? 'bg-green-400 text-white' : 'bg-gray-100 text-gray-800'
-                    }`}
-                >
-                    All
+        <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
+            {/* Header */}
+            <div className="bg-white p-4 shadow-md flex justify-between items-center rounded-md">
+                {/* Left Section: Logo and Title */}
+                <div className="flex items-center space-x-2">
+                    {/* Logo */}
+                    <div className="w-8 h-8 flex items-center justify-center">
+                        <img
+                            src={logoImage} // Replace with your star icon/image URL
+                            alt="Logo"
+                            className="object-contain w-full h-full"
+                        />
+                    </div>
+                    {/* Title */}
+                    <h1 className="text-xl font-bold text-gray-800">FoodBazalt</h1>
+                </div>
+
+                {/* Right Section: Language Button */}
+                <div>
+                    <button className="bg-gray-200 px-4 py-2 rounded-full text-gray-800 text-sm">
+                        English
+                    </button>
+                </div>
+            </div>
+            {/* End of Header */}
+
+            {/* Search */}
+            <div className="flex items-center bg-gray-800 rounded-full px-4 py-2 mt-4 shadow-md">
+                {/* Search Icon */}
+                <i className="fas fa-search text-gray-400"></i>
+                
+                {/* Search Input */}
+                <input
+                    type="text"
+                    placeholder="Search your favourites..."
+                    className="bg-transparent text-white placeholder-gray-500 ml-4 flex-grow focus:outline-none"
+                />
+                
+                {/* Filter Icon */}
+                <button className="ml-4">
+                    <i className="fas fa-sliders-h text-gray-400"></i> {/* Replace with an appropriate filter icon */}
                 </button>
-                {categories.map((category, index) => (
-                <button key={index}
-                            onClick={() => setActiveCategory(category.name)}
-                            className={`px-4 py-2 rounded-full mx-2 ${
-                                activeCategory === category.name ? 'bg-green-400 text-white' : 'bg-gray-100 text-gray-800'
-                            } hover:bg-green-200 focus:bg-green-400`}>
-                        {category.name}
-                </button>
+            </div>
+
+
+            {/* Section with an Image
+            <div className="mt-4 flex justify-center items-center">
+                <img
+                    src="https://via.placeholder.com/600x300" // Replace with your desired image URL
+                    alt="Section Content"
+                    className="w-full max-w-4xl object-cover rounded-md"
+                />
+            </div> */}
+
+            {/* Category Filter */}
+            <div className="flex space-x-6 mb-6 overflow-x-auto pb-4 scrollbar">
+                {['All', ...categories].map((category, index) => (
+                    <button
+                        key={index}
+                        onClick={() => setActiveCategory(category.name || category)}
+                        className={`flex flex-col items-center space-y-2 px-2 py-1 ${
+                            activeCategory === (category.name || category)
+                                ? 'text-blue-500'
+                                : 'text-gray-600'
+                        }`}
+                    >
+                        {/* Icon/Image */}
+                        <div
+                            className={`w-12 h-12 flex items-center justify-center rounded-full ${
+                                activeCategory === (category.name || category) ? 'bg-yellow-300' : 'bg-gray-200'
+                            }`}
+                        >
+                            <img
+                                src={category.image || 'https://via.placeholder.com/40'}
+                                alt={category.name || 'Category'}
+                                className="w-6 h-6 object-contain"
+                            />
+                        </div>
+                        {/* Text */}
+                        <span className="text-xs md:text-sm font-medium">
+                            {category.name || category}
+                        </span>
+                    </button>
                 ))}
             </div>
 
-            <div className="flex justify-between">
-                {/* Product Grid */}
-                <div className="grid grid-cols-3 gap-6">
-                    {filteredProducts.map((product) => (
-                        <div key={product.id}
-                            className="border rounded-lg p-4 shadow-md text-center hover:shadow-lg transition">
-                            <div className="h-32 bg-gray-100 mb-4">
-                                <img src={product.thumbnail} alt={product.name}
-                                    className="w-full h-full object-cover" loading="lazy"/>
-                            </div>
-                            <h3 className="font-bold mb-2">{product.name}</h3>
-                            <p className="text-lg font-semibold mb-4">{product.price.toFixed(2)}₮</p>
-                            <button
-                                onClick={() => handleAddToCart(product)}
-                                className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600"
-                            >
-                                Add
-                            </button>
-                        </div>
-                    ))}
-                </div>
+
+
+
+
+            {/* Product List
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {filteredProducts.map((product) => (
+                    <div key={product.id} className="bg-white rounded shadow-md p-4">
+                        <img
+                            src={product.thumbnail || 'https://via.placeholder.com/150'}
+                            alt={product.name || 'Product'}
+                            className="w-full h-32 sm:h-48 object-cover rounded mb-4"
+                        />
+                        <h3 className="text-sm md:text-lg font-semibold">{product.name}</h3>
+                        <p className="text-gray-500 text-xs md:text-sm">£{product.price.toFixed(2)}</p>
+                        <button
+                            onClick={() => handleAddToCart(product)}
+                            className="mt-2 px-4 py-2 bg-green-500 text-white rounded text-sm md:text-base w-full"
+                        >
+                            Add to Cart
+                        </button>
+                    </div>
+            </div> */}
+
+            {/* Product List */}
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+                {filteredProducts.map((product) => (
+                    <div key={product.id} className="bg-white rounded shadow-md p-4">
+                        <img
+                            src={product.thumbnail || 'https://via.placeholder.com/150'}
+                            alt={product.name || 'Product'}
+                            className="w-full h-32 sm:h-48 object-cover rounded mb-4"
+                        />
+                        <h3 className="text-sm md:text-lg font-semibold">{product.name}</h3>
+                        <p className="text-gray-500 text-xs md:text-sm">£{product.price.toFixed(2)}</p>
+                        <button
+                            onClick={() => handleAddToCart(product)}
+                            className="mt-2 px-4 py-2 bg-green-500 text-white rounded text-sm md:text-base w-full"
+                        >
+                            Add to Cart
+                        </button>
+                    </div>
+                ))}
+            </div>
 
                 {/* Cart Summary */}
                 <div className="w-64 bg-white p-6 rounded-lg shadow-md">

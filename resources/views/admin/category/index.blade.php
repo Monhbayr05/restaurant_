@@ -14,7 +14,6 @@
                 <button type="button" class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     +&nbsp; Ангилал нэмэх
                 </button>
-
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
@@ -195,6 +194,11 @@
 @section('dataTable-script')
 <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
+
+
+<script>
+
+</script>
 @endsection
 
 @section('alert')
