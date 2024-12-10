@@ -14,11 +14,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-//        DB::table('roles')->insert([
-//            ['name' => 'admin'],
-//            ['name' => 'user'],
-//            ['name' => 'chef'],
-//        ]);
+        DB::table('roles')->insert([
+            ['name' => 'admin'],
+            ['name' => 'user'],
+            ['name' => 'chef'],
+        ]);
 
 
         DB::table('users')->insert([
