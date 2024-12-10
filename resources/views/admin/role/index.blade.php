@@ -34,7 +34,7 @@
                             <td>{{ $user->restaurant->name ?? 'Тодорхойгүй' }}</td>
                             <td>{{ $user->role->name ?? 'Тодорхойгүй' }}</td>
                             <td>
-                                <form action="{{ route('role.destroy',$user->id) }}" method="post">
+                                <form action="{{ route('role.destroy',$user->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger" type="submit">
