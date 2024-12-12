@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\HumanOrder;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,26 +32,26 @@ class OrderController extends Controller
         $cartItems = json_decode($validatedData['cart_items'], true);
 
         $totalPrice = 0;
-        $foodNames = [];
+
         foreach ($cartItems as $item) {
             $totalPrice += $item['price'] * $item['quantity'];
-            $foodNames[] = $item['name'];
         }
 
         $order = Order::create([
-            'quantity' => count($cartItems),
             'price' => $totalPrice,
-            'food_name' => implode(', ', $foodNames),
-            'food_image' => 'Product Image',
-        ]);
-
-        HumanOrder::create([
-            'order_id' => $order->id,
             'name' => $validatedData['name'],
             'phone_number' => $validatedData['phone'],
             'email' => $validatedData['email'],
             'allergies' => $validatedData['notes'],
         ]);
+
+        foreach ($cartItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'quantity' => $item['quantity'],
+                'food_name' => $item['name'],
+            ]);
+        }
 
         return redirect()->route('order')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
