@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             ['name' => 'admin'],
             ['name' => 'user'],
             ['name' => 'chef'],
+            ['name' => 'manager'],
         ]);
 
 
