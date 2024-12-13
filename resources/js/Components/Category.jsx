@@ -7,28 +7,24 @@ const Category = ({ categories, activeCategory, setActiveCategory }) => {
             {['All', ...categories].map((category, index) => (
                 <button
                     key={index}
-                    onClick={() => setActiveCategory(category.name || category)}
+                    onClick={() => setActiveCategory(category)}
                     className={`flex flex-col items-center space-y-2 px-2 py-1 ${
-                        activeCategory === (category.name || category)
-                            ? 'text-blue-500'
-                            : 'text-gray-600'
+                        activeCategory === category ? 'text-orange-500' : 'text-gray-600'
                     }`}
                 >
                     <div
                         className={`w-12 h-12 flex items-center justify-center rounded-full ${
-                            activeCategory === (category.name || category)
-                                ? 'bg-yellow-300'
-                                : 'bg-gray-200'
+                            activeCategory === category ? 'bg-orange-500' : 'bg-gray-200'
                         }`}
                     >
                         <img
-                            src={category.image || 'https://via.placeholder.com/40'}
+                            src={category.thumbnail || 'https://via.placeholder.com/40'}
                             alt={category.name || 'Category'}
                             className="w-6 h-6 object-contain"
                         />
                     </div>
                     <span className="text-xs md:text-sm font-medium">
-                        {category.name || category}
+                        {category.name || 'All'}
                     </span>
                 </button>
             ))}

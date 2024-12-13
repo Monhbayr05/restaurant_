@@ -71,7 +71,7 @@ const Cart = ({ cartItems, setCartItems }) => {
             <div className="flex">
               <button
                 onClick={() => handleAddToCart(item)}
-                className="text-white bg-green-500 px-2 py-1 rounded-full mx-1"
+                className="text-white bg-orange-500 px-2 py-1 rounded-full mx-1"
               >
                 +
               </button>
@@ -90,12 +90,12 @@ const Cart = ({ cartItems, setCartItems }) => {
       </p>
       <button
         onClick={handlePayment}
-        className="w-full bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600"
+        className="w-full bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600"
       >
         Go to checkout
       </button>
       <p className="text-sm text-gray-500 mt-2">Min. order $0.00</p>
-      <button className="text-green-500 text-sm underline mt-2">
+      <button className="text-orange-500 text-sm underline mt-2">
         I have a coupon
       </button>
     </div>

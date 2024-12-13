@@ -11,11 +11,11 @@ const Product = ({ product, handleAddToCart }) => {
             />
             <h3 className="text-sm md:text-lg font-semibold">{product.name}</h3>
             <p className="text-gray-500 text-xs md:text-sm">
-                £{product.price.toFixed(2)}
+                {product.price} ₮
             </p>
             <button
                 onClick={() => handleAddToCart(product)}
-                className="mt-2 px-4 py-2 bg-green-500 text-white rounded text-sm md:text-base w-full"
+                className="mt-2 px-4 py-2 bg-orange-500 text-white rounded text-sm md:text-base w-full"
             >
                 Add to Cart
             </button>

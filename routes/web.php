@@ -141,3 +141,12 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/order/checkout', 'index')->name('order.index');
 });
 
+// Route::get('/api/categories', function () {
+//     try {
+//         $categories = Category::with('products')->get();
+//         return response()->json($categories, 200);
+//     } catch (\Exception $e) {
+//         return response()->json(['error' => $e->getMessage()], 500);
+//     }
+// });
+
