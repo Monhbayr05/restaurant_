@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import logoImage from '../Components/logo.png';
-import Cart from '../Components/Cart.jsx';
-import Product from '../Components/Product.jsx';
-import Category from '../Components/Category.jsx';
-
 const Order = ({ categories, products }) => {
+    // Энэ хэсэгт categories болон products массивын утгуудыг шалгана
+    if (!products || !categories) {
+        return <div>Loading...</div>; // Хэрэв мэдээлэл байхгүй бол "Loading..." гэж харагдуулна
+    }
+
     const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
     const [activeCategory, setActiveCategory] = useState('All');
     const [tableId, setTableId] = useState(localStorage.getItem('tableId') || '');
@@ -105,5 +104,3 @@ const Order = ({ categories, products }) => {
         </div>
     );
 };
-
-export default Order;
