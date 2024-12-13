@@ -4,16 +4,18 @@ import Cart from '../Components/Cart.jsx';
 import Product from '../Components/Product.jsx';
 import Category from '../Components/Category.jsx';
 
-const Order = ({ categories, products }) => {
+const Order = ({ categories, products, table }) => {
     const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
     const [activeCategory, setActiveCategory] = useState('All');
-    const [tableId, setTableId] = useState(localStorage.getItem('tableId') || '');
+    const [tableId, setTableId] = useState(localStorage.getItem('tableId') || table?.id || '');
 
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     useEffect(() => {
-        localStorage.setItem('tableId', tableId);
-    }, [tableId]);
+        if (table?.id) {
+            localStorage.setItem('tableId', table.id);
+        }
+    }, [table]);
 
     const handleAddToCart = (product) => {
         const existingItem = cartItems.find((item) => item.id === product.id);
@@ -56,31 +58,13 @@ const Order = ({ categories, products }) => {
                 </button>
             </div>
 
-            {/* Search Bar */}
-            <div className="flex items-center bg-gray-800 rounded-full px-4 py-2 mt-4 shadow-md">
-                <i className="fas fa-search text-gray-400"></i>
-                <input
-                    type="text"
-                    placeholder="Search your favourites..."
-                    className="bg-transparent text-white placeholder-gray-500 ml-4 flex-grow focus:outline-none"
-                />
-                <button className="ml-4">
-                    <i className="fas fa-sliders-h text-gray-400"></i>
-                </button>
-            </div>
-
-            {/* Input for Table ID */}
-            <div className="mb-6 mt-4">
-                <label htmlFor="tableId" className="block text-sm font-medium text-gray-700">
-                    Enter Table ID
-                </label>
-                <input
-                    id="tableId"
-                    value={tableId}
-                    onChange={(e) => setTableId(e.target.value)}
-                    hidden
-                />
-            </div>
+            {/* Display Table Info */}
+            {table && (
+                <div className="my-4 bg-gray-800 text-white p-4 rounded-md shadow-md">
+                    <h2 className="text-lg font-bold">Table: {table.name}</h2>
+                    <p className="text-sm">Restaurant: {table.restaurant_id}</p>
+                </div>
+            )}
 
             {/* Category Filter */}
             <Category
@@ -105,5 +89,6 @@ const Order = ({ categories, products }) => {
         </div>
     );
 };
+
 
 export default Order;
