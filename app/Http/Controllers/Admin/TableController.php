@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class TableController extends Controller
 {
@@ -50,17 +51,30 @@ class TableController extends Controller
 
     public function getTable($qr)
     {
+        try {
+            $qr = decrypt($qr);  // QR кодыг тайлах
+        } catch (DecryptException $e) {
+            // Хэрэв тайлж чадахгүй бол алдааг харуулах
+            return redirect()->route('admin.table.index')
+                ->with('error', 'QR кодыг тайлахад алдаа гарлаа.');
+        }
+
+        $table = Table::query()->where('qrcode', $qr)->first();
+
+        if (!$table) {
+            // Хэрэв тухайн QR кодоор ширээ олдсонгүй бол
+            return redirect()->route('admin.table.index')
+                ->with('error', 'Ширээ олдсонгүй.');
+        }
+
+        // Ширээ олдсон бол бүтээгдэхүүнүүдийг авах
         $products = Product::all();
 
-
-        $qr = decrypt($qr);
-        $table = Table::query()->where('qrcode', $qr)->first();
-        return Inertia::render(
-            'Order',[
-                'table' => $table,
-                'products' => $products,
-            ],
-        );
+        // Үзүүлж буй хуудас дээр ширээ болон бүтээгдэхүүнүүдийг дамжуулах
+        return Inertia::render('Order', [
+            'table' => $table,
+            'products' => $products,
+        ]);
     }
 
     public function update(Request $request, $id)
