@@ -9,7 +9,14 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['table_id', 'quantity', 'price', 'food_name', 'food_image'];
+    protected $fillable = [
+        'price',
+        'name',
+        'phone_number',
+        'email',
+        'allergies'
+    ];
+
 
     public function humanOrder()
     {

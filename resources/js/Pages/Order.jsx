@@ -3,10 +3,19 @@ import logoImage from '../Components/logo.png';
 import Cart from '../Components/Cart.jsx';
 import Product from '../Components/Product.jsx';
 import Category from '../Components/Category.jsx';
+import React, { useState, useEffect } from 'react';
 
 const Order = ({ categories, products }) => {
     const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
     const [activeCategory, setActiveCategory] = useState('All');
+    const [tableId, setTableId] = useState(localStorage.getItem('tableId') || ''); // LocalStorage-оос tableId-г унших
+
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    useEffect(() => {
+        // tableId-ийн утгыг LocalStorage-д хадгалах
+        localStorage.setItem('tableId', tableId);
+    }, [tableId]); // tableId өөрчлөгдөх бүрд хадгална
 
     const handleAddToCart = (product) => {
         const existingItem = cartItems.find((item) => item.id === product.id);
@@ -26,7 +35,6 @@ const Order = ({ categories, products }) => {
         }
     };
 
-    // Filtered Products by Category
     const filteredProducts = activeCategory === 'All'
         ? products
         : products.filter((product) => product.category === activeCategory);
@@ -53,6 +61,12 @@ const Order = ({ categories, products }) => {
             {/* Search Bar */}
             <div className="flex items-center bg-gray-800 rounded-full px-4 py-2 mt-4 shadow-md">
                 <i className="fas fa-search text-gray-400"></i>
+        <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
+            {/* Input for Table ID */}
+            <div className="mb-6">
+                <label htmlFor="tableId" className="block text-sm font-medium text-gray-700">
+                    Enter Table ID
+                </label>
                 <input
                     type="text"
                     placeholder="Search your favourites..."
@@ -70,6 +84,14 @@ const Order = ({ categories, products }) => {
                 setActiveCategory={setActiveCategory}
             />
 
+                    id="tableId"
+                    value={tableId}
+                    onChange={(e) => setTableId(e.target.value)} // State болон LocalStorage-д хадгална
+                    placeholder="Table ID"
+                    className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm"
+                />
+            </div>
+
             {/* Product List */}
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredProducts.map((product) => (
@@ -84,6 +106,9 @@ const Order = ({ categories, products }) => {
             {/* Cart Component */}
             <Cart cartItems={cartItems} setCartItems={setCartItems} />
         </div>
+    );
+};
+            
     );
 };
 
