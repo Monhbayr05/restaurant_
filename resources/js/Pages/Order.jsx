@@ -4,10 +4,16 @@ import Cart from '../Components/Cart.jsx';
 import Product from '../Components/Product.jsx';
 import Category from '../Components/Category.jsx';
 
-const Order = ({ categories, products, table }) => {
-    const [cartItems, setCartItems] = useState(JSON.parse(localStorage.getItem('cart')) || []);
+const Order = ({ categories = [], products = [], table = null }) => {
+    const [cartItems, setCartItems] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        } catch {
+            return [];
+        }
+    });
     const [activeCategory, setActiveCategory] = useState('All');
-    const [tableId, setTableId] = useState(localStorage.getItem('tableId') || table?.id || '');
+    const tableId = table?.id || localStorage.getItem('tableId') || '';
 
     const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -36,8 +42,8 @@ const Order = ({ categories, products, table }) => {
     };
 
     const filteredProducts = activeCategory === 'All'
-        ? products
-        : products.filter((product) => product.category === activeCategory);
+        ? products || []
+        : (products || []).filter((product) => product.category === activeCategory);
 
     return (
         <div className="p-4 md:p-6 bg-slate-950 min-h-screen">
@@ -75,13 +81,17 @@ const Order = ({ categories, products, table }) => {
 
             {/* Product List */}
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
-                {filteredProducts.map((product) => (
-                    <Product
-                        key={product.id}
-                        product={product}
-                        handleAddToCart={handleAddToCart}
-                    />
-                ))}
+                {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                        <Product
+                            key={product.id}
+                            product={product}
+                            handleAddToCart={handleAddToCart}
+                        />
+                    ))
+                ) : (
+                    <p className="text-white text-center col-span-3">No products available</p>
+                )}
             </div>
 
             {/* Cart Component */}
@@ -89,6 +99,5 @@ const Order = ({ categories, products, table }) => {
         </div>
     );
 };
-
 
 export default Order;
