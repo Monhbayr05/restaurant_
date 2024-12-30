@@ -1,4 +1,3 @@
-<!-- resources/views/checkout.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,21 +14,20 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <div class="text">
-                        Food Bazalt
-                    </div>
+                    <div class="text">Food Bazalt</div>
 
+                    <!-- User Information Form -->
                     <div class="form-row">
                         <div class="input-data">
                             <input type="text" name="name" required>
                             <div class="underline"></div>
-                            <label for="">Нэр</label>
+                            <label for="name">Нэр</label>
                         </div>
                         <br>
                         <div class="input-data">
                             <input type="number" name="phone" required>
                             <div class="underline"></div>
-                            <label for="">Утасны дугаар</label>
+                            <label for="phone">Утасны дугаар</label>
                         </div>
                     </div>
                     <br>
@@ -37,7 +35,7 @@
                         <div class="input-data">
                             <input type="text" name="email" required>
                             <div class="underline"></div>
-                            <label for="">И-мэйл хаяг</label>
+                            <label for="email">И-мэйл хаяг</label>
                         </div>
                         <br>
                     </div>
@@ -45,15 +43,20 @@
                         <div class="input-data textarea">
                             <textarea name="notes" rows="8" cols="80" required></textarea>
                             <div class="underline"></div>
-                            <label for="">Харшилтай эсэх</label>
+                            <label for="notes">Харшилтай эсэх</label>
                         </div>
                     </div>
-                    <input type="hidden" name="cart_items" id="cartItemsInput">
 
+                    <!-- Hidden Inputs -->
+                    <input type="hidden" name="cart_items" id="cartItemsInput">
+                    <input type="hidden" name="table_id" id="tableIdInput">
+                    <input type="hidden" name="restaurant_id" id="restaurantIdInput">
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Cart Display -->
     <div class="orders">
         <div class="container">
             <div class="row">
@@ -64,39 +67,7 @@
                         <div class="total" id="totalAmount">Total: 0₮</div>
                     </div>
 
-                    <script>
-                        const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-                        console.log(localStorage.getItem("cart"));
-
-                        function displayCartItems() {
-                            const cartContainer = document.getElementById("cartItems");
-                            cartContainer.innerHTML = "";
-
-                            let total = 0;
-
-                            cartItems.forEach(item => {
-                                const itemElement = document.createElement("div");
-                                itemElement.className = "cart-item";
-
-                                itemElement.innerHTML = `
-                <h4>${item.name}</h4>
-                <p>${item.price.toFixed(2)}₮ x ${item.quantity}</p>
-            `;
-
-                                total += item.price * item.quantity;
-
-                                cartContainer.appendChild(itemElement);
-                                document.getElementById("cartItemsInput").value = JSON.stringify(cartItems);
-                            });
-
-                            document.getElementById("totalAmount").textContent = `Total: ${total.toFixed(2)}₮`;
-                        }
-
-
-
-                        displayCartItems();
-                    </script>
-
+                    <!-- Submit Button -->
                     <button class="btn btn-primary" type="submit">
                         Захиалах
                     </button>
@@ -105,5 +76,50 @@
         </div>
     </div>
 </form>
+
+<script>
+    // LocalStorage-аас cart болон tableId-г унших
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const tableId = localStorage.getItem("tableId");
+    const restaurantId = localStorage.getItem("restaurantId");
+
+    // Cart-ийг харагдуулах функц
+    function displayCartItems() {
+        const cartContainer = document.getElementById("cartItems");
+        cartContainer.innerHTML = "";
+
+        let total = 0;
+
+        cartItems.forEach(item => {
+            const itemElement = document.createElement("div");
+            itemElement.className = "cart-item";
+
+            itemElement.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <p>${item.price.toFixed(2)}₮ x ${item.quantity}</p>
+                `;
+
+            total += item.price * item.quantity;
+
+            cartContainer.appendChild(itemElement);
+        });
+
+        // Total үнийн дүнг шинэчлэх
+        document.getElementById("totalAmount").textContent = `Total: ${total.toFixed(2)}₮`;
+
+        // Cart-ийг form руу дамжуулах
+        document.getElementById("cartItemsInput").value = JSON.stringify(cartItems);
+    }
+
+    // Table ID-г form руу дамжуулах
+    if (tableId) {
+        document.getElementById("tableIdInput").value = tableId;
+    } else {
+        console.warn("No table ID found in localStorage!");
+    }
+
+    // Cart-ийг эхлэх үед харагдуулна
+    displayCartItems();
+</script>
 </body>
 </html>

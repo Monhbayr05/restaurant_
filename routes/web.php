@@ -64,7 +64,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         Route::delete('admin/restaurant/delete/{slug}', 'destroy')
             ->name('admin.restaurant.delete');
     });
-    Route::controller(TableController::class)->group(function () {
+    Route::controller(\App\Http\Controllers\Admin\TableController::class)->group(function () {
         Route::get('admin/table', 'index')
             ->name('admin.table.index');
         Route::post('admin/table', 'store')
@@ -101,7 +101,6 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
             ->name('admin.product.image');
         Route::post('admin/product/{id}/images', 'storeImage')
             ->name('admin.product.storeImage');
-
         Route::delete('admin/products/image/{id}', 'imageDestroy')
             ->name('admin.product.imageDestroy');
 
@@ -124,29 +123,35 @@ Route::controller(RoleController::class)->group(function () {
 });
 
 Route::middleware(['auth', ChefMiddleware::class])->group(function () {
-    Route::get('chef/index', function () {
-        return view('chef.index');
-    })->name('chef.index');
+    Route::get('chef/dashboard', function () {
+        return view('chef.dashboard');
+    })->name('chef.dashboard');
 });
 
 Route::middleware(['auth', ManagerMiddleware::class])->group(function () {
    Route::get('manager/dashboard', function () {
       return view('manager.dashboard');
    })->name('manager.dashboard');
+
+    Route::controller(AuthenticatedSessionController::class)->group(function () {
+        Route::post('manager/logout', 'destroy')
+            ->name('manager.logout');
+    });
+
+   Route::controller(\App\Http\Controllers\Manager\TableController::class)->group(function () {
+       Route::get('manager/table', 'index')->name('manager.table.index');
+       Route::post('manager/table', 'store')->name('manager.table.store');
+       Route::delete('manager/table/{id}', 'destroy')->name('manager.table.destroy');
+   });
+
+   Route::controller(\App\Http\Controllers\Manager\OrderController::class)->group(function () {
+      Route::get('manager/order', 'index')->name('manager.order.index');
+   });
 });
 
 Route::controller(OrderController::class)->group(function () {
-    Route::get('/order', 'show')->name('order');
-    Route::post('/order/store',  'order')->name('order.store');
-    Route::get('/order/checkout', 'index')->name('order.index');
+   Route::get('order', 'show')->name('order');
+   Route::get('order/checkout', 'index')->name('order.checkout');
+   Route::post('order/checkout', 'store')->name('order.store');
 });
-
-// Route::get('/api/categories', function () {
-//     try {
-//         $categories = Category::with('products')->get();
-//         return response()->json($categories, 200);
-//     } catch (\Exception $e) {
-//         return response()->json(['error' => $e->getMessage()], 500);
-//     }
-// });
 
