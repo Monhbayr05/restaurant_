@@ -52,12 +52,14 @@
     </div>
 </div>
 
+@stack('scripts')
 
 
 
 <!-- jquery  -->
 <script src="{{ asset('admin/assets/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
 <script src="{{ asset('admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -70,7 +72,6 @@
 <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 
 <!-- eniig commentloson  -->
-<script src="{{ asset('admin/assets/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
 
 
@@ -78,7 +79,7 @@
 <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
 
 <!-- real datatable  -->
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('admin/assets/js/datatable/datatable_bundle.min.js') }}"></script>
 <script src="{{ asset('admin/assets/js/datatable/datatable_jquery.js') }}"></script>
 

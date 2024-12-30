@@ -18,18 +18,34 @@ class OrderController extends Controller
 
         return view('user.checkout');
     }
-    public function order(Request $request)
+    public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|numeric',
             'email' => 'required|email',
             'notes' => 'nullable|string|max:500',
             'cart_items' => 'required|json',
+            'table_id' => 'nullable|numeric|exists:tables,id',
         ]);
-
         $cartItems = json_decode($validatedData['cart_items'], true);
+//        dd($cartItems);
+
+        $validatedCartItems = [];
+        foreach ($cartItems as $item) {
+            $validator = \Validator::make($item, [
+                'id' => 'required|exists:products,id',
+                'quantity' => 'required|numeric|min:1',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $validatedCartItems[] = $validator->validated();
+        }
 
         $totalPrice = 0;
 
@@ -37,7 +53,10 @@ class OrderController extends Controller
             $totalPrice += $item['price'] * $item['quantity'];
         }
 
+//        dd($validatedCartItems);
+
         $order = Order::create([
+            'table_id' => $validatedData['table_id'],
             'price' => $totalPrice,
             'name' => $validatedData['name'],
             'phone_number' => $validatedData['phone'],
@@ -45,11 +64,11 @@ class OrderController extends Controller
             'allergies' => $validatedData['notes'],
         ]);
 
-        foreach ($cartItems as $item) {
+        foreach ($validatedCartItems as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'quantity' => $item['quantity'],
-                'food_name' => $item['name'],
+                'product_id' => $item['id'],
             ]);
         }
 
@@ -58,9 +77,6 @@ class OrderController extends Controller
 
     public function show()
     {
-
-
-
         $categories = Category::all();
         $products = Product::all();
 

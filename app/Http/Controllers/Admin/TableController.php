@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Restaurant;
 use App\Models\Table;
@@ -10,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Contracts\Encryption\DecryptException;
 
 class TableController extends Controller
 {
@@ -33,7 +33,11 @@ class TableController extends Controller
 
         $incString = encrypt($randomString);
 
-        $content = 'http://13.115.248.34/QR/' . $incString;
+        $appUrl = 'https://restaurant_.test';
+
+        $content = $appUrl .'/QR/' . $incString;
+
+//        dd($content);
 
         $qr = QrCode::size(300)->margin(0)->generate($content);
 
@@ -51,31 +55,28 @@ class TableController extends Controller
 
     public function getTable($qr)
     {
-        try {
-            $qr = decrypt($qr);  // QR кодыг тайлах
-        } catch (DecryptException $e) {
-            // Хэрэв тайлж чадахгүй бол алдааг харуулах
-            return redirect()->route('admin.table.index')
-                ->with('error', 'QR кодыг тайлахад алдаа гарлаа.');
-        }
+        $qr = decrypt($qr);
 
         $table = Table::query()->where('qrcode', $qr)->first();
+        $product = Product::all();
+        $categories = Category::all();
+
+
 
         if (!$table) {
-            // Хэрэв тухайн QR кодоор ширээ олдсонгүй бол
-            return redirect()->route('admin.table.index')
-                ->with('error', 'Ширээ олдсонгүй.');
+            abort(404, 'Table not found');
         }
 
-        // Ширээ олдсон бол бүтээгдэхүүнүүдийг авах
-        $products = Product::all();
-
-        // Үзүүлж буй хуудас дээр ширээ болон бүтээгдэхүүнүүдийг дамжуулах
-        return Inertia::render('Order', [
-            'table' => $table,
-            'products' => $products,
-        ]);
+        return Inertia::render(
+            'Order',
+            [
+                'tableId' => $table->id,
+                'products' => $product,
+                'categories' => $categories,
+            ]
+        );
     }
+
 
     public function update(Request $request, $id)
     {

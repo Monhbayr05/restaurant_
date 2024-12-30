@@ -12,12 +12,29 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-
+    <li class="nav-item active">
+        <a class="nav-link" href="{{route('manager.dashboard')}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Хяналтын самбар</span>
+        </a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{route('manager.table.index')}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Ширээ</span>
+        </a>
+    </li>
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{route('manager.order.index')}}">
+            <i class="bi bi-border-style"></i>
+            <span>Захиалга</span>
+        </a>
+    </li>
 
 
     <!-- Divider -->

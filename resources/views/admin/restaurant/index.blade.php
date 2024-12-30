@@ -5,13 +5,12 @@
             <h6 class="m-0 font-weight-bold text-primary d-inline fs-5">Ресторан Жагсаалт</h6>
             <div class="float-end">
                 <div class="create-page">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary p-2 " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary p-2 " data-bs-toggle="modal" data-bs-target="#createRestaurantModal">
                         +&nbsp; Ресторан Нэмэх
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="createRestaurantModal" tabindex="-1" aria-labelledby="createRestaurantModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -123,7 +122,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                
+
                                 <!-- Edit Modal -->
                                 <div class="modal fade" id="editModal{{ $item->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $item->id }}" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -183,6 +182,7 @@
     </div>
 @endsection
 
+
 @section('dataTable-script')
 <script src="{{ asset('admin/assets/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/assets/js/demo/datatables-demo.js') }}"></script>
@@ -231,7 +231,7 @@
             });
 
             if (result.isConfirmed) {
-                await delay(1.5); 
+                await delay(1.5);
                 document.getElementById('delete-form').submit();
             }
         });

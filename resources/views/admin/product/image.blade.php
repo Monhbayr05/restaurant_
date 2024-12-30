@@ -43,7 +43,8 @@
                             <img src="{{ asset($image->image) }}" class="card-img-top" alt="Бүтээгдэхүүний Зураг" width="250px" height="200px">
                             <div class="card-body">
                                 <button type="button" class="btn btn-danger delete-image-button" data-id="{{ $image->id }}">Устгах</button>
-                                <form id="delete-image-form-{{ $image->id }}" action="{{ route('admin.product.imageDestroy', $image->id) }}" method="POST" style="display: none;">
+                                <form id="delete-image-form-{{ $image->id }}"
+                                      action="{{ route('admin.product.imageDestroy', $image->id) }}" method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>
@@ -69,7 +70,7 @@
     document.querySelectorAll('.delete-image-button').forEach(button => {
         button.addEventListener('click', async function(event) {
             const id = event.target.getAttribute('data-id');
-            
+
             // SweetAlert confirmation dialog
             const result = await Swal.fire({
                 title: "Та итгэлтэй байна уу?",
