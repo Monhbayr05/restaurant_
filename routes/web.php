@@ -127,6 +127,9 @@ Route::middleware(['auth', ChefMiddleware::class])->group(function () {
     Route::get('chef/index', function () {
         return view('chef.index');
     })->name('chef.index');
+    Route::get('chef/dashboard', function () {
+        return view('chef.dashboard');
+    })->name('chef.dashboard');
 });
 
 Route::middleware(['auth', ManagerMiddleware::class])->group(function () {

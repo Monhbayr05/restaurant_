@@ -31,6 +31,11 @@
 
 
 
+    <!-- turshilt  -->
+    <link rel="stylesheet" href="{{asset('chef/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}">
+    
+    <link rel="stylesheet" crossorigin href="{{asset('chef/assets/compiled/css/table-datatable-jquery.css')}}">
+    <!-- turshit duussan  -->
 
 </head>
 <body>
@@ -90,7 +95,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
-<!-- charts  -->
+
 
 
 
@@ -99,6 +104,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 
+
+    <!-- datatable  -->
+    <script src="{{asset('chef/assets/extensions/jquery/jquery.min.js')}}"></script>
+    <script src="{{asset('chef/assets/extensions/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('chef/assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js')}}"></script>
+    <script src="{{asset('chef/assets/static/js/pages/datatables.js')}}"></script>
+    <!-- turshilt  -->
 
 @yield('alert')
 @yield('dataTable-script')

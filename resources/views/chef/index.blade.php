@@ -1,4 +1,4 @@
 @extends('layouts.chef')
 @section('chef')
-    <div>suga</div>
+    <h1>SUGAAA</h1>
 @endsection

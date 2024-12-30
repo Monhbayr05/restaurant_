@@ -21,6 +21,7 @@ class ChefMiddleware
                 return $next($request);
             }
         }
+        console.log("chefeer newterne uu");
         return redirect('/')->with('You are not Chef');
     }
 }
