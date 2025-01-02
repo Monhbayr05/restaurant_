@@ -3,7 +3,7 @@ import React from 'react';
 
 const Category = ({ categories, activeCategory, setActiveCategory }) => {
     return (
-        <div className="flex space-x-6 mb-6 overflow-x-auto pb-4 scrollbar">
+        <div className="flex space-x-6 mb-6 overflow-x-auto pb-4 scrollbar rounded-sm">
             {['All', ...categories].map((category, index) => (
                 <button
                     key={index}

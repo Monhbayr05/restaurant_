@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Restaurant;
 use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
@@ -15,7 +16,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::query()->orderBy('name')->get();
-        return view('admin.product.index', compact('products'));
+        $restaurants = Restaurant::all();
+        $categories = Category::all();
+        return view('admin.product.index', compact('products','restaurants','categories'));
     }
 
     public function create()

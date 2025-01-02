@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ cartItems, setCartItems }) => {
+  const navigate = useNavigate();
+
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -56,7 +59,8 @@ const Cart = ({ cartItems, setCartItems }) => {
     console.log('Payment data:', paymentData);
     alert('Proceeding with payment...');
 
-    window.location.href = '/order/checkout';
+    // window.location.href = '/order/checkout';
+    navigate('/order/checkout', { state: { paymentData } });
   };
 
   return (
@@ -93,10 +97,6 @@ const Cart = ({ cartItems, setCartItems }) => {
         className="w-full bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600"
       >
         Go to checkout
-      </button>
-      <p className="text-sm text-gray-500 mt-2">Min. order $0.00</p>
-      <button className="text-orange-500 text-sm underline mt-2">
-        I have a coupon
       </button>
     </div>
   );

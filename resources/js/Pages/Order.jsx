@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logoImage from '../Components/logo.png';
+import BackImage from '../Components/back.jpg';
 import Cart from '../Components/Cart.jsx';
 import Product from '../Components/Product.jsx';
 import Category from '../Components/Category.jsx';
@@ -85,7 +87,14 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
     }
 
     return (
-        <div className="p-4 md:p-6 bg-slate-950 min-h-screen">
+
+        <div className="p-4 md:p-6 bg-slate-700 min-h-screen flex flex-col"
+            style={{
+                backgroundImage: `linear-gradient(rgba(250, 119, 40, 0.5), rgba(253, 161, 114, 0.5)), url(${BackImage})`,
+                backgroundRepeat: 'repeat',
+                backgroundPosition: 'center',
+            }}
+        >
             {/* Header */}
             <div className="bg-white p-4 shadow-md flex justify-between items-center rounded-md">
                 <div className="flex items-center space-x-2">
@@ -98,9 +107,6 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
                     </div>
                     <h1 className="text-xl font-bold text-gray-800">FoodBazalt</h1>
                 </div>
-                <button className="bg-gray-200 px-4 py-2 rounded-full text-gray-800 text-sm">
-                    English
-                </button>
             </div>
 
             {/* Category Filter */}
@@ -111,7 +117,7 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
             />
 
             {/* Product List */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+            <div className="bg-white opacity-5 rounded-md grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <Product
@@ -127,18 +133,10 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
                 )}
             </div>
 
-            {/* Cart Component */}
-            <Cart cartItems={cartItems} setCartItems={setCartItems} />
+            <div className="sticky bottom-0 w-full  text-black p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+                <Cart cartItems={cartItems} setCartItems={setCartItems} />
+            </div>
 
-            {/*/!* Complete Order Button *!/*/}
-            {/*<div className="mt-6 text-center">*/}
-            {/*    <button*/}
-            {/*        className="bg-green-500 px-4 py-2 rounded-full text-white font-bold"*/}
-            {/*        onClick={handleCompleteOrder}*/}
-            {/*    >*/}
-            {/*        Complete Order*/}
-            {/*    </button>*/}
-            {/*</div>*/}
         </div>
     );
 };

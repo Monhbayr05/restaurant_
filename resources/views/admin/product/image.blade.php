@@ -89,17 +89,6 @@
             }
         });
     });
-    @if(Session::has('delete'))
-        (async () => {
-            await delay(0.5);
-            Swal.fire({
-                title: "Устгасан!",
-                text: "{{ session('delete') }}",
-                icon: "success",
-                confirmButtonText: "Ойлголоо"
-            });
-        })();
-    @endif
 </script>
 
 @endsection

@@ -1,148 +1,169 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="card shadow mb-4">
-    <div class="card-header d-flex justify-content-between align-items-center p-2">
-        <h6 class="m-2 font-weight-bold text-primary d-inline fs-5">Бүтээгдэхүүн Нэмэх</h6>
-        <a href="{{ route('admin.product.index') }}" class="btn btn-primary float-end">Буцах</a>
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <!-- Page Heading -->
+            <div class="col-md-6">
+                <h3>Бүтээгдэхүүн</h3>
+                <p class="text-subtitle text-muted">Бүтээгдэхүүн нэмэх эсвэл удирдах</p>
+            </div>
+            <!-- Breadcrumb -->
+            <div class="col-md-6 text-end">
+                <nav aria-label="breadcrumb" class="breadcrumb-header">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('admin.product.index') }}">Бүтээгдэхүүн Жагсаалт</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Бүтээгдэхүүн Нэмэх</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
     </div>
 
-    <div class="card-body">
-        @if ($errors->any())
-            <div class="alert alert-warning">
-                @foreach ($errors->all() as $error)
-                    <div>{{ $error }}</div>
-                @endforeach
-            </div>
-        @endif
-        <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-
-            <!-- Tabs for different sections -->
-            <ul class="nav nav-tabs" id="productTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                            data-bs-target="#home-tab-pane" type="button" role="tab"
-                            aria-controls="home-tab-pane" aria-selected="true">
-                        Нүүр
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="details-tab" data-bs-toggle="tab"
-                            data-bs-target="#details-tab-pane" type="button" role="tab"
-                            aria-controls="details-tab-pane" aria-selected="false">
-                        Дэлгэрэнгүй
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="image-tab" data-bs-toggle="tab"
-                            data-bs-target="#image-tab-pane" type="button" role="tab"
-                            aria-controls="image-tab-pane" aria-selected="false">
-                        Бүтээгдэхүүний Зураг
-                    </button>
-                </li>
-            </ul>
-
-            <!-- Tab content -->
-            <div class="tab-content" id="productTabContent">
-                <!-- Home Tab -->
-                <div class="tab-pane fade border p-3 show active" id="home-tab-pane" role="tabpanel"
-                     aria-labelledby="home-tab">
-                    <!-- Category -->
-                    <div class="mb-3">
-                        <label for="category_id" class="form-label">Категори</label>
-                        <select name="category_id" class="form-control" required>
-                            <option>Категори сонгох</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
+    <section id="multiple-column-form">
+        <div class="row match-height">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Бүтээгдэхүүн Нэмэх</h4>
                     </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <!-- Display Errors -->
+                            @if ($errors->any())
+                                <div class="alert alert-warning">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
 
-                    <!-- Product Name -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Бүтээгдэхүүний Нэр</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name') }}">
-                    </div>
+                            <!-- Product Form -->
+                            <form class="form" action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row">
+                                    <!-- Thumbnail Upload -->
+                                    <div class="col-md-6 text-center">
+                                        <div class="form-group">
+                                            <label for="thumbnail" class="form-label">Thumbnail Зураг</label>
+                                            <div class="image-upload-wrapper position-relative">
+                                                <img 
+                                                    id="thumbnailPreview" 
+                                                    src="https://via.placeholder.com/200" 
+                                                    alt="Thumbnail Preview" 
+                                                    class="img-thumbnail"
+                                                    style="width: 200px; height: 200px; object-fit: cover; cursor: pointer;" />
+                                                <button 
+                                                    type="button" 
+                                                    class="btn btn-primary btn-sm position-absolute top-50 start-50 translate-middle" 
+                                                    onclick="document.getElementById('thumbnail').click()" 
+                                                    style="border-radius: 50%;">
+                                                    +
+                                                </button>
+                                            </div>
+                                            <input 
+                                                type="file" 
+                                                id="thumbnail" 
+                                                name="thumbnail" 
+                                                class="form-control d-none" 
+                                                accept="image/*" 
+                                                onchange="previewThumbnail(event)" />
+                                        </div>
+                                    </div>
 
-                    <!-- Product Slug -->
-                    <div class="mb-3">
-                        <label for="slug" class="form-label">Товчлол</label>
-                        <input type="text" name="slug" class="form-control" value="{{ old('slug') }}">
-                    </div>
+                                    <!-- Product Information -->
+                                    <div class="col-md-6">
+                                        <!-- Category -->
+                                        <div class="mb-3">
+                                            <label for="category_id" class="form-label">Категори</label>
+                                            <select name="category_id" id="category_id" class="form-control" required>
+                                                <option value="" selected disabled>Категори сонгох</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                    <!-- Quantity Limit -->
-                    <div class="mb-3">
-                        <label for="quantity_limit" class="form-label">Тооны Хязгаар</label>
-                        <input type="text" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}">
-                    </div>
+                                        <!-- Name -->
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Бүтээгдэхүүний Нэр</label>
+                                            <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}" required>
+                                        </div>
 
-                    <!-- Product Description -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Тодорхойлолт</label>
-                        <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                        <!-- Status -->
+                                        <div class="form-check form-switch">
+                                            <input type="checkbox" name="status" class="form-check-input" id="status" {{ old('status') ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="status">Ил болгох</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <!-- Slug -->
+                                    <div class="col-md-6">
+                                        <label for="slug" class="form-label">Товчлол</label>
+                                        <input type="text" id="slug" name="slug" class="form-control" value="{{ old('slug') }}" required>
+                                    </div>
+
+                                    <!-- Quantity Limit -->
+                                    <div class="col-md-6">
+                                        <label for="quantity_limit" class="form-label">Тооны Хязгаар</label>
+                                        <input type="number" id="quantity_limit" name="quantity_limit" class="form-control" value="{{ old('quantity_limit') }}" min="1" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <!-- Description -->
+                                    <div class="col-md-12">
+                                        <label for="description" class="form-label">Тодорхойлолт</label>
+                                        <textarea id="description" name="description" class="form-control" rows="4">{{ old('description') }}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <!-- Sale Percent -->
+                                    <div class="col-md-4">
+                                        <label for="sale_percent" class="form-label">Хямдралын Хувь</label>
+                                        <input type="number" id="sale_percent" name="sale_percent" class="form-control" value="{{ old('sale_percent') }}" max="100">
+                                    </div>
+
+                                    <!-- Price -->
+                                    <div class="col-md-4">
+                                        <label for="price" class="form-label">Үнэ</label>
+                                        <input type="number" id="price" name="price" class="form-control" value="{{ old('price') }}" min="1" required>
+                                    </div>
+
+                                    <!-- Quantity -->
+                                    <div class="col-md-4">
+                                        <label for="quantity" class="form-label">Тоо хэмжээ</label>
+                                        <input type="number" id="quantity" name="quantity" class="form-control" value="{{ old('quantity') }}" min="1" required>
+                                    </div>
+                                </div>
+
+                                <!-- Form Buttons -->
+                                <div class="col-12 d-flex justify-content-center pt-4">
+                                    <button type="submit" class="btn btn-primary me-2">Хадгалах</button>
+                                    <button type="reset" class="btn btn-secondary">Буцах</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Details Tab -->
-                <div class="tab-pane fade border p-3" id="details-tab-pane" role="tabpanel"
-                     aria-labelledby="details-tab">
-                    <div class="row">
-                        <!-- Sale Percent -->
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="sale_percent" class="form-label">Хямдралын Хувь</label>
-                                <input type="number" name="sale_percent" class="form-control"
-                                       value="{{ old('sale_percent') }}" max="100">
-                            </div>
-                        </div>
-
-                        <!-- Price -->
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Үнэ</label>
-                                <input type="number" name="price" class="form-control"
-                                       value="{{ old('price') }}" min="1">
-                            </div>
-                        </div>
-
-                        <!-- Quantity -->
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="quantity" class="form-label">Тоо хэмжээ</label>
-                                <input type="number" name="quantity" class="form-control"
-                                       value="{{ old('quantity') }}" min="1">
-                            </div>
-                        </div>
-
-                        <!-- Status -->
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <label for="status">Status</label>
-                                <label>Ил бол дарна уу?</label>
-                                <input type="checkbox" name="status" {{old('status') ? 'checked' : ''}}>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Image Tab -->
-                <div class="tab-pane fade border p-3" id="image-tab-pane" role="tabpanel"
-                     aria-labelledby="image-tab">
-                    <!-- Thumbnail -->
-                    <div class="mb-3">
-                        <label for="thumbnail">Thumbnail Зураг</label>
-                        <input type="file" name="thumbnail" class="form-control">
-                    </div>
-                </div>
             </div>
-
-            <!-- Submit Button -->
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary float-end">Илгээх</button>
-            </div>
-
-        </form>
-    </div>
+        </div>
+    </section>
 </div>
+
+<script>
+    function previewThumbnail(event) {
+        const reader = new FileReader();
+        reader.onload = function () {
+            document.getElementById('thumbnailPreview').src = reader.result;
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 @endsection
