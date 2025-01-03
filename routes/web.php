@@ -123,12 +123,14 @@ Route::controller(RoleController::class)->group(function () {
 });
 
 Route::middleware(['auth', ChefMiddleware::class])->group(function () {
-    Route::get('chef/index', function () {
-        return view('chef.index');
-    })->name('chef.index');
     Route::get('chef/dashboard', function () {
         return view('chef.dashboard');
     })->name('chef.dashboard');
+
+    Route::controller(AuthenticatedSessionController::class)->group(function () {
+        Route::post('chef/logout', 'destroy')
+            ->name('chef.logout');
+    });
 });
 
 Route::middleware(['auth', ManagerMiddleware::class])->group(function () {

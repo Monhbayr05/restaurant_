@@ -56,7 +56,6 @@ class OrderController extends Controller
 //        dd($validatedCartItems);
 
         $order = Order::create([
-            'table_id' => $validatedData['table_id'],
             'price' => $totalPrice,
             'name' => $validatedData['name'],
             'phone_number' => $validatedData['phone'],
@@ -66,6 +65,7 @@ class OrderController extends Controller
 
         foreach ($validatedCartItems as $item) {
             OrderItem::create([
+                'table_id' => $validatedData['table_id'],
                 'order_id' => $order->id,
                 'quantity' => $item['quantity'],
                 'product_id' => $item['id'],

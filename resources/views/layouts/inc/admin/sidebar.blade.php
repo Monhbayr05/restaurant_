@@ -129,7 +129,7 @@
         <div class="sidebar-footer position-absolute bottom-0 p-2 w-100">
             <div class="d-flex justify-content-between align-items-center p-2" style="border: 1px solid #dee2e6; border-radius: 10px;">
 
-                <h5 class="font-bold m-0" style="color: #495057;">{{ Auth::user()->email }}</h5>
+                <h5 class="font-bold m-0" style="color: #495057;">{{ Auth::user()->name }}</h5>
 
 
                 <form method="POST" action="{{ route('admin.logout') }}" class="m-0">

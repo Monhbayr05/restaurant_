@@ -23,5 +23,10 @@ class Order extends Model
     {
         return $this->hasOne(HumanOrder::class);
     }
+
+    public function table()
+    {
+        return $this->belongsTo(Table::class);
+    }
 }
 

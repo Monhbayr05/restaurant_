@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{asset('chef/assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}">
 
         <link rel="stylesheet" crossorigin href="{{asset('chef/assets/compiled/css/table-datatable-jquery.css')}}">
-        
+
         <!-- bootstrap icons  -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -28,7 +28,6 @@
         <div id="app">
             @include('layouts.inc.chef.sidebar')
             <div id="main">
-            @include('layouts.inc.chef.header')
 
                 @yield('chef')
                 @include('layouts.inc.chef.footer')

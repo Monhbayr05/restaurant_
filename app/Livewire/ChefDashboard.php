@@ -3,38 +3,39 @@
 namespace App\Livewire;
 
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ChefDashboard extends Component
 {
     public $orderItems;
-    public $restaurantId; // Тогоочийн рестораны ID
+    public $restaurantId;
 
     protected $listeners = ['orderUpdated' => 'refreshOrders'];
 
     public function mount($restaurantId)
     {
-        $this->restaurantId = $restaurantId; // Тогоочийн рестораны ID-г тохируулна
+        $this->restaurantId = $restaurantId;
         $this->refreshOrders();
     }
 
     public function refreshOrders()
     {
-        // Захиалгуудыг ресторанаар нь шүүж ачаална
-        $this->orderItems = OrderItem::whereHas('product.category.restaurant', function ($query) {
-            $query->where('id', $this->restaurantId);
-        })
-            ->where('food_status', '<', 2) // Food status: 0 (шинэ), 1 (бэлэн болсон)
-            ->with(['table', 'product.category.restaurant'])
+        $this->orderItems = OrderItem::with(['product', 'order.table'])
+            ->whereHas('product.category', function ($query) {
+                $query->where('restaurant_id', $this->restaurantId);
+            })
+            ->where('food_status', '<', 2)
             ->orderBy('created_at', 'desc')
             ->get();
+        dd($this->orderItems);
     }
 
     public function markAsPrepared($itemId)
     {
         $orderItem = OrderItem::find($itemId);
         if ($orderItem && $this->isOrderBelongsToRestaurant($orderItem)) {
-            $orderItem->food_status = 1; // 1 = Бэлэн болсон
+            $orderItem->food_status = 1;
             $orderItem->save();
             $this->refreshOrders();
         }
@@ -44,16 +45,15 @@ class ChefDashboard extends Component
     {
         $orderItem = OrderItem::find($itemId);
         if ($orderItem && $this->isOrderBelongsToRestaurant($orderItem)) {
-            $orderItem->food_status = 2; // 2 = Дууссан
+            $orderItem->food_status = 2;
             $orderItem->save();
             $this->refreshOrders();
         }
     }
 
-    // Тухайн захиалга тогоочийн рестораны захиалга эсэхийг шалгах
     public function isOrderBelongsToRestaurant($orderItem)
     {
-        return $orderItem->product->category->restaurant_id == $this->restaurantId;
+        return $orderItem->table->restaurant_id == $this->restaurantId;
     }
 
     public function render()
