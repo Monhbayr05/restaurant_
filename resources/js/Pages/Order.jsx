@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import logoImage from '../Components/logo.png';
 import BackImage from '../Components/back.jpg';
 import Cart from '../Components/Cart.jsx';
@@ -117,7 +116,7 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
             />
 
             {/* Product List */}
-            <div className="bg-white opacity-5 rounded-md grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+            <div className="bg-white rounded-md grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <Product
