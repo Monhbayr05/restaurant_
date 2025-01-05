@@ -110,18 +110,24 @@
                     </a>
                 </li>
                 <li
-                    class="sidebar-item  ">
-                    <a href="{{ route('admin.product.index') }}" class='sidebar-link'>
+                    class="sidebar-item has-sub">
+                    <a href="" class='sidebar-link'>
                         <i class="bi bi-file-earmark-medical-fill"></i>
                         <span>Бүтээгдэхүүн</span>
                     </a>
-                </li>
-                <li
-                    class="sidebar-item  ">
-                    <a href="" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
-                        <span>Захиалга</span>
-                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item ">
+                            <a href="{{ route('admin.product.index2') }}">Жагсаалт</a>
+                        </li>
+                        <li class="submenu-item  ">
+                            <a href="{{ route('admin.product.index') }}" class="submenu-link">Хүснэгтээр</a>
+
+                        </li>
+                        <li class="submenu-item  ">
+                            <a href="{{ route('admin.product.create') }}" class="submenu-link">Бүтээгдэхүүн нэмэх</a>
+                        </li>
+
+                    </ul>
                 </li>
 
             </ul>

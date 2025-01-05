@@ -18,57 +18,88 @@
             </div>
         </div>
     </div>
-    <section id="multiple-column-form">
-        <div class="row match-height">
-            <div class="col-3"></div>
-            <div class="col-6">
-                <div class="card shadow mb-4" style="width: 70%;">
-                    <div class="card-header text-center">
-                        <h3 class="card-title">Ширээ Нэмэх Форум</h3>
-                    </div>
-                    <div class="card-content">
-                        <div class="card-body">
-                            <form action="{{ route('admin.table.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label>Ресторан сонгох</label>
-                                    <select name="restaurant_id" class="form-select" aria-label="Default select example">
-                                        <option>Ресторан сонго</option>
-                                        @foreach($restaurants as $restaurant)
-                                        <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('restaurant_id')
-                                    <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <label>Ширээ нэр</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Ширээ нэр" value="{{ old('name') }}">
-                                    @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-2 d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary mx-2">
-                                        Хадгалах
-                                    </button>
-                                    <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">
-                                        Close
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3"></div>
-        </div>
-    </section>
+
+    
     <section class="section">
         <div class="card shadow mb-4">
-            <div class="card-header p-3 align-items-center">
+            <div class="card-header p-3 d-flex align-items-center justify-content-between">
                 <h3 class="m-3 font-weight-bold text-primary">Ширээ Жагсаалт</h3>
+                <div class="flex-end">
+                    <div class="create-page">
+                        <!-- Button trigger modal -->
+                        <button type="button"
+                            class="btn btn-outline-primary fs-5"
+                            data-bs-toggle="modal"
+                            data-bs-target="#inlineForm">
+                            +&nbsp; Ширээ нэмэх
+                        </button>
+
+                        <!-- modal  -->
+                        <div
+                            class="modal fade text-left"
+                            id="inlineForm"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="myModalLabel33"
+                            aria-hidden="true">
+                            <div
+                                class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+                                role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title d-flex justify-content-center fs-3" id="myModalLabel33">Ширээ Нэмэх Форум</h4>
+                                        <button
+                                            type="button"
+                                            class="close"
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i data-feather="x"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="card shadow-none" style="width: 100%">
+                                            <div class="card-content">
+                                                <div class="card-body">
+                                                    <form action="{{ route('admin.table.store') }}" method="POST" enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <label>Ресторан сонгох</label>
+                                                            <select name="restaurant_id" class="form-select" aria-label="Default select example">
+                                                                <option>Ресторан сонго</option>
+                                                                @foreach($restaurants as $restaurant)
+                                                                <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('restaurant_id')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label>Ширээ нэр</label>
+                                                            <input type="text" name="name" class="form-control" placeholder="Ширээ нэр" value="{{ old('name') }}">
+                                                            @error('name')
+                                                            <small class="text-danger">{{ $message }}</small>
+                                                            @enderror
+                                                        </div>
+                                                        <div class="mb-2 d-flex justify-content-center">
+                                                            <button type="submit" class="btn btn-primary mx-2">
+                                                                Хадгалах
+                                                            </button>
+                                                            <button type="button" class="btn btn-secondary mx-2" data-bs-dismiss="modal">
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal duusah  -->
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive ">
