@@ -1,4 +1,4 @@
 @extends('layouts.manager')
 @section('content')
-    <h1>zahialga huudas</h1>
+    @livewire('manager-order')
 @endsection

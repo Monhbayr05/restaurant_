@@ -63,6 +63,8 @@ class TableController extends Controller
 
 
 
+
+
         if (!$table) {
             abort(404, 'Table not found');
         }

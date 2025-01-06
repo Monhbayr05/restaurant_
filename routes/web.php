@@ -147,6 +147,7 @@ Route::middleware(['auth', ManagerMiddleware::class])->group(function () {
        Route::get('manager/table', 'index')->name('manager.table.index');
        Route::post('manager/table', 'store')->name('manager.table.store');
        Route::delete('manager/table/{id}', 'destroy')->name('manager.table.destroy');
+       Route::put('manager/table/{id}', 'update')->name('manager.table.update');
    });
 
    Route::controller(\App\Http\Controllers\Manager\OrderController::class)->group(function () {

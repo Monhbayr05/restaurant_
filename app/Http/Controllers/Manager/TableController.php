@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Manager;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Table;
 use Illuminate\Http\Request;
@@ -31,7 +32,11 @@ class TableController extends Controller
 
         $incString = encrypt($randomString);
 
-        $content = 'http://13.115.248.34/QR/' . $incString;
+        $appUrl = 'https://foodbazalt.online/';
+
+        $content = $appUrl .'/QR/' . $incString;
+
+//        dd($content);
 
         $qr = QrCode::size(300)->margin(0)->generate($content);
 
@@ -46,16 +51,25 @@ class TableController extends Controller
     }
     public function getTable($qr)
     {
-        $products = Product::all();
-
-
         $qr = decrypt($qr);
+
         $table = Table::query()->where('qrcode', $qr)->first();
+        $product = Product::all();
+        $categories = Category::all();
+
+
+
+        if (!$table) {
+            abort(404, 'Table not found');
+        }
+
         return Inertia::render(
-            'Order',[
-            'table' => $table,
-            'products' => $products,
-        ],
+            'Order',
+            [
+                'tableId' => $table->id,
+                'products' => $product,
+                'categories' => $categories,
+            ]
         );
     }
 
