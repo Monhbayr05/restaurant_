@@ -28,6 +28,8 @@ class OrderController extends Controller
             'cart_items' => 'required|json',
             'table_id' => 'nullable|numeric|exists:tables,id',
         ]);
+
+        dd($validatedData);
         $cartItems = json_decode($validatedData['cart_items'], true);
 //        dd($cartItems);
 

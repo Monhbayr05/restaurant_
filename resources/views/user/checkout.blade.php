@@ -50,7 +50,14 @@
                     <div class="input-container textarea">
                         <textarea name="notes" rows="8" cols="80" required class="input" placeholder="Харшилтай эсэх"></textarea>
                     </div>
-                    <input type="submit" value="Send" class="btn" />
+
+                    <!-- Hidden Inputs -->
+                    <input type="hidden" name="cart_items" id="cartItemsInput">
+                    <input type="hidden" name="table_id" id="tableIdInput">
+
+                    <button type="submit" class="btn">
+                        Захиалах
+                    </button>
                 </form>
             </div>
         </div>
