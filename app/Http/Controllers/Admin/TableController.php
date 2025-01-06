@@ -33,7 +33,7 @@ class TableController extends Controller
 
         $incString = encrypt($randomString);
 
-        $appUrl = 'https://restaurant.test';
+        $appUrl = 'https://foodbazalt.online';
 
         $content = $appUrl .'/QR/' . $incString;
 
