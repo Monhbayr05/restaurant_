@@ -20,6 +20,13 @@ class ProductController extends Controller
         $categories = Category::all();
         return view('admin.product.index', compact('products','restaurants','categories'));
     }
+    public function index2()
+    {
+        $products = Product::query()->get();
+        $restaurants = Restaurant::all();
+        $categories = Category::all();
+        return view('admin.product.index2', compact('products','restaurants','categories'));
+    }
 
     public function create()
     {

@@ -17,9 +17,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="stylesheet" crossorigin href="{{asset('chef/assets/css/app.css')}}">
+    <link rel="stylesheet" crossorigin href="{{asset('chef/assets/css/swiper.css')}}">
     <link rel="stylesheet" crossorigin href="{{asset('chef/assets/css/app-dark.css')}}">
     <link rel="stylesheet" crossorigin href="{{asset('chef/assets/css/iconly.css')}}">
     <link rel="stylesheet" crossorigin href="{{asset('chef/assets/css/table-datatable-jquery.css')}}">
+
+    <!-- swiper  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
 </head>
 
 <body>
@@ -56,6 +61,40 @@
 
     @yield('alert')
     @yield('dataTable-script')
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 6, 
+            spaceBetween: 15, 
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            breakpoints: {
+                // Responsive breakpoints for different screen sizes
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 15,
+                },
+                1440: {
+                    slidesPerView: 6,
+                    spaceBetween: 20,
+                },
+            },
+        });
+    </script>
+    </script>
 </body>
 
 </html>
