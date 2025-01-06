@@ -7,7 +7,7 @@
     <title>Checkout</title>
     <link rel="stylesheet" href="{{ asset('admin/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
-    <!-- <link rel="stylesheet" crossorigin href="{{asset('chef/assets/css/app.css')}}"> -->
+
 
 </head>
 
