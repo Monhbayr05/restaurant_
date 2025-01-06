@@ -11,6 +11,7 @@
                 <th class="px-4 py-2 text-left" style="color: #000;">Actions</th>
             </tr>
             </thead>
+
             <tbody>
             @foreach($orderItems as $item)
                 <tr class="border-b">

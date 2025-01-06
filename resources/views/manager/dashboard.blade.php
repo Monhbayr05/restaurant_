@@ -56,6 +56,7 @@
                                         <h6 class="font-extrabold mb-0">80.000</h6>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

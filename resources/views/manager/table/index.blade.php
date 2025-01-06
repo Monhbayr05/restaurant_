@@ -84,6 +84,7 @@
                                                 Үйлдэл
                                             </button>
 
+
                                             <ul class="dropdown-menu dropdown-menu-left list-inline">
                                                 <li class="d-flex align-items-center text-left me-3">
                                                     <button type="button" class="dropdown-item text-primary p-2" data-bs-toggle="modal" data-bs-target="#editModal{{ $table->id }}">

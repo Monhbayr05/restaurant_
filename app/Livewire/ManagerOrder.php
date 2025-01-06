@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class ManagerOrder extends Component
 {
     public $orders;
+
     public $restaurantId;
 
     public function mount()
