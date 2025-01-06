@@ -12,6 +12,9 @@
             </tr>
             </thead>
 
+
+
+
             <tbody>
             @foreach($orderItems as $item)
                 <tr class="border-b">

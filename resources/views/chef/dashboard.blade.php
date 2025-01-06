@@ -3,6 +3,8 @@
     <div class="container mx-auto">
         <livewire:chef-dashboard :restaurant-id="auth()->user()->restaurant_id" />
     </div>
+
+
 {{--    <section class="section">--}}
 {{--        <div class="card shadow mb-4">--}}
 {{--            <div class="card-header py-3 d-flex justify-content-between align-items-center">--}}

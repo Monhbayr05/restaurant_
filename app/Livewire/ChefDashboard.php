@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class ChefDashboard extends Component
 {
+
+
     public $orderItems;
     public $restaurantId;
 
