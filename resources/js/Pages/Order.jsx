@@ -1,41 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import logoImage from '../Components/logo.png';
-import BackImage from '../Components/back.jpg';
-import Cart from '../Components/Cart.jsx';
-import Product from '../Components/Product.jsx';
-import Category from '../Components/Category.jsx';
+import React, { useState, useEffect } from "react";
+import logoImage from "../Components/logoo.png";
+import BackImage from "../Components/back.jpg";
+import Cart from "../Components/Cart.jsx";
+import Product from "../Components/Product.jsx";
+import Category from "../Components/Category.jsx";
 
-const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'}) => {
+const Order = ({
+    categories = [],
+    products = [],
+    table = [],
+    tableId = "tableId",
+}) => {
     const [cartItems, setCartItems] = useState(
-        JSON.parse(localStorage.getItem('cart')) || []
+        JSON.parse(localStorage.getItem("cart")) || []
     );
-    const [activeCategory, setActiveCategory] = useState('All');
+    const [activeCategory, setActiveCategory] = useState("All");
 
     // Table ID-ийг localStorage-оос авах
     useEffect(() => {
         if (tableId) {
-            if (tableId !== localStorage.getItem('tableId')) {
+            if (tableId !== localStorage.getItem("tableId")) {
                 // Шинэ QR код уншигдсан тул localStorage-г цэвэрлэх
-                localStorage.removeItem('cart');
+                localStorage.removeItem("cart");
                 setCartItems([]);
             }
-            localStorage.setItem('tableId', tableId); // Хадгалах үед string болж хадгалагдана
+            localStorage.setItem("tableId", tableId); // Хадгалах үед string болж хадгалагдана
         }
     }, [tableId]);
 
     useEffect(() => {
-        const updatedCartItems = cartItems.map((item) => (
+        const updatedCartItems = cartItems.map((item) =>
             item.food_status === undefined ? { ...item, food_status: 0 } : item
-        ));
+        );
         if (JSON.stringify(updatedCartItems) !== JSON.stringify(cartItems)) {
             setCartItems(updatedCartItems);
-            localStorage.setItem('cart', JSON.stringify(updatedCartItems));
+            localStorage.setItem("cart", JSON.stringify(updatedCartItems));
         }
     }, [cartItems]);
 
     const handleAddToCart = (product) => {
         const existingItem = cartItems.find((item) => item.id === product.id);
-        const tableId = Number(localStorage.getItem('tableId')) || 0;
+        const tableId = Number(localStorage.getItem("tableId")) || 0;
 
         if (existingItem) {
             if (existingItem.quantity < product.quantity_limit) {
@@ -45,35 +50,41 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
                         : item
                 );
                 setCartItems(updatedCart);
-                localStorage.setItem('cart', JSON.stringify(updatedCart));
+                localStorage.setItem("cart", JSON.stringify(updatedCart));
             } else {
-                alert(`You can only add up to ${product.quantity_limit} of this item.`);
+                alert(
+                    `You can only add up to ${product.quantity_limit} of this item.`
+                );
             }
         } else {
             if (product.quantity_limit > 0) {
-                const newCart = [...cartItems, { ...product, quantity: 1, tableId, food_status: 0 }];
+                const newCart = [
+                    ...cartItems,
+                    { ...product, quantity: 1, tableId, food_status: 0 },
+                ];
                 setCartItems(newCart);
-                localStorage.setItem('cart', JSON.stringify(newCart));
+                localStorage.setItem("cart", JSON.stringify(newCart));
             } else {
-                alert(`You can only add up to ${product.quantity_limit} of this item.`);
+                alert(
+                    `You can only add up to ${product.quantity_limit} of this item.`
+                );
             }
         }
     };
 
-
     const handleCompleteOrder = () => {
         // Захиалгыг дуусгах логик (API руу илгээх эсвэл сервертэй холбогдох)
         // Амжилттай бол localStorage-г цэвэрлэх
-        localStorage.removeItem('cart');
-        localStorage.removeItem('tableId');
+        localStorage.removeItem("cart");
+        localStorage.removeItem("tableId");
         setCartItems([]);
     };
 
     // Category-ийг сонгох логик
     const filteredProducts = Array.isArray(products)
-        ? (activeCategory === 'All'
+        ? activeCategory === "All"
             ? products
-            : products.filter((product) => product.category === activeCategory))
+            : products.filter((product) => product.category === activeCategory)
         : [];
 
     if (!table || !Array.isArray(products)) {
@@ -86,25 +97,25 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
     }
 
     return (
-
-        <div className="p-4 md:p-6 bg-slate-700 min-h-screen flex flex-col"
+        <div
+            className="p-4 md:p-6 bg-slate-700 min-h-screen flex flex-col"
             style={{
-                backgroundImage: `linear-gradient(rgba(250, 119, 40, 0.5), rgba(253, 161, 114, 0.5)), url(${BackImage})`,
-                backgroundRepeat: 'repeat',
-                backgroundPosition: 'center',
+                // backgroundImage: `linear-gradient(rgba(33, 147, 176, 0.5), rgba(109, 213, 237, 0.5)), url(${BackImage})`,
+                backgroundRepeat: "repeat",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
             }}
         >
             {/* Header */}
-            <div className="bg-white p-4 shadow-md flex justify-between items-center rounded-md">
-                <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 flex items-center justify-center">
+            <div className="bg-white shadow-md flex justify-between items-center rounded-md mb-2">
+                <div className="flex items-center space-x-1">
+                    <div className="w-16 aspect-square flex items-center justify-center">
                         <img
                             src={logoImage}
                             alt="Logo"
                             className="object-contain w-full h-full"
                         />
                     </div>
-                    <h1 className="text-xl font-bold text-gray-800">FoodBazalt</h1>
                 </div>
             </div>
 
@@ -116,26 +127,33 @@ const Order = ({ categories = [], products = [], table = [], tableId = 'tableId'
             />
 
             {/* Product List */}
-            <div className="bg-white rounded-md grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
-                {filteredProducts.length > 0 ? (
-                    filteredProducts.map((product) => (
-                        <Product
-                            key={product.id}
-                            product={product}
-                            handleAddToCart={handleAddToCart}
-                        />
-                    ))
-                ) : (
-                    <div className="col-span-full text-center text-white">
-                        No products available.
-                    </div>
-                )}
-            </div>
+            <section className="p-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    {filteredProducts.length > 0 ? (
+                        filteredProducts.map((product) => (
+                            <article key={product.id}>
+                                <Product
+                                    product={product}
+                                    handleAddToCart={handleAddToCart}
+                                />
+                            </article>
+                        ))
+                    ) : (
+                        <div className="col-span-full text-center text-gray-500 py-6">
+                            <p className="text-lg font-semibold">
+                                No products available.
+                            </p>
+                            <p className="text-sm">
+                                Check back later or browse other categories.
+                            </p>
+                        </div>
+                    )}
+                </div>
+            </section>
 
             <div className="sticky bottom-0 w-full  text-black p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
                 <Cart cartItems={cartItems} setCartItems={setCartItems} />
             </div>
-
         </div>
     );
 };
