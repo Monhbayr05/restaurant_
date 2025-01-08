@@ -129,6 +129,18 @@
             input.addEventListener("blur", blurFunc);
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    @section('alert')
+    @if (Session::has('success'))
+    <script>
+        Swal.fire({
+            title: " Амжилттай!",
+            text: "Захиалга амжилттай үүслээ.",
+            icon: "success"
+        });
+    </script>
+    @endif
 </body>
 
 </html>
