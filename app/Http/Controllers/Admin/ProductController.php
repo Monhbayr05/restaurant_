@@ -44,11 +44,10 @@ class ProductController extends Controller
             'slug' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'thumbnail' => 'required|image|max:2048',
             'status' =>'nullable',
             'quantity_limit' => 'required',
         ]);
-
 
         if ($request->hasFile('thumbnail')) {
             $file = $request->file('thumbnail');

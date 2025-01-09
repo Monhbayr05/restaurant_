@@ -52,7 +52,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                 )}
                             </nav>
                         </header>
-
                         <main className="mt-1">
                             <div className="flex flex-col items-center min-h-screen p-4">
                                 <div className="text-center mt-8">

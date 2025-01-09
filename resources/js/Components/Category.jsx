@@ -1,45 +1,53 @@
-// Category.jsx
 import React from "react";
+import popular from "../Components/popular.png";
 
-const Category = ({ categories, activeCategory, setActiveCategory }) => {
+const Category = ({ categories = [], activeCategory, setActiveCategory }) => {
+    // Ensure "All" is the first category with the popular thumbnail
+    const categoryList = [{ name: "All", thumbnail: popular }, ...categories];
+
     return (
-        <div className="flex space-x-3 mb-6 overflow-x-auto pb-4 scrollbar overflow:vsisble rounded-sm">
-            {["All", ...categories].map((category, index) => (
-                <button
-                    key={index}
-                    onClick={() => setActiveCategory(category)}
-                    className={`flex flex-col items-center space-y-1 px-1 py-1 ${
-                        activeCategory === category ? "active" : ""
-                    }`}
-                >
-                    <div
-                        className={`w-16 h-16 flex items-center justify-center rounded-full ${
-                            activeCategory === category
-                                ? "bg-orange-500"
-                                : "bg-gray-200"
-                        }`}
-                    >
-                        <img
-                            src={
-                                category.thumbnail ||
-                                "https://via.placeholder.com/80"
-                            }
-                            alt={category.name || "Category"}
-                            className="w-16 h-16 object-cover rounded-full"
-                        />
-                    </div>
-                    <span
-                        className={`text-sm font-medium ${
-                            activeCategory === category
-                                ? "text-orange-500"
-                                : "text-gray-600"
-                        }`}
-                    >
-                        {category.name || "All"}
-                    </span>
-                </button>
-            ))}
-        </div>
+        <section className="categories-section categories-section--medium-photo overflow-x-auto p-1.5 flex space-x-3 mb-6 pb-4 rounded-sm scrollbar">
+            <div className="categories-section__container flex flex-nowrap items-stretch">
+                {categoryList.map((category, index) => {
+                    const name = category.name || "Unnamed";
+                    const thumbnail = category.thumbnail || "https://via.placeholder.com/80";
+
+                    return (
+                        <button
+                            key={index}
+                            onClick={() => setActiveCategory(name)}
+                            aria-label={`Select category ${name}`}
+                            className={`flex flex-col items-center space-y-1 px-2 py-2 ${
+                                activeCategory === name ? "active" : ""
+                            }`}
+                        >
+                            <div
+                                className={`w-16 h-16 flex items-center justify-center rounded-full transition ${
+                                    activeCategory === name
+                                        ? "bg-orange-500 shadow-lg"
+                                        : "bg-gray-200"
+                                }`}
+                            >
+                                <img
+                                    src={thumbnail}
+                                    alt={name}
+                                    className="w-14 h-14 object-cover rounded-full"
+                                />
+                            </div>
+                            <span
+                                className={`text-sm font-medium ${
+                                    activeCategory === name
+                                        ? "text-orange-500"
+                                        : "text-gray-600"
+                                }`}
+                            >
+                                {name}
+                            </span>
+                        </button>
+                    );
+                })}
+            </div>
+        </section>
     );
 };
 

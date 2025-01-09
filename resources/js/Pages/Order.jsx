@@ -1,33 +1,28 @@
 import React, { useState, useEffect } from "react";
-import logoImage from "../Components/logoo.png";
-import BackImage from "../Components/back.jpg";
 import Cart from "../Components/Cart.jsx";
 import Product from "../Components/Product.jsx";
 import Category from "../Components/Category.jsx";
+import Header from "@/Components/Header";
+import "../Components/order.css";
 
-const Order = ({
-    categories = [],
-    products = [],
-    table = [],
-    tableId = "tableId",
-}) => {
+const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
     const [cartItems, setCartItems] = useState(
         JSON.parse(localStorage.getItem("cart")) || []
     );
     const [activeCategory, setActiveCategory] = useState("All");
 
-    // Table ID-ийг localStorage-оос авах
+    // Update localStorage with tableId and clear cart if tableId changes
     useEffect(() => {
         if (tableId) {
             if (tableId !== localStorage.getItem("tableId")) {
-                // Шинэ QR код уншигдсан тул localStorage-г цэвэрлэх
                 localStorage.removeItem("cart");
                 setCartItems([]);
             }
-            localStorage.setItem("tableId", tableId); // Хадгалах үед string болж хадгалагдана
+            localStorage.setItem("tableId", tableId);
         }
     }, [tableId]);
 
+    // Update cart in localStorage whenever it changes
     useEffect(() => {
         const updatedCartItems = cartItems.map((item) =>
             item.food_status === undefined ? { ...item, food_status: 0 } : item
@@ -38,6 +33,7 @@ const Order = ({
         }
     }, [cartItems]);
 
+    // Add product to cart logic
     const handleAddToCart = (product) => {
         const existingItem = cartItems.find((item) => item.id === product.id);
         const tableId = Number(localStorage.getItem("tableId")) || 0;
@@ -72,22 +68,14 @@ const Order = ({
         }
     };
 
-    const handleCompleteOrder = () => {
-        // Захиалгыг дуусгах логик (API руу илгээх эсвэл сервертэй холбогдох)
-        // Амжилттай бол localStorage-г цэвэрлэх
-        localStorage.removeItem("cart");
-        localStorage.removeItem("tableId");
-        setCartItems([]);
-    };
-
-    // Category-ийг сонгох логик
+    // Category filter 
     const filteredProducts = Array.isArray(products)
         ? activeCategory === "All"
             ? products
             : products.filter((product) => product.category === activeCategory)
         : [];
 
-    if (!table || !Array.isArray(products)) {
+    if (!categories.length || !Array.isArray(products)) {
         return (
             <div className="p-4 md:p-6 bg-slate-950 min-h-screen text-white text-center">
                 <h1 className="text-2xl font-bold">Error: Data not loaded</h1>
@@ -98,60 +86,51 @@ const Order = ({
 
     return (
         <div
-            className="p-4 md:p-6 bg-slate-700 min-h-screen flex flex-col"
-            style={{
-                // backgroundImage: `linear-gradient(rgba(33, 147, 176, 0.5), rgba(109, 213, 237, 0.5)), url(${BackImage})`,
-                backgroundRepeat: "repeat",
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-            }}
+            id="menu-page"
+            className="min-h-screen flex flex-col  top-0 bg-white"
         >
-            {/* Header */}
-            <div className="bg-white shadow-md flex justify-between items-center rounded-md mb-2">
-                <div className="flex items-center space-x-1">
-                    <div className="w-16 aspect-square flex items-center justify-center">
-                        <img
-                            src={logoImage}
-                            alt="Logo"
-                            className="object-contain w-full h-full"
-                        />
-                    </div>
-                </div>
-            </div>
-
-            {/* Category Filter */}
-            <Category
-                categories={categories}
-                activeCategory={activeCategory}
-                setActiveCategory={setActiveCategory}
-            />
+            <header
+                id="sticky-header"
+                className="transition-transform duration-1000 ease bg-ik-header-bg-color text-ik-header-bg-high-contrast-color"
+            >
+                <Header />
+                {/* Category Filter */}
+                <Category
+                    categories={categories}
+                    activeCategory={activeCategory}
+                    setActiveCategory={setActiveCategory}
+                />
+            </header>
 
             {/* Product List */}
-            <section className="p-4">
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                    {filteredProducts.length > 0 ? (
-                        filteredProducts.map((product) => (
-                            <article key={product.id}>
-                                <Product
-                                    product={product}
-                                    handleAddToCart={handleAddToCart}
-                                />
-                            </article>
-                        ))
-                    ) : (
-                        <div className="col-span-full text-center text-gray-500 py-6">
-                            <p className="text-lg font-semibold">
-                                No products available.
-                            </p>
-                            <p className="text-sm">
-                                Check back later or browse other categories.
-                            </p>
-                        </div>
-                    )}
+            <section className="menu-content--categories-medium-photo menu-content overflow-y-auto mb-20">
+                <div className="p-[10px]">
+                    <div className="menu-grid grid grid-cols-2 gap-y-[10px] gap-x-[5px]">
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((product) => (
+                                <article key={product.id}>
+                                    <Product
+                                        product={product}
+                                        handleAddToCart={handleAddToCart}
+                                    />
+                                </article>
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center text-gray-500 py-6">
+                                <p className="text-lg font-semibold">
+                                    Бүтээгдэхүүн байхгүй байна.
+                                </p>
+                                <p className="text-sm">
+                                    Админ шалгаж дуустал түр хүлээнэ үү.
+                                </p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </section>
 
-            <div className="sticky bottom-0 w-full  text-black p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-6">
+            {/* Cart Section */}
+            <div className="w-full bg-white text-black fixed bottom-0 left-0">
                 <Cart cartItems={cartItems} setCartItems={setCartItems} />
             </div>
         </div>

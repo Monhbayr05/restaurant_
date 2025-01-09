@@ -64,7 +64,7 @@ Route::middleware(['auth', AdminMiddleware::class])->group(function () {
         Route::delete('admin/restaurant/delete/{slug}', 'destroy')
             ->name('admin.restaurant.delete');
     });
-    Route::controller(\App\Http\Controllers\Admin\TableController::class)->group(function () {
+    Route::controller(TableController::class)->group(function () {
         Route::get('admin/table', 'index')
             ->name('admin.table.index');
         Route::post('admin/table', 'store')
