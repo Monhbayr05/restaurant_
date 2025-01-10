@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.png'; 
+import logo from '../Components/Images/logoo.png'; 
 
 export default function ApplicationLogo(props) {
     return (

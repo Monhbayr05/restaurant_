@@ -3,7 +3,7 @@ import Cart from "../Components/Cart.jsx";
 import Product from "../Components/Product.jsx";
 import Category from "../Components/Category.jsx";
 import Header from "@/Components/Header";
-import "../Components/order.css";
+import "../Components/css/order.css";
 
 const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
     const [cartItems, setCartItems] = useState(
@@ -68,7 +68,7 @@ const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
         }
     };
 
-    // Category filter 
+    // Category filter
     const filteredProducts = Array.isArray(products)
         ? activeCategory === "All"
             ? products
@@ -77,9 +77,31 @@ const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
 
     if (!categories.length || !Array.isArray(products)) {
         return (
-            <div className="p-4 md:p-6 bg-slate-950 min-h-screen text-white text-center">
-                <h1 className="text-2xl font-bold">Error: Data not loaded</h1>
-                <p>Please reload the page or contact support.</p>
+            <div
+                id="menu-page"
+                className="min-h-screen flex flex-col  top-0 bg-white"
+            >
+                <header
+                    id="sticky-header"
+                    className="transition-transform duration-1000 ease bg-ik-header-bg-color text-ik-header-bg-high-contrast-color"
+                >
+                    <Header />
+                </header>
+
+                <section className="menu-content--categories-medium-photo menu-content overflow-y-auto mb-20">
+                    <div className="p-[10px]">
+                        <div className="menu-grid grid grid-cols-2 gap-y-[10px] gap-x-[5px]">
+                            <div className="col-span-full text-center text-gray-500 py-6">
+                                <p className="text-lg font-semibold">
+                                    Бүтээгдэхүүн байхгүй байна.
+                                </p>
+                                <p className="text-sm">
+                                    Админ шалгаж дуустал түр хүлээнэ үү.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         );
     }
@@ -108,7 +130,10 @@ const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
                     <div className="menu-grid grid grid-cols-2 gap-y-[10px] gap-x-[5px]">
                         {filteredProducts.length > 0 ? (
                             filteredProducts.map((product) => (
-                                <article key={product.id}>
+                                <article
+                                    key={product.id}
+                                    className="w-full h-full"
+                                >
                                     <Product
                                         product={product}
                                         handleAddToCart={handleAddToCart}

@@ -1,5 +1,5 @@
 import React from "react";
-import logoImage from "../Components/logoo.png";
+import logoImage from "../Components/Images/logoo.png";
 const Header = ({ restaurants = {} }) => {
     return (
         <div className="border border-gray-300 rounded header bg-gray-100 px-5 gap-2">

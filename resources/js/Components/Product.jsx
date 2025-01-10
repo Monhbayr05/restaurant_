@@ -19,6 +19,7 @@ const Product = ({ product, handleAddToCart, handleRemoveFromCart }) => {
         }
     };
 
+    
     const isSelected = selectedProduct?.id === product.id;
     const productCount = selectedProduct?.count || 0;
 
@@ -47,11 +48,11 @@ const Product = ({ product, handleAddToCart, handleRemoveFromCart }) => {
                         <span className="text-sm sm:text-base font-semibold text-gray-700">
                             {product.name || "Unnamed Product"}
                         </span>
-                        <span className="text-sm sm:text-base font-semibold text-orange-500">
+                        <h6 className="text-sm sm:text-base font-semibold text-orange-500">
                             {product.price
                                 ? `${product.price}₮`
                                 : "Price Unavailable"}
-                        </span>
+                        </h6>
                     </div>
                 </div>
 

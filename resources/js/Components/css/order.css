@@ -37,7 +37,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Pacifico', cursive; /* Use Pacifico for headings */
 }
 
-button {
+button,span {
     font-family: 'Roboto', sans-serif; /* Buttons can use Roboto */
 }
 

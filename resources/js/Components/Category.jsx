@@ -1,8 +1,7 @@
 import React from "react";
-import popular from "../Components/popular.png";
+import popular from "../Components/Images/popular.png";
 
 const Category = ({ categories = [], activeCategory, setActiveCategory }) => {
-    // Ensure "All" is the first category with the popular thumbnail
     const categoryList = [{ name: "All", thumbnail: popular }, ...categories];
 
     return (
