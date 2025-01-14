@@ -1,7 +1,7 @@
 import React from "react";
 import popular from "../Components/Images/popular.png";
 
-const Category = ({ categories = [], activeCategory, setActiveCategory }) => {
+const Category = ({ categories = [], activeCategory,  setActiveCategory }) => {
     const categoryList = [{ name: "All", thumbnail: popular }, ...categories];
 
     return (
