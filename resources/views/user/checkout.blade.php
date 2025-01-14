@@ -38,15 +38,6 @@
                 <span class="circle two"></span>
                 <form action="{{ route('order.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="input-container">
-                        <input type="text" name="name" required class="input" placeholder="Нэр">
-                    </div>
-                    <div class="input-container">
-                        <input type="number" name="phone" required class="input" placeholder="Утасны дугаар">
-                    </div>
-                    <div class="input-container">
-                        <input type="text" name="email" required class="input" placeholder="И-мэйл хаяг">
-                    </div>
                     <div class="input-container textarea">
                         <textarea name="notes" rows="8" cols="80" required class="input" placeholder="Харшилтай эсэх"></textarea>
                     </div>
