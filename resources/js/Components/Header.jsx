@@ -1,5 +1,5 @@
 import React from "react";
-import logoImage from "../Components/Images/logoo.png";
+import logoImage from "../Components/Images/logoo2.png";
 const Header = ({ restaurants = {} }) => {
     return (
         <div className="border border-gray-300 rounded header bg-gray-100 px-5 gap-2">
@@ -12,11 +12,11 @@ const Header = ({ restaurants = {} }) => {
                         className="header__logo max-h-[80px]"
                     />
                     {/* Restaurant Name */}
-                    <div className="header__restaurant-name">
+                    {/* <div className="header__restaurant-name">
                         <h2 className="text-sm text-orange-500 font-bold">
                             {restaurants.name || "Restaurant Name"}
                         </h2>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

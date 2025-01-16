@@ -1,94 +1,70 @@
 import React from "react";
 import { Link, Head } from "@inertiajs/react";
-import logoImage from "../Components/Images/logoo.png";
+import logoImage from "../Components/Images/logoo2.png";
 import Footer from "../Components/Footer";
 import Hero from "../Components/Hero";
 import AboutUs from "@/Components/AboutUs";
 import WhyUs from "@/Components/WhyUs";
 import Stats from "@/Components/Stats";
-
+import Contact from "@/Components/Contact";
+import "@/Components/css/welcome.css";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
             <div>
-                <header
-                    id="header"
-                    class="sticky top-0 bg-white shadow-md w-full rounded-full"
-                >
-                    <div class="container mx-auto flex items-center justify-between p-4">
-                        <a
-                            href="index.html"
-                            class="flex items-center space-x-2"
-                        >
-                            {/* Logo */}
-                            <img
-                                src={logoImage}
-                                alt="Logo"
-                                className="max-h-[80px]"
-                            />
-                            <h1 class="text-xl font-bold text-gray-800">
-                                FoodBazalt
-                            </h1>
-                            <span class="text-primary">.</span>
-                        </a>
-
-                        <nav
-                            id="navmenu"
-                            class="hidden lg:flex items-center space-x-6"
-                        >
-                            <ul class="flex space-x-6 text-gray-800">
-                                <li>
-                                    <a
-                                        href="#hero"
-                                        class="text-primary font-semibold hover:text-primary-dark"
+                <header className=" top-0 bg-white shadow-md w-full rounded-lg z-50">
+                    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 ">
+                        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                            <a
+                                href="https://foodbazalt.online"
+                                class="flex items-center"
+                            >
+                                <img
+                                    src={logoImage}
+                                    class="mr-3 h-12 sm:h-15"
+                                    alt="Flowbite Logo"
+                                />
+                            </a>
+                            <div class="flex items-center lg:order-2">
+                                {auth.user ? (
+                                    <Link
+                                        href={route("dashboard")}
+                                        className="rounded-md px-3 py-2 bg-orange-500 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                     >
-                                        Home
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#about" class="hover:text-primary">
-                                        About
-                                    </a>
-                                </li>
-                                <div>
-                                    {auth.user ? (
+                                        Хяналтын самбар
+                                    </Link>
+                                ) : (
+                                    <>
                                         <Link
-                                            href={route("dashboard")}
-                                            className="rounded-md px-3 py-2 bg-orange-500 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                            href={route("login")}
+                                            className="rounded-md mx-2 px-3 py-2 bg-orange-500 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                         >
-                                            Dashboard
+                                            Нэвтрэх
                                         </Link>
-                                    ) : (
-                                        <>
-                                            <Link
-                                                href={route("login")}
-                                                className="rounded-md mx-2 px-3 py-2 bg-orange-500 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                                            >
-                                                Log in
-                                            </Link>
-                                            <Link
-                                                href={route("order")}
-                                                className="rounded-md px-3 py-2 bg-orange-500 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
-                                            >
-                                                Order
-                                            </Link>
-                                        </>
-                                    )}
-                                </div>
-                            </ul>
-                            <i class="mobile-nav-toggle hidden bi bi-list"></i>
-                        </nav>
-
-                        <i class="mobile-nav-toggle lg:hidden bi bi-list text-2xl text-gray-800 cursor-pointer"></i>
-                    </div>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </nav>
                 </header>
+
                 <main>
                     <Hero />
-                    <AboutUs />
-                    <WhyUs />
+                    <WhyUs
+                        subtitle="Таны цаг хугацааг хэмнэнэ."
+                        title="QR код уншдаг рестораны систем."
+                        description="Зөөгчөөс асуух шаардлагагүй, QR кодыг ашиглан шууд үйлчилгээнд холбогдоорой."
+                    />
                     <Stats />
+                    <WhyUs
+                        subtitle="Өөрчлөлтийг мэдрээрэй."
+                        title="Хэрэглэгчийн тав тухыг нэн тэргүүнд тавьсан."
+                        description="Бидний систем нь таны амьдралыг хялбарчлах болно."
+                    />
+                    <AboutUs />
+                    <Contact />
                 </main>
 
                 <Footer />
