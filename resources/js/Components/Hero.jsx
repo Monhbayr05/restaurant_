@@ -73,7 +73,7 @@ export default function Hero() {
 
     return (
         <>
-            <section className="bg-gray-100 py-12 flex flex-col items-center justify-center min-h-[calc(100vh+50px)] relative">
+            <section className="bg-gray-100 py-12 flex flex-col items-center justify-center min-h-[100vh] relative">
                 {/* Mockup Section */}
                 <div className="container mx-auto flex items-center justify-center h-auto relative">
                     {/* Laptop Mockup */}

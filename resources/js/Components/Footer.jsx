@@ -23,7 +23,7 @@ const Footer = () => {
                     </a>
 
                     {/* Navigation Links */}
-                    <ul className="flex flex-wrap items-center justify-center text-base font-medium text-white space-x-8 rtl:space-x-reverse">
+                    <ul className="flex flex-wrap items-center justify-center text-xl font-medium text-white space-x-8 rtl:space-x-reverse">
                         <li>
                             <a href="#" className="hover:underline">
                                 Танилцуулга
@@ -43,11 +43,11 @@ const Footer = () => {
                 </div>
 
                 {/* Separator */}
-                <hr className="my-6 border-t border-white opacity-40 sm:mx-auto" />
+                <hr className="my-6 border-t border-white opacity-90 sm:mx-auto" />
 
                 {/* Copyright Section */}
                 <div className="text-center">
-                    <span className="text-base text-white block">
+                    <span className="text-lg text-white block">
                         © 2024{" "}
                         <a
                             href="#"
@@ -55,7 +55,7 @@ const Footer = () => {
                         >
                             FoodBazalt™
                         </a>
-                        . MSmart Academy Дипломын ажилд зориулан хөгжүүлэв.
+                        .      MSmart Academy Дипломын ажилд зориулан хөгжүүлэв.
                     </span>
                 </div>
             </div>
