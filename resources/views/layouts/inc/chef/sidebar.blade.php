@@ -44,7 +44,7 @@
             <ul class="menu">
                 <li class="sidebar-item">
                     <a href="" class="sidebar-link">
-                        <i class="bi bi-cart-fill"></i> 
+                        <i class="bi bi-cart-fill"></i>
                         <span>Захиалга</span>
                     </a>
                 </li>

@@ -8,6 +8,8 @@ use Livewire\Component;
 
 class ChefDashboard extends Component
 {
+
+
     public $orderItems;
     public $restaurantId;
 
@@ -28,7 +30,6 @@ class ChefDashboard extends Component
             ->where('food_status', '<', 2)
             ->orderBy('created_at', 'desc')
             ->get();
-        dd($this->orderItems);
     }
 
     public function markAsPrepared($itemId)

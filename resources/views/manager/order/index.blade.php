@@ -2,4 +2,6 @@
 @section('content')
     @livewire('manager-order')
 
+
+
 @endsection

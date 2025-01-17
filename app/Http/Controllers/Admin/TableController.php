@@ -35,7 +35,7 @@ class TableController extends Controller
 
         $appUrl = 'https://foodbazalt.online';
 
-        $content = $appUrl .'/QR/' . $incString;
+        $content = $appUrl .'/QR/' . urlencode($incString);
 
 //        dd($content);
 
