@@ -11,6 +11,12 @@ const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
     );
     const [activeCategory, setActiveCategory] = useState("All");
 
+    // Debugging to verify incoming props
+    useEffect(() => {
+        console.log("Categories:", categories);
+        console.log("Products:", products);
+    }, [categories, products]);
+
     // Update localStorage with tableId and clear cart if tableId changes
     useEffect(() => {
         if (tableId) {
@@ -68,12 +74,18 @@ const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
         }
     };
 
-    // Category filter
     const filteredProducts = Array.isArray(products)
         ? activeCategory === "All"
             ? products
-            : products.filter((product) => product.category === activeCategory)
+            : products.filter(
+                  (product) => product.category?.name === activeCategory
+              )
         : [];
+    // Debugging filtered products
+    useEffect(() => {
+        console.log("Active Category:", activeCategory);
+        console.log("Filtered Products:", filteredProducts);
+    }, [activeCategory, filteredProducts]);
 
     if (!categories.length || !Array.isArray(products)) {
         return (

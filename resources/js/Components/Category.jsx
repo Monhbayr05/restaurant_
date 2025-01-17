@@ -2,13 +2,16 @@ import React from "react";
 import popular from "../Components/Images/popular.png";
 
 const Category = ({ categories = [], activeCategory,  setActiveCategory }) => {
+
+    console.log("Categories received:", categories);
+    
     const categoryList = [{ name: "All", thumbnail: popular }, ...categories];
 
     return (
         <section className="categories-section categories-section--medium-photo overflow-x-auto p-1.5 flex space-x-3 mb-6 pb-4 rounded-sm scrollbar">
             <div className="categories-section__container flex flex-nowrap items-stretch">
                 {categoryList.map((category, index) => {
-                    const name = category.name || "Unnamed";
+                    const name = category.name || "helloworld";
                     const thumbnail = category.thumbnail || "https://via.placeholder.com/80";
 
                     return (

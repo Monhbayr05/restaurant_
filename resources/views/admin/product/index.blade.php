@@ -43,6 +43,7 @@
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Үнэ</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Тоо хэмжээ</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Status</th>
+                                <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Category id</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Үүсгэсэн огноо</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder opacity-10">Үйлдлүүд</th>
                             </tr>
@@ -67,6 +68,7 @@
                                     <span class="badge badge-sm bg-gradient-warning">Бусад</span>
                                     @endif
                                 </td>
+                                <td>{{ $item->category->name }}</td>
                                 <td>{{ $item->created_at }}</td>
                                 <td class="editDelete justify-content-center">
                                     <div class="dropdown dropstart">
