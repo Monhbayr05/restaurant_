@@ -46,7 +46,7 @@
                 <!-- Dashboard -->
                 <li class="sidebar-item">
                     <a href="{{route('manager.dashboard')}}" class="sidebar-link">
-                        <i class="bi bi-bar-chart-fill"></i>
+                        <i class="bi bi-speedometer2"></i> <!-- Dashboard -->
                         <span>Хяналтын самбар</span>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                 <!-- Reports -->
                 <li class="sidebar-item has-sub">
                     <a href="javascript:void(0);" class="sidebar-link">
-                        <i class="bi bi-graph-up"></i>
+                        <i class="bi bi-file-earmark-bar-graph"></i> <!-- Reports -->
                         <span>Тайлан</span>
                     </a>
                     <ul class="submenu">
@@ -67,10 +67,26 @@
                     </ul>
                 </li>
 
+                <!-- Users -->
+                <li class="sidebar-item has-sub">
+                    <a href="javascript:void(0);" class="sidebar-link">
+                        <i class="bi bi-person-lines-fill"></i> <!-- Users -->
+                        <span>Хэрэглэгчид</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item">
+                            <a href="{{ route('manager.role.index') }}" class="submenu-link">Жагсаалт</a>
+                        </li>
+                        <li class="submenu-item">
+                            <a href="{{ route('manager.role.create') }}" class="submenu-link">Хэрэглэгч нэмэх</a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- Tables -->
                 <li class="sidebar-item">
                     <a href="{{route('manager.table.index')}}" class="sidebar-link">
-                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                        <i class="bi bi-layout-text-window-reverse"></i> <!-- Tables -->
                         <span>Ширээ</span>
                     </a>
                 </li>
@@ -78,11 +94,28 @@
                 <!-- Orders -->
                 <li class="sidebar-item">
                     <a href="{{route('manager.order.index')}}" class="sidebar-link">
-                        <i class="bi bi-bag-fill"></i>
+                        <i class="bi bi-cart-fill"></i> <!-- Orders -->
                         <span>Захиалга</span>
                     </a>
                 </li>
+
+                <!-- Categories -->
+                <li class="sidebar-item">
+                    <a href="{{route('manager.category.index')}}" class="sidebar-link">
+                        <i class="bi bi-tags-fill"></i> <!-- Categories -->
+                        <span>Категори</span>
+                    </a>
+                </li>
+
+                <!-- Products -->
+                <li class="sidebar-item">
+                    <a href="{{route('manager.product.index')}}" class="sidebar-link">
+                        <i class="bi bi-box-seam"></i> <!-- Products -->
+                        <span>Бүтээгдэхүүн</span>
+                    </a>
+                </li>
             </ul>
+
 
         </div>
         <div class="sidebar-footer position-absolute bottom-0 p-2 w-100">

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.manager')
 @section('content')
     <div class="page-heading">
         <div class="page-title">

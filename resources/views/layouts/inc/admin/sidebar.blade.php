@@ -52,7 +52,7 @@
                 <!-- Users -->
                 <li class="sidebar-item has-sub">
                     <a href="javascript:void(0);" class="sidebar-link">
-                        <i class="bi bi-people-fill"></i>
+                        <i class="bi bi-person-lines-fill"></i> <!-- Users -->
                         <span>Хэрэглэгчид</span>
                     </a>
                     <ul class="submenu">
@@ -76,7 +76,7 @@
                 <!-- Tables -->
                 <li class="sidebar-item">
                     <a href="{{ route('admin.table.index') }}" class="sidebar-link">
-                        <i class="bi bi-table"></i>
+                        <i class="bi bi-layout-text-window-reverse"></i>
                         <span>Ширээ</span>
                     </a>
                 </li>
