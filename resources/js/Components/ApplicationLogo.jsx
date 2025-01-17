@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../Components/Images/logoo.png'; 
+import logo from '../Components/Images/logoo2.png'; 
 
 export default function ApplicationLogo(props) {
     return (
@@ -7,9 +7,7 @@ export default function ApplicationLogo(props) {
             {...props}
             src={logo}
             alt="Foodbazalt Logo"
-            className="w-32 h-32 rounded-full bg-[#170801] flex items-center justify-center"
-            height={32}
-            width={32}
+            className="w-48 h-full bg-white flex items-center justify-center"
         />
     );
 }
