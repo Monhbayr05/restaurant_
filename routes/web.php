@@ -155,6 +155,32 @@ Route::middleware(['auth', ManagerMiddleware::class])->group(function () {
    Route::controller(\App\Http\Controllers\Manager\OrderController::class)->group(function () {
       Route::get('manager/order', 'index')->name('manager.order.index');
    });
+
+   Route::controller(\App\Http\Controllers\Manager\CategoryController::class)->group(function () {
+      Route::get('manager/category', 'index')->name('manager.category.index');
+      Route::post('manager/category', 'store')->name('manager.category.store');
+      Route::delete('manager/category/{id}', 'destroy')->name('manager.category.destroy');
+      Route::put('manager/category/update/{id}', 'update')->name('manager.category.update');
+   });
+
+   Route::controller(\App\Http\Controllers\Manager\ProductController::class)->group(function () {
+       Route::get('manager/product', 'index')->name('manager.product.index');
+       Route::get('manager/product/create', 'create')->name('manager.product.create');
+       Route::post('manager/product/store', 'store')->name('manager.product.store');
+       Route::get('manager/product/edit/{id}', 'edit')->name('manager.product.edit');
+       Route::put('manager/product/update/{id}', 'update')->name('manager.product.update');
+       Route::delete('manager/product/{id}', 'destroy')->name('manager.product.destroy');
+
+       Route::get('manager/products/{id}/image', 'image')->name('manager.product.image');
+       Route::post('manager/product/{id}/images', 'storeImage') ->name('manager.product.storeImage');
+       Route::delete('manager/products/image/{id}', 'imageDestroy')->name('manager.product.imageDestroy');
+   });
+
+   Route::controller(\App\Http\Controllers\Manager\RoleController::class)->group(function () {
+      Route::get('manager/role', 'index')->name('manager.role.index');
+      Route::get('manager/role/create', 'create')->name('manager.role.create');
+      Route::post('manager/role/store', 'store')->name('manager.role.store');
+   });
 });
 
 Route::controller(OrderController::class)->group(function () {
