@@ -251,14 +251,29 @@
             <div class="card">
                 <div class="card-body py-4 px-4">
                     <div class="d-flex align-items-center">
-                        <div class="avatar avatar-xl">
-                            <img src="./assets/compiled/jpg/1.jpg" alt="Face 1">
+                        <div class="avatar avatar-xl d-flex align-items-center justify-content-center text-white font-bold"
+                            style="background-color: #f59e0b; width: 3rem; height: 3rem; border-radius: 50%;">
+                            @if(Auth::user()->profile_image)
+                            <img src="{{ Auth::user()->profile_image }}" alt="{{ Auth::user()->name }}" style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;">
+                            @else
+                            @if(Auth::user()->role == 'admin')
+                            A
+                            @elseif(Auth::user()->role == 'manager')
+                            M
+                            @elseif(Auth::user()->role == 'chef')
+                            C
+                            @else
+                            {{ substr(Auth::user()->name, 0, 1) }}
+                            @endif
+                            @endif
                         </div>
                         <div class="ms-3 name">
                             <h5 class="font-bold">{{ Auth::user()->name }}</h5>
                             <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <div class="card">
@@ -309,8 +324,4 @@
         </div>
     </section>
 </div>
-@endsection
-@section('script')
-<script src="{{asset('chef/assets/extensions/apexcharts/apexcharts.min.js')}}"></script>
-<script src="{{asset('chef/assets/static/js/pages/dashboard.js')}}"></script>
 @endsection
