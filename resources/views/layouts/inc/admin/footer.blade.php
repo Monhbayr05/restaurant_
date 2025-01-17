@@ -2,11 +2,11 @@
 <footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
-            <p>2023 &copy; Mazer</p>
+            <p>© 2024 FoodBazalt™ </p>
         </div>
         <div class="float-end">
-            <p>Crafted with <span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
-                by <a href="https://saugi.me">Saugi</a></p>
+            <p><span class="text-danger"><i class="bi bi-heart-fill icon-mid"></i></span>
+                 <a href="https://msmart.mn/" class="text-2xl text-red-700">MSmart Academy</a> Дипломын ажилд зориулан хөгжүүлэв.</p>
         </div>
     </div>
 </footer>

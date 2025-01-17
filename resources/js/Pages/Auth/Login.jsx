@@ -17,9 +17,20 @@ export default function Login({ status, canResetPassword }) {
         e.preventDefault();
 
         post(route("login"), {
-            onSuccess: () => {
+            onSuccess: (response) => {
                 reset("password");
-                window.location.href = "/admin/dashboard";
+
+                // Redirect based on role
+                const userRole = response.props.auth.user.role;
+                if (userRole === "admin") {
+                    window.location.href = "/admin/dashboard";
+                } else if (userRole === "chef") {
+                    window.location.href = "/chef/dashboard";
+                } else if (userRole === "manager") {
+                    window.location.href = "/manager/dashboard";
+                } else {
+                    window.location.href = "/";
+                }
             },
             onError: () => {
                 console.log("Login failed, check the errors");
@@ -31,8 +42,8 @@ export default function Login({ status, canResetPassword }) {
         <GuestLayout>
             <Head title="Log in" />
 
-            <div className="max-w-md mx-auto bg-white rounded-lg p-6">
-
+            <div className="max-w-md mx-auto bg-white rounded-lg p-6 shadow-md">
+                {/* Status Message */}
                 {status && (
                     <div className="mb-4 text-sm font-medium text-white bg-orange-500 rounded-md p-2 text-center">
                         {status}

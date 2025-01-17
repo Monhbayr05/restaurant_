@@ -51,7 +51,7 @@ class AuthenticatedSessionController extends Controller
             return redirect('manager/dashboard');
         }
         else{
-            return redirect('dashboard');
+            return redirect('/');
         }
     }
 

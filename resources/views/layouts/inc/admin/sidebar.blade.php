@@ -4,9 +4,24 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
                     <a href="{{route('admin.dashboard')}}">
-                    <img src="{{asset('uploads/logoo3.png')}}" alt="" class="w-30 h-30">
+                        <img src="{{asset('uploads/logoo2.png')}}" alt="Logo" class="img-fluid" style="width: 100px; height: auto;">
                 </div>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+                        role="img" class="iconify iconify--system-uicons" width="20" height="20"
+                        preserveAspectRatio="xMidYMid meet" viewBox="0 0 21 21">
+                        <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path
+                                d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4c0 2.219 1.781 4 4 4zM4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2"
+                                opacity=".3"></path>
+                            <g transform="translate(-210 -1)">
+                                <path d="M220.5 2.5v2m6.5.5l-1.5 1.5"></path>
+                                <circle cx="220.5" cy="11.5" r="4"></circle>
+                                <path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"></path>
+                            </g>
+                        </g>
+                    </svg>
                     <div class="form-check form-switch fs-6">
                         <input class="form-check-input  me-0" type="checkbox" id="toggle-dark" style="cursor: pointer">
                         <label class="form-check-label"></label>
@@ -26,102 +41,99 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li
-                    class="sidebar-item active">
-                    <a href="{{route('admin.dashboard')}}" class='sidebar-link'>
+                <!-- Dashboard -->
+                <li class="sidebar-item active">
+                    <a href="{{ route('admin.dashboard') }}" class="sidebar-link">
                         <i class="bi bi-grid-fill"></i>
                         <span>Хяналтын самбар</span>
                     </a>
                 </li>
 
-                <li
-                    class="sidebar-item has-sub">
-                    <a href="{{route('admin.dashboard')}}" class='sidebar-link'>
-                        <i class="bi bi-stack"></i>
-                        <span>Тайлан</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="submenu-item  ">
-                            <a href="" class="submenu-link">Сараар</a>
-
-                        </li>
-
-                        <li class="submenu-item  ">
-                            <a href="" class="submenu-link">Өдрөөр</a>
-
-                        </li>
-                    </ul>
-                </li>
-
-                <li
-                    class="sidebar-item has-sub">
-                    <a href="" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
+                <!-- Users -->
+                <li class="sidebar-item has-sub">
+                    <a href="javascript:void(0);" class="sidebar-link">
+                        <i class="bi bi-people-fill"></i>
                         <span>Хэрэглэгчид</span>
                     </a>
                     <ul class="submenu">
-                        <li class="submenu-item  ">
+                        <li class="submenu-item">
                             <a href="{{ route('role.index') }}" class="submenu-link">Жагсаалт</a>
-
                         </li>
-                        <li class="submenu-item  ">
+                        <li class="submenu-item">
                             <a href="{{ route('role.create') }}" class="submenu-link">Хэрэглэгч нэмэх</a>
-
                         </li>
                     </ul>
                 </li>
 
-                <li
-                    class="sidebar-item">
-                    <a href="{{route('admin.restaurant.index')}}" class='sidebar-link'>
-                        <i class="bi bi-grid-1x2-fill"></i>
+                <!-- Restaurants -->
+                <li class="sidebar-item">
+                    <a href="{{ route('admin.restaurant.index') }}" class="sidebar-link">
+                        <i class="bi bi-shop-window"></i>
                         <span>Ресторан</span>
                     </a>
                 </li>
 
-
-                <li
-                    class="sidebar-item">
-                    <a href="{{ route('admin.table.index') }}" class='sidebar-link'>
-                        <i class="bi bi-hexagon-fill"></i>
+                <!-- Tables -->
+                <li class="sidebar-item">
+                    <a href="{{ route('admin.table.index') }}" class="sidebar-link">
+                        <i class="bi bi-table"></i>
                         <span>Ширээ</span>
                     </a>
                 </li>
 
-                <li
-                    class="sidebar-item  ">
-                    <a href="{{ route('admin.category.index') }}" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
+                <!-- Categories -->
+                <li class="sidebar-item">
+                    <a href="{{ route('admin.category.index') }}" class="sidebar-link">
+                        <i class="bi bi-tags-fill"></i>
                         <span>Категори</span>
                     </a>
                 </li>
-                <li
-                    class="sidebar-item has-sub">
-                    <a href="" class='sidebar-link'>
-                        <i class="bi bi-file-earmark-medical-fill"></i>
+
+                <!-- Products -->
+                <li class="sidebar-item has-sub">
+                    <a href="javascript:void(0);" class="sidebar-link">
+                        <i class="bi bi-box-seam"></i>
                         <span>Бүтээгдэхүүн</span>
                     </a>
                     <ul class="submenu">
-                        <li class="submenu-item ">
-                            <a href="{{ route('admin.product.index2') }}">Жагсаалт</a>
+                        <li class="submenu-item">
+                            <a href="{{ route('admin.product.index2') }}" class="submenu-link">Жагсаалт</a>
                         </li>
-                        <li class="submenu-item  ">
+                        <li class="submenu-item">
                             <a href="{{ route('admin.product.index') }}" class="submenu-link">Хүснэгтээр</a>
-
                         </li>
-                        <li class="submenu-item  ">
+                        <li class="submenu-item">
                             <a href="{{ route('admin.product.create') }}" class="submenu-link">Бүтээгдэхүүн нэмэх</a>
                         </li>
-
                     </ul>
                 </li>
-
             </ul>
+
         </div>
         <div class="sidebar-footer position-absolute bottom-0 p-2 w-100">
-            <div class="d-flex justify-content-between align-items-center p-2" style="border: 1px solid #dee2e6; border-radius: 10px;">
-
-                <h5 class="font-bold m-0" style="color: #495057;">{{ Auth::user()->name }}</h5>
+            <div class="d-flex justify-content-between align-items-center p-2">
+                <div class="d-flex align-items-center">
+                    <div class="avatar avatar-xl d-flex align-items-center justify-content-center text-white font-bold"
+                        style="background-color: #f59e0b; width: 3rem; height: 3rem; border-radius: 50%;">
+                        @if(Auth::user()->profile_image)
+                        <img src="{{ Auth::user()->profile_image }}" alt="{{ Auth::user()->name }}" style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                        @if(Auth::user()->role == 'admin')
+                        A
+                        @elseif(Auth::user()->role == 'manager')
+                        M
+                        @elseif(Auth::user()->role == 'chef')
+                        C
+                        @else
+                        {{ substr(Auth::user()->name, 0, 1) }}
+                        @endif
+                        @endif
+                    </div>
+                    <div class="ms-3 name">
+                        <h5 class="font-bold">{{ Auth::user()->name }}</h5>
+                        <h6 class="text-muted mb-0">{{ Auth::user()->email }}</h6>
+                    </div>
+                </div>
 
 
                 <form method="POST" action="{{ route('admin.logout') }}" class="m-0">

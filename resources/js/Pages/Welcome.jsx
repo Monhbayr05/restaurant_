@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, Head } from "@inertiajs/react";
+import React, { useEffect } from "react";
+import { Link, Head, usePage } from "@inertiajs/react";
 import logoImage from "../Components/Images/logoo2.png";
 import Footer from "../Components/Footer";
 import Hero from "../Components/Hero";
@@ -10,27 +10,50 @@ import Contact from "@/Components/Contact";
 import "@/Components/css/welcome.css";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
+    const user = auth.user;
+
+    useEffect(() => {
+        // Redirect users based on role
+        if (user) {
+            if (user.role === "admin") {
+                window.location.href = "/admin/dashboard";
+            } else if (user.role === "chef") {
+                window.location.href = "/chef/dashboard";
+            } else if (user.role === "manager") {
+                window.location.href = "/manager/dashboard";
+            }
+        }
+    }, [user]);
+
     return (
         <>
             <Head title="Welcome" />
             <div>
                 <header className=" top-0 bg-white shadow-md w-full rounded-lg z-50">
-                    <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 ">
-                        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+                    <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
+                        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                             <a
                                 href="https://foodbazalt.online"
-                                class="flex items-center"
+                                className="flex items-center"
                             >
                                 <img
                                     src={logoImage}
-                                    class="mr-3 h-12 sm:h-15"
+                                    className="mr-3 h-12 sm:h-15"
                                     alt="Flowbite Logo"
                                 />
                             </a>
-                            <div class="flex items-center lg:order-2">
-                                {auth.user ? (
+                            <div className="flex items-center lg:order-2">
+                                {user ? (
                                     <Link
-                                        href={route("dashboard")}
+                                        href={
+                                            user.role === "admin"
+                                                ? "/admin/dashboard"
+                                                : user.role === "chef"
+                                                ? "/chef/dashboard"
+                                                : user.role === "manager"
+                                                ? "/manager/dashboard"
+                                                : "/"
+                                        }
                                         className="rounded-md px-3 py-2 bg-orange-500 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                     >
                                         Хяналтын самбар
