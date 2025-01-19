@@ -6,17 +6,13 @@ const Header = ({ restaurants = {} }) => {
             <div className="flex-grow relative h-[80px]">
                 <div className="flex gap-2.5 items-center justify-between h-full px-4">
                     {/* Logo */}
-                    <img
-                        src={logoImage}
-                        alt="Logo"
-                        className="header__logo max-h-[80px]"
-                    />
-                    {/* Restaurant Name */}
-                    {/* <div className="header__restaurant-name">
-                        <h2 className="text-sm text-orange-500 font-bold">
-                            {restaurants.name || "Restaurant Name"}
-                        </h2>
-                    </div> */}
+                    <a href={route("order")}>
+                        <img
+                            src={logoImage}
+                            alt="Logo"
+                            className="header__logo max-h-[80px]"
+                        />
+                    </a>
                 </div>
             </div>
         </div>

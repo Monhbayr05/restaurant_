@@ -136,56 +136,61 @@ Route::middleware(['auth', ChefMiddleware::class])->group(function () {
 });
 
 Route::middleware(['auth', ManagerMiddleware::class])->group(function () {
-   Route::get('manager/dashboard', function () {
-      return view('manager.dashboard');
-   })->name('manager.dashboard');
+    Route::get('manager/dashboard', function () {
+        return view('manager.dashboard');
+    })->name('manager.dashboard');
 
     Route::controller(AuthenticatedSessionController::class)->group(function () {
         Route::post('manager/logout', 'destroy')
             ->name('manager.logout');
     });
 
-   Route::controller(\App\Http\Controllers\Manager\TableController::class)->group(function () {
-       Route::get('manager/table', 'index')->name('manager.table.index');
-       Route::post('manager/table', 'store')->name('manager.table.store');
-       Route::delete('manager/table/{id}', 'destroy')->name('manager.table.destroy');
-       Route::put('manager/table/{id}', 'update')->name('manager.table.update');
-   });
+    Route::controller(\App\Http\Controllers\Manager\TableController::class)->group(function () {
+        Route::get('manager/table', 'index')->name('manager.table.index');
+        Route::post('manager/table', 'store')->name('manager.table.store');
+        Route::delete('manager/table/{id}', 'destroy')->name('manager.table.destroy');
+        Route::put('manager/table/{id}', 'update')->name('manager.table.update');
+    });
 
-   Route::controller(\App\Http\Controllers\Manager\OrderController::class)->group(function () {
-      Route::get('manager/order', 'index')->name('manager.order.index');
-   });
+    Route::controller(\App\Http\Controllers\Manager\OrderController::class)->group(function () {
+        Route::get('manager/order', 'index')->name('manager.order.index');
+    });
 
-   Route::controller(\App\Http\Controllers\Manager\CategoryController::class)->group(function () {
-      Route::get('manager/category', 'index')->name('manager.category.index');
-      Route::post('manager/category', 'store')->name('manager.category.store');
-      Route::delete('manager/category/{id}', 'destroy')->name('manager.category.destroy');
-      Route::put('manager/category/update/{id}', 'update')->name('manager.category.update');
-   });
+    Route::controller(\App\Http\Controllers\Manager\CategoryController::class)->group(function () {
+        Route::get('manager/category', 'index')->name('manager.category.index');
+        Route::post('manager/category', 'store')->name('manager.category.store');
+        Route::delete('manager/category/{id}', 'destroy')->name('manager.category.destroy');
+        Route::put('manager/category/update/{id}', 'update')->name('manager.category.update');
+    });
 
-   Route::controller(\App\Http\Controllers\Manager\ProductController::class)->group(function () {
-       Route::get('manager/product', 'index')->name('manager.product.index');
-       Route::get('manager/product/create', 'create')->name('manager.product.create');
-       Route::post('manager/product/store', 'store')->name('manager.product.store');
-       Route::get('manager/product/edit/{id}', 'edit')->name('manager.product.edit');
-       Route::put('manager/product/update/{id}', 'update')->name('manager.product.update');
-       Route::delete('manager/product/{id}', 'destroy')->name('manager.product.destroy');
+    Route::controller(\App\Http\Controllers\Manager\ProductController::class)->group(function () {
+        Route::get('manager/product', 'index')->name('manager.product.index');
+        Route::get('manager/product/create', 'create')->name('manager.product.create');
+        Route::post('manager/product/store', 'store')->name('manager.product.store');
+        Route::get('manager/product/edit/{id}', 'edit')->name('manager.product.edit');
+        Route::put('manager/product/update/{id}', 'update')->name('manager.product.update');
+        Route::delete('manager/product/{id}', 'destroy')->name('manager.product.destroy');
 
-       Route::get('manager/products/{id}/image', 'image')->name('manager.product.image');
-       Route::post('manager/product/{id}/images', 'storeImage') ->name('manager.product.storeImage');
-       Route::delete('manager/products/image/{id}', 'imageDestroy')->name('manager.product.imageDestroy');
-   });
+        Route::get('manager/products/{id}/image', 'image')->name('manager.product.image');
+        Route::post('manager/product/{id}/images', 'storeImage')->name('manager.product.storeImage');
+        Route::delete('manager/products/image/{id}', 'imageDestroy')->name('manager.product.imageDestroy');
+    });
 
-   Route::controller(\App\Http\Controllers\Manager\RoleController::class)->group(function () {
-      Route::get('manager/role', 'index')->name('manager.role.index');
-      Route::get('manager/role/create', 'create')->name('manager.role.create');
-      Route::post('manager/role/store', 'store')->name('manager.role.store');
-   });
+    Route::controller(\App\Http\Controllers\Manager\RoleController::class)->group(function () {
+        Route::get('manager/role', 'index')->name('manager.role.index');
+        Route::get('manager/role/create', 'create')->name('manager.role.create');
+        Route::post('manager/role/store', 'store')->name('manager.role.store');
+    });
 });
 
 Route::controller(OrderController::class)->group(function () {
-   Route::get('order', 'show')->name('order');
-   Route::get('order/checkout', 'index')->name('order.checkout');
-   Route::post('order/checkout', 'store')->name('order.store');
-});
 
+    Route::get('order', 'show')->name('order');
+
+    Route::get('order/checkout', 'index')->name('order.checkout');
+
+    //    Route::get('order/checkout', 'index')->name('order.checkout');
+    // Route::post('order/checkout', 'checkout')->name('order.checkout.byl');
+    // // Webhook шалгах Route
+    // Route::post('byl/webhook', 'handleWebhook')->name('byl.webhook');
+});

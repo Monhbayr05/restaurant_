@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('quantity');
             $table->tinyInteger('food_status')->default(0);
+            $table->integer('phone_number');
+            $table->string('allergies')->nullable();
             $table->timestamps();
         });
     }

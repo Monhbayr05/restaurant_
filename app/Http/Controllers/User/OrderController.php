@@ -5,133 +5,118 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Client;
 
 
 
 class OrderController extends Controller
 {
 
-    public function store(Request $request): JsonResponse
-    {
-        try {
-            $validatedData = $request->validate([
-                'totalAmount' => 'required|numeric',
-                'cartItems' => 'required|array',
-                'cartItems.*.id' => 'required|exists:products,id',
-                'cartItems.*.quantity' => 'required|numeric|min:1',
-                'cartItems.*.price' => 'required|numeric',
-                'description' => 'nullable|string|max:500',
-                'tableId' => 'nullable|numeric|exists:tables,id',
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'message' => 'Validation error',
-                'errors' => $e->errors(),
-            ], 422);
-        }
-
-
-
-        $calculatedTotal = 0;
-
-        foreach ($validatedData['cartItems'] as $item) {
-            $calculatedTotal += $item['price'] * $item['quantity'];
-        }
-
-
-        if (abs($calculatedTotal - $validatedData['totalAmount']) > 0.01) {
-            return response()->json([
-                'message' => 'The total amount does not match the calculated total.',
-            ], 400);
-        }
-
-        // Create the order
-        $order = Order::create([
-            'price' => $calculatedTotal,
-            'allergies' => $validatedData['description'],
-            'table_id' => $validatedData['tableId'],
-        ]);
-
-        // Add items to the order
-        foreach ($validatedData['cartItems'] as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'table_id' => $validatedData['tableId'],
-                'product_id' => $item['id'],
-                'quantity' => $item['quantity'],
-            ]);
-        }
-
-        return response()->json([
-            'message' => 'Order placed successfully!',
-            'order_id' => $order->id,
-        ], 201);
-    }
-
-
-    // public function store(Request $request)
+    // public function checkout(Request $request)
     // {
-
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'phone' => 'required|numeric',
-    //         'email' => 'required|email',
-    //         'notes' => 'nullable|string|max:500',
-    //         'cart_items' => 'required|json',
-    //         'table_id' => 'nullable|numeric|exists:tables,id',
+    //     // 1) Хүсэлтийн өгөгдлүүдээ шалгана
+    //     $validatedData = request()->validate([
+    //         'cartItems' => 'required|array',
+    //         'cartItems.*.id'       => 'required|integer',
+    //         'cartItems.*.name'     => 'required|string|max:255',
+    //         'cartItems.*.price'    => 'required|numeric|min:0',
+    //         'cartItems.*.quantity' => 'required|integer|min:1',
+        
+    //         'totalAmount' => 'required|numeric|min:1',
+        
+    //         'description' => 'nullable|string|max:500',
+    //         'table_id'    => 'nullable|integer',
+    //         'phoneNumber' => 'required|string|min:8|max:15',
     //     ]);
+        
+        
 
-    //     dd($validatedData);
-    //     $cartItems = json_decode($validatedData['cart_items'], true);
-    //     //        dd($cartItems);
+    //     // 2) Тухайн захиалгыг DB-дээ бүртгэж хадгална (жишээ код)
+    //     //  $order = Order::create([
+    //     //      'phone' => $request->phoneNumber,
+    //     //      'description' => $request->description,
+    //     //      'total_amount' => $request->totalAmount,
+    //     //  ]);
 
-    //     $validatedCartItems = [];
-    //     foreach ($cartItems as $item) {
-    //         $validator = \Validator::make($item, [
-    //             'id' => 'required|exists:products,id',
-    //             'quantity' => 'required|numeric|min:1',
+    //     // 3) Byl-д нэхэмжлэх үүсгэх
+    //     $client = new Client();
+    //     $bylBaseUrl   = env('BYL_BASE_URL', 'https://byl.mn');
+    //     $bylProjectId = env('BYL_PROJECT_ID');
+    //     $bylToken     = env('BYL_TOKEN');      
+
+    //     try {
+    //         $response = $client->request('POST', "$bylBaseUrl/api/v1/projects/$bylProjectId/invoices", [
+    //             'headers' => [
+    //                 'Authorization' => "Bearer $bylToken",
+    //                 'Content-Type'  => 'application/json',
+    //                 'Accept'        => 'application/json'
+    //             ],
+    //             'json' => [
+    //                 // Та front-оос ирсэн нийт дүнг оруулна
+    //                 'amount'      => $request->totalAmount,
+    //                 'description' => $request->phoneNumber ?: 'Order Payment',
+    //                 // auto_advance = true => төлбөр төлөгдөөд дууссан л бол эцэслэнэ
+    //                 'auto_advance' => true
+    //             ]
     //         ]);
 
-    //         if ($validator->fails()) {
-    //             return redirect()->back()
-    //                 ->withErrors($validator)
-    //                 ->withInput();
+    //         $invoiceData = json_decode($response->getBody()->getContents(), true);
+
+    //         // Нэхэмжлэхийн линк
+    //         $invoiceUrl = $invoiceData['data']['url'] ?? null;
+
+    //         if (!$invoiceUrl) {
+    //             return response()->json([
+    //                 'success' => false,
+    //                 'message' => 'Failed to get invoice URL from Byl-bbb'
+    //             ], 500);
     //         }
 
-    //         $validatedCartItems[] = $validator->validated();
-    //     }
+    //         // 4) Амжилттай нэхэмжлэх үүссэн тохиолдолд front-end рүү invoiceUrl буцаана
+    //         // Мөн үүнийг orders хүснэгтийнхээ аль нэг талбарт хадгалж болно
+    //         // $order->invoice_url = $invoiceUrl;
+    //         // $order->save();
 
-    //     $totalPrice = 0;
-
-    //     foreach ($cartItems as $item) {
-    //         $totalPrice += $item['price'] * $item['quantity'];
-    //     }
-
-    //     //        dd($validatedCartItems);
-
-    //     $order = Order::create([
-    //         'price' => $totalPrice,
-    //         'name' => $validatedData['name'],
-    //         'phone_number' => $validatedData['phone'],
-    //         'email' => $validatedData['email'],
-    //         'allergies' => $validatedData['notes'],
-    //     ]);
-
-    //     foreach ($validatedCartItems as $item) {
-    //         OrderItem::create([
-    //             'table_id' => $validatedData['table_id'],
-    //             'order_id' => $order->id,
-    //             'quantity' => $item['quantity'],
-    //             'product_id' => $item['id'],
+    //         return response()->json([
+    //             'success' => true,
+    //             'invoiceUrl' => $invoiceUrl,
     //         ]);
+    //     } catch (\Exception $e) {
+    //         Log::error('Byl invoice create error: ' . $e->getMessage());
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Failed to create invoice-aaa'
+    //         ], 500);
+    //     }
+    // }
+
+    // public function handleWebhook(Request $request)
+    // {
+    //     // Byl webhook-с ирж буй түүхий body
+    //     $rawBody = $request->getContent();
+    //     $signature = $request->header('byl-signature');
+    //     $hashKey = env('BYL_HASH_KEY');
+
+    //     // HMAC шалгах
+    //     $computedSignature = hash_hmac('sha256', $rawBody, $hashKey);
+
+    //     if (!hash_equals($computedSignature, $signature)) {
+    //         return response('Invalid signature', 403);
     //     }
 
-    //     return redirect()->route('order')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
+    //     // Амжилттай бол event-ийн мэдээллийг авч лог хийх буюу DB-г шинэчлэх
+    //     $payloadData = json_decode($rawBody, true);
+    //     Log::info('BYL Webhook Data: ', $payloadData);
+
+    //     // Тухайн invoice төлбөр төлөгдсөн, цуцлагдсан гэх зэрэг event-тэй холбоотой
+    //     // өөрийн бизнес логик (orders хүснэгтийг шинэчлэх, төлбөрийн төлөв гэх мэт)-ыг
+    //     // энд бичиж болно.
+
+    //     return response('Webhook received!', 200);
     // }
 
     public function show()
@@ -146,12 +131,16 @@ class OrderController extends Controller
             'quantity_limit'
         )->get();
 
-        
+
         // dd(['categories' => $categories, 'products' => $products]);
 
         return Inertia::render('Order', [
             'categories' => $categories,
             'products' => $products,
         ]);
+    }
+    public function index()
+    {
+        return Inertia::render('Checkout'); // resources/js/Pages/Checkout.jsx гэсэн файлаа render
     }
 }

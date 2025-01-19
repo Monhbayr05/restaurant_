@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, Head, usePage } from "@inertiajs/react";
+import { Link, Head } from "@inertiajs/react";
 import logoImage from "../Components/Images/logoo2.png";
 import Footer from "../Components/Footer";
 import Hero from "../Components/Hero";

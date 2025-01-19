@@ -12,17 +12,10 @@ class Order extends Model
     protected $fillable = [
         'table_id',
         'price',
-        'name',
         'phone_number',
-        'email',
         'allergies'
     ];
 
-
-    public function humanOrder()
-    {
-        return $this->hasOne(HumanOrder::class);
-    }
 
     public function table()
     {
