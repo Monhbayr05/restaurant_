@@ -23,7 +23,7 @@ class OrderController extends Controller
             'phone' => 'required|numeric',
             'notes' => 'nullable|string|max:500',
             'cart_items' => 'required|json',
-            'table_id' => 'nullable|numeric|exists:tables,id',
+            'table_id' => 'required|numeric|exists:tables,id', // Table ID is required
         ]);
 
         $cartItems = json_decode($validatedData['cart_items'], true);
@@ -58,7 +58,7 @@ class OrderController extends Controller
 
         foreach ($validatedCartItems as $item) {
             OrderItem::create([
-                'table_id' => $validatedData['table_id'],
+                'table_id' => $validatedData['table_id'], // Now table_id is correctly passed
                 'order_id' => $order->id,
                 'quantity' => $item['quantity'],
                 'product_id' => $item['id'],
@@ -68,6 +68,7 @@ class OrderController extends Controller
 
         return redirect()->route('order')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
+
 
 
     public function show()

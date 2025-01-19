@@ -186,13 +186,6 @@ Route::middleware(['auth', ManagerMiddleware::class])->group(function () {
 Route::controller(OrderController::class)->group(function () {
 
     Route::get('order', 'show')->name('order');
-
     Route::get('order/checkout', 'index')->name('order.checkout');
-
-    //    Route::get('order/checkout', 'index')->name('order.checkout');
-    // Route::post('order/checkout', 'checkout')->name('order.checkout.byl');
-    // // Webhook шалгах Route
-    // Route::post('byl/webhook', 'handleWebhook')->name('byl.webhook');
-
     Route::post('order/checkout/store', 'store')->name('order.checkout.store');
 });

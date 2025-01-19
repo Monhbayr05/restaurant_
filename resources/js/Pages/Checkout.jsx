@@ -9,7 +9,7 @@ export default function Checkout() {
 
     const [phoneNumber, setPhoneNumber] = useState(localStorage.getItem("phoneNumber") || "");
     const [description, setDescription] = useState(localStorage.getItem("description") || "");
-    const [tableId, setTableId] = useState(localStorage.getItem("tableId") || 1);
+    const [table_id, setTableId] = useState(localStorage.getItem("tableId") || 1); // Default table_id is 1
 
     const totalPrice = cartItems.reduce(
         (acc, item) => acc + item.price * item.quantity,
@@ -25,8 +25,6 @@ export default function Checkout() {
     useEffect(() => {
         localStorage.setItem("description", description);
     }, [description]);
-
-
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -80,7 +78,7 @@ export default function Checkout() {
 
                     <div className="bg-white rounded-lg shadow p-6">
                         <h3 className="text-lg font-semibold mb-4 text-gray-700">
-                            Захиалгын мэдээлэл {table_id && ` - ${table_id}-р ширээ`}
+                            Захиалгын мэдээлэл ({table_id && `${table_id}-р ширээ`})
                         </h3>
 
                         <form
