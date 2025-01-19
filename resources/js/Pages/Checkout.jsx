@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Header from "@/Components/Header";
 import { Link } from "@inertiajs/react";
 
 export default function Checkout() {
@@ -31,77 +29,9 @@ export default function Checkout() {
         localStorage.setItem("description", description);
     }, [description]);
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        const csrfToken = document
-            .querySelector('meta[name="csrf-token"]')
-            ?.getAttribute("content");
-
-        const checkoutData = {
-            totalAmount: totalPrice,
-            cartItems: cartItems.map(({ id, name, price, quantity }) => ({
-                id,
-                name,
-                price,
-                quantity,
-            })),
-            description,
-            table_id,
-            phoneNumber,
-        };
-
-        try {
-            // 1) Laravel-ийн /order/checkout зам руу POST
-            //    Энэ зам дээр Byl төлбөрийн нэхэмжлэх үүсгээд invoiceUrl-ыг буцааж байгаа гэж үзнэ
-            const response = await axios.post(
-                route("order.checkout.byl"), // Inertiaгийн route helper
-                checkoutData,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": csrfToken || "",
-                    },
-                }
-            );
-
-            if (response.data.success) {
-                // 2) Амжилттай тохиолдолд invoiceUrl-ыг авна
-                const invoiceUrl = response.data.invoiceUrl;
-                console.log(invoiceUrl);
-                if (invoiceUrl) {
-                    // 3) Шаардлагатай бол сагсыг цэвэрлэнэ
-                    localStorage.removeItem("cart");
-                    setCartItems([]);
-
-                    // 4) Шууд төлбөрийн нэхэмжлэхийн хуудсыг нээнэ
-                    window.location.href = invoiceUrl;
-                } else {
-                    console.log(response.data);
-                    alert("Төлбөрийн нэхэмжлэхийн URL олдсонгүй!");
-                }
-            } else {
-                alert(response.data.message || "Төлбөр үүсгэхэд алдаа гарлаа.");
-            }
-        } catch (error) {
-            if (error.response) {
-                console.error("Server-side error-ccc:", error.response.data);
-                alert(error.response.data.message || "Алдаа гарлаа-ooo");
-            } else if (error.request) {
-                console.error("Network error-dddd:", error.request);
-                alert("Сүлжээний алдаа гарлаа.");
-            } else {
-                console.error("Error:", error.message);
-                alert("Алдаа гарлаа-iii.");
-            }
-        }
-    };
-
     return (
         <div className="min-h-screen bg-gray-50">
-            <header className="bg-ik-header-bg-color text-ik-header-bg-high-contrast-color">
-                <Header />
-            </header>
-
+            {/* ...header, etc... */}
             <div className="container mx-auto px-4 py-10">
                 <h2 className="text-2xl font-bold text-gray-700 mb-6 text-center">
                     Төлбөр төлөх
@@ -126,17 +56,12 @@ export default function Checkout() {
                                                 {item.name}
                                             </p>
                                             <p className="text-gray-600 text-sm">
-                                                {item.price.toFixed(2)}₮ x{" "}
-                                                {item.quantity}
+                                                {item.price.toFixed(2)}₮ x {item.quantity}
                                             </p>
                                             <p className="text-gray-500 text-xs mt-1">
                                                 Нийт:{" "}
                                                 <span className="font-semibold">
-                                                    {(
-                                                        item.price *
-                                                        item.quantity
-                                                    ).toFixed(2)}
-                                                    ₮
+                                                    {(item.price * item.quantity).toFixed(2)}₮
                                                 </span>
                                             </p>
                                         </div>
@@ -156,19 +81,28 @@ export default function Checkout() {
                                 </div>
                             </>
                         ) : (
-                            <p className="text-gray-500">
-                                Таны сагс хоосон байна.
-                            </p>
+                            <p className="text-gray-500">Таны сагс хоосон байна.</p>
                         )}
                     </div>
 
                     {/* Checkout Form Section */}
                     <div className="bg-white rounded-lg shadow p-6">
                         <h3 className="text-lg font-semibold mb-4 text-gray-700">
-                            Захиалгын мэдээлэл{" "}
-                            {table_id && ` - ${table_id}-р ширээ`}
+                            Захиалгын мэдээлэл {table_id && ` - ${table_id}-р ширээ`}
                         </h3>
-                        <form onSubmit={handleFormSubmit} className="space-y-5">
+
+                        {/* 
+                          1) method="POST"
+                          2) action={route('order.store')} or "/order/checkout"
+                        */}
+                        <form 
+                            method="POST" 
+                            action={route('order.store')} // or "/order/checkout"
+                            className="space-y-5"
+                        >
+                            {/* If you need CSRF: */}
+                            {/* <input type="hidden" name="_token" value={csrfToken} /> */}
+
                             <div>
                                 <label
                                     htmlFor="phoneNumber"
@@ -178,18 +112,18 @@ export default function Checkout() {
                                 </label>
                                 <input
                                     id="phoneNumber"
+                                    name="phoneNumber"
                                     type="tel"
                                     value={phoneNumber}
                                     placeholder="9999-9999"
-                                    onChange={(e) =>
-                                        setPhoneNumber(e.target.value)
-                                    }
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    className="w-full px-3 py-2 border border-gray-300 
+                                               rounded focus:ring-2 focus:ring-orange-500 
+                                               focus:outline-none"
                                     required
                                 />
                             </div>
 
-                            {/* Description */}
                             <div>
                                 <label
                                     htmlFor="description"
@@ -199,19 +133,29 @@ export default function Checkout() {
                                 </label>
                                 <textarea
                                     id="description"
+                                    name="description"
                                     rows="4"
                                     value={description}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded focus:ring-2 focus:ring-orange-500 focus:outline-none"
+                                    className="w-full px-3 py-2 border border-gray-300 
+                                               rounded focus:ring-2 focus:ring-orange-500 
+                                               focus:outline-none"
                                     placeholder="Хэрэв таньд мэдэгдэх зүйл байвал бичнэ үү..."
-                                    onChange={(e) =>
-                                        setDescription(e.target.value)
-                                    }
-                                ></textarea>
+                                    onChange={(e) => setDescription(e.target.value)}
+                                />
                             </div>
+
+                            {/* Hidden Inputs */}
+                            <input type="hidden" name="table_id" value={table_id || ""} />
+                            <input
+                                type="hidden"
+                                name="cart_item"
+                                value={JSON.stringify(cartItems)}
+                            />
 
                             <button
                                 type="submit"
-                                className="w-full bg-orange-500 text-white py-2 px-4 rounded hover:bg-orange-600 transition-colors"
+                                className="w-full bg-orange-500 text-white py-2 px-4 rounded 
+                                           hover:bg-orange-600 transition-colors"
                             >
                                 Төлөх: {totalPrice.toFixed(2)}₮
                             </button>
@@ -219,7 +163,8 @@ export default function Checkout() {
 
                         <Link
                             href={route("order")}
-                            className="block text-center mt-4 bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400 transition-colors"
+                            className="block text-center mt-4 bg-gray-300 text-gray-700 
+                                       py-2 px-4 rounded hover:bg-gray-400 transition-colors"
                         >
                             Болих
                         </Link>
