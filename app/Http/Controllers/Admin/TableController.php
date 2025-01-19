@@ -58,8 +58,15 @@ class TableController extends Controller
         $qr = decrypt($qr);
 
         $table = Table::query()->where('qrcode', $qr)->first();
-        $product = Product::all();
-        $categories = Category::all();
+        $categories = Category::select('id', 'name', 'thumbnail')->get();
+        $product = Product::with('category:id,name')->select(
+            'id',
+            'name',
+            'price',
+            'category_id',
+            'thumbnail',
+            'quantity_limit'
+        )->get();
 
 
 
