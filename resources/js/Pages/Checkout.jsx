@@ -7,6 +7,8 @@ export default function Checkout() {
         return storedCart ? JSON.parse(storedCart) : [];
     });
 
+
+
     const [phoneNumber, setPhoneNumber] = useState(localStorage.getItem("phoneNumber") || "");
     const [description, setDescription] = useState(localStorage.getItem("description") || "");
     const [table_id, setTableId] = useState(localStorage.getItem("tableId") || 0); // Default table_id is 1
