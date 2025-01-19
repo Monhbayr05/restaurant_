@@ -13,10 +13,10 @@ class BylService
 
     public function __construct()
     {
-        $this->token = env('BYL_API_KEY');
+        $this->token = env('BYL_TOKEN');
 
         $this->client = new Client([
-            'base_uri' => env('BYL_API_URL'),
+            'base_uri' => env('BYL_BASE_URL'),
             'headers' => [
                 'Authorization' => "Bearer {$this->token}",
                 'Content-Type'  => 'application/json',
@@ -28,6 +28,7 @@ class BylService
 
     public function createInvoice($amount, $description, $autoAdvance )
     {
+
             $response = $this->client->post('invoices', [
                 'json' => [
                     'amount'       => $amount,

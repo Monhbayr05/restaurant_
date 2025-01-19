@@ -74,40 +74,18 @@ class OrderController extends Controller
             ]);
         }
 
-        // **Byl.mn API ашиглаж нэхэмжлэл үүсгэх**
-        try {
+
             $phoneNumber = $validatedData['phone'];
 
-            // BylService ашиглан нэхэмжлэл үүсгэх
+
             $invoice = $this->payService->createInvoice($totalPrice, $phoneNumber, true);
 
-            // Нэхэмжлэлийн статусыг шалгах
-            if ($invoice['data']['status'] === 'open') {
-                // Нэхэмжлэлийг хадгалах
-                Invoice::create([
-                    'user_id' => auth()->id(),
-                    'invoice_id' => $invoice['data']['id'],
-                    'url' => $invoice['data']['url'],
-                    'status' => $invoice['data']['status'],
-                    'amount' => $invoice['data']['amount'],
-                    'customer_id' => $invoice['data']['customer_id'],
-                    'description' => $invoice['data']['description'],
-                    'number' => $invoice['data']['number'],
-                    'project_id' => $invoice['data']['project_id'],
-                    'due_date' => $invoice['data']['due_date'],
-                ]);
 
-                // Төлбөрийн URL рүү чиглүүлэх
+            if ($invoice['data']['status'] === 'open') {
                 return redirect($invoice['data']['url']);
-            } elseif ($invoice['data']['status'] === 'closed') {
-                return redirect()->back()->with('error', 'Нэхэмжлэл хаагдсан байна.');
-            } else {
-                return redirect()->back()->with('error', 'Төлбөрийн нэхэмжлэл үүсгэх явцад алдаа гарлаа.');
+            } else{
+                return redirect()->back()->with('error', 'Нэхэмжлэл үүсгэх явцад алдаа гарлаа.');
             }
-        } catch (\Exception $e) {
-            \Log::error('Byl.mn API алдаа: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Нэхэмжлэл үүсгэх явцад алдаа гарлаа.');
-        }
 
         return redirect()->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
