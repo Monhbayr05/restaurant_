@@ -12,8 +12,8 @@ class OrderItem extends Model
         'order_id',
         'product_id',
         'table_id',
-        'quantity',
         'food_name',
+        'quantity',
     ];
 
     public function table()
