@@ -4,18 +4,24 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Services\BylService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Support\Facades\Log;
-use GuzzleHttp\Client;
-
 
 
 class OrderController extends Controller
 {
+    protected $payService;
+
+    public function __construct(BylService $payService)
+    {
+        $this->payService = $payService;
+    }
+
 
     public function store(Request $request)
     {
@@ -46,10 +52,12 @@ class OrderController extends Controller
             $validatedCartItems[] = $validator->validated();
         }
 
+        // Total price calculation
         $totalPrice = array_reduce($validatedCartItems, function ($carry, $item) {
             return $carry + $item['quantity'] * $item['price'];
         }, 0);
 
+        // Create the order
         $order = Order::create([
             'price' => $totalPrice,
             'phone_number' => $validatedData['phone'],
@@ -58,7 +66,7 @@ class OrderController extends Controller
 
         foreach ($validatedCartItems as $item) {
             OrderItem::create([
-                'table_id' => $validatedData['table_id'], // Now table_id is correctly passed
+                'table_id' => $validatedData['table_id'], // Table ID is correctly passed
                 'order_id' => $order->id,
                 'quantity' => $item['quantity'],
                 'product_id' => $item['id'],
@@ -66,8 +74,46 @@ class OrderController extends Controller
             ]);
         }
 
-        return redirect()->route('order')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
+        // **Byl.mn API ашиглаж нэхэмжлэл үүсгэх**
+        try {
+            $phoneNumber = $validatedData['phone'];
+
+            // BylService ашиглан нэхэмжлэл үүсгэх
+            $invoice = $this->payService->createInvoice($totalPrice, $phoneNumber, true);
+
+            // Нэхэмжлэлийн статусыг шалгах
+            if ($invoice['data']['status'] === 'open') {
+                // Нэхэмжлэлийг хадгалах
+                Invoice::create([
+                    'user_id' => auth()->id(),
+                    'invoice_id' => $invoice['data']['id'],
+                    'url' => $invoice['data']['url'],
+                    'status' => $invoice['data']['status'],
+                    'amount' => $invoice['data']['amount'],
+                    'customer_id' => $invoice['data']['customer_id'],
+                    'description' => $invoice['data']['description'],
+                    'number' => $invoice['data']['number'],
+                    'project_id' => $invoice['data']['project_id'],
+                    'due_date' => $invoice['data']['due_date'],
+                ]);
+
+                // Төлбөрийн URL рүү чиглүүлэх
+                return redirect($invoice['data']['url']);
+            } elseif ($invoice['data']['status'] === 'closed') {
+                return redirect()->back()->with('error', 'Нэхэмжлэл хаагдсан байна.');
+            } else {
+                return redirect()->back()->with('error', 'Төлбөрийн нэхэмжлэл үүсгэх явцад алдаа гарлаа.');
+            }
+        } catch (\Exception $e) {
+            \Log::error('Byl.mn API алдаа: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Нэхэмжлэл үүсгэх явцад алдаа гарлаа.');
+        }
+
+        return redirect()->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
+
+
+
 
 
 
@@ -91,6 +137,7 @@ class OrderController extends Controller
             'products' => $products,
         ]);
     }
+
     public function index()
     {
         return inertia('Checkout');
