@@ -19,16 +19,11 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
             'phone' => 'required|numeric',
-            'email' => 'required|email',
             'notes' => 'nullable|string|max:500',
             'cart_items' => 'required|json',
             'table_id' => 'nullable|numeric|exists:tables,id',
-
-
         ]);
 
         $cartItems = json_decode($validatedData['cart_items'], true);
@@ -38,6 +33,8 @@ class OrderController extends Controller
             $validator = \Validator::make($item, [
                 'id' => 'required|exists:products,id',
                 'quantity' => 'required|numeric|min:1',
+                'price' => 'required|numeric|min:0',
+                'name' => 'required|string|max:255',
             ]);
 
             if ($validator->fails()) {
@@ -49,12 +46,9 @@ class OrderController extends Controller
             $validatedCartItems[] = $validator->validated();
         }
 
-        $totalPrice = 0;
-
-
-        foreach ($cartItems as $item) {
-            $totalPrice += $item['price'] * $item['quantity'];
-        }
+        $totalPrice = array_reduce($validatedCartItems, function ($carry, $item) {
+            return $carry + $item['quantity'] * $item['price'];
+        }, 0);
 
         $order = Order::create([
             'price' => $totalPrice,
@@ -68,12 +62,13 @@ class OrderController extends Controller
                 'order_id' => $order->id,
                 'quantity' => $item['quantity'],
                 'product_id' => $item['id'],
-                'food_name' => $item['food_name'],
+                'phone_number' => $validatedData['phone'],
             ]);
         }
 
         return redirect()->route('order')->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
+
 
     public function show()
     {
@@ -97,6 +92,6 @@ class OrderController extends Controller
     }
     public function index()
     {
-        return view('user.checkout');
+        return inertia('Checkout');
     }
 }

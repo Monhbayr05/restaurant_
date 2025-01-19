@@ -193,4 +193,6 @@ Route::controller(OrderController::class)->group(function () {
     // Route::post('order/checkout', 'checkout')->name('order.checkout.byl');
     // // Webhook шалгах Route
     // Route::post('byl/webhook', 'handleWebhook')->name('byl.webhook');
+
+    Route::post('order/checkout/store', 'store')->name('order.checkout.store');
 });

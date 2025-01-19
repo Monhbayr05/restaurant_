@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('allergies')->nullable();
             $table->integer('price');
             $table->string('status')->default('pending');
-            $table->date('ordered_at');
             $table->timestamps();
         });
     }
