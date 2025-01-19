@@ -11,6 +11,8 @@ const Order = ({ categories = [], products = [], tableId = "tableId" }) => {
     );
     const [activeCategory, setActiveCategory] = useState("All");
 
+
+
     // Debugging to verify incoming props
     useEffect(() => {
         console.log("Categories:", categories);
