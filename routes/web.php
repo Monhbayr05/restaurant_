@@ -189,3 +189,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('order/checkout', 'index')->name('order.checkout');
     Route::post('order/checkout/store', 'store')->name('order.checkout.store');
 });
+
+Route::controller(\App\Http\Controllers\User\OrderController::class)->group(function () {
+    Route::post('byl/webhook' , 'storeWebhook')->name('byl.webhook');
+});
