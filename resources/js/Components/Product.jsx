@@ -19,7 +19,6 @@ const Product = ({ product, handleAddToCart, handleRemoveFromCart }) => {
         }
     };
 
-    
     const isSelected = selectedProduct?.id === product.id;
     const productCount = selectedProduct?.count || 0;
 
@@ -33,12 +32,12 @@ const Product = ({ product, handleAddToCart, handleRemoveFromCart }) => {
                 {/* Product Image */}
                 <div className="aspect-square bg-gray-100">
                     <img
-                        src={
-                            product.thumbnail ||
-                            "https://via.placeholder.com/150"
-                        }
+                        src={`https://foodbazalt.online/${product.thumbnail}`}
                         alt={product.name || "Product"}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                            e.target.src = "https://via.placeholder.com/150"; 
+                        }}
                     />
                 </div>
 
