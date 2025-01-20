@@ -1,10 +1,9 @@
 import React from "react";
 import popular from "../Components/Images/popular.png";
 
-const Category = ({ categories = [], activeCategory,  setActiveCategory }) => {
-
+const Category = ({ categories = [], activeCategory, setActiveCategory }) => {
     console.log("Categories received:", categories);
-    
+
     const categoryList = [{ name: "All", thumbnail: popular }, ...categories];
 
     return (
@@ -12,7 +11,8 @@ const Category = ({ categories = [], activeCategory,  setActiveCategory }) => {
             <div className="categories-section__container flex flex-nowrap items-stretch">
                 {categoryList.map((category, index) => {
                     const name = category.name || "helloworld";
-                    const thumbnail = category.thumbnail || "https://via.placeholder.com/80";
+                    const thumbnail =
+                        category.thumbnail || "https://via.placeholder.com/80";
 
                     return (
                         <button
@@ -31,9 +31,13 @@ const Category = ({ categories = [], activeCategory,  setActiveCategory }) => {
                                 }`}
                             >
                                 <img
-                                    src={thumbnail}
-                                    alt={name}
+                                    src={`https://foodbazalt.online/${thumbnail}`}
+                                    alt={name || "Image"}
                                     className="w-14 h-14 object-cover rounded-full"
+                                    onError={(e) => {
+                                        e.target.src =
+                                            "https://foodbazalt.online/default-placeholder.jpg"; // Алдааны зураг
+                                    }}
                                 />
                             </div>
                             <span
