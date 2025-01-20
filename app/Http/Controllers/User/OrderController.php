@@ -98,30 +98,32 @@ class OrderController extends Controller
 
         $signatureReceived = $request->header('Byl-Signature');
 
-
+        // Signature шалгалт
         if ($signatureReceived && $this->isSignatureVaild($payload, $signatureReceived)) {
-            if ($data['status'] === 'paid') {
+            // `type` утга нь `invoice.paid` эсэхийг шалгах
+            if (isset($data['type']) && $data['type'] === "invoice.paid") {
                 Payment::create([
-                    'invoice_id' => $data['invoice_id'],
-                    'order_id' => $data['order_id'],
-                    'amount' => $data['amount'],
-                    'status' => $data['status'],
-                    'transaction_id' => $data['transaction_id'] ?? null,
-                    'payment_date' => $data['payment_date'] ?? now(),
+                    'invoice_id' => $data['data']['object']['id'], // Corrected to access the nested data
+                    'order_id' => $data['data']['object']['description'], // Assuming description is the order_id
+                    'amount' => $data['data']['object']['amount'],
+                    'status' => $data['data']['object']['status'],
+                    'transaction_id' => $data['data']['object']['url'] ?? null, // Using URL as an example
+                    'payment_date' => now(),
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
 
-                Order::where('id', $data['order_id'])->update([
+                Order::where('id', $data['data']['object']['description'])->update([
                     'status' => 'completed',
                 ]);
+
                 return response()->json(['message' => 'Төлбөр амжилттай бүртгэгдлээ.'], 200);
             }
         }
 
-
         return response()->json(['message' => 'Төлбөр амжилтгүй байна.'], 400);
     }
+
 
     protected function isSignatureVaild($payload, $signatureReceived)
     {
