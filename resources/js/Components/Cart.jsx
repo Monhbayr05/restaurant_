@@ -76,9 +76,13 @@ const Cart = ({ cartItems, setCartItems }) => {
                     className="mb-4 flex justify-between items-center"
                   >
                     <img
-                      src={item.thumbnail}
-                      alt={item.name}
+                      src={`https://foodbazalt.online/${item.thumbnail}`}
+                      alt={item.name || "Product Image"}
                       className="w-[40px] h-[40px] object-cover rounded"
+                      onError={(e) => {
+                        e.target.src =
+                          "https://foodbazalt.online/default-placeholder.jpg";
+                      }}
                     />
                     <span className="text-sm">
                       {item.name} - {item.price.toFixed(2)}₮ x {item.quantity}
