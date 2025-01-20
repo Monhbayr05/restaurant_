@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Services\BylService;
 use Illuminate\Http\Request;
@@ -90,6 +91,49 @@ class OrderController extends Controller
         return redirect()->with('success', 'Захиалга амжилттай хадгалагдлаа.');
     }
 
+    public function storeWebhook(Request $request)
+    {
+        $payload = $request->getContent();
+        $data = json_decode($payload, true);
+
+        $signatureReceived = $request->header('Byl-Signature');
+
+        if (!$signatureReceived) {
+            return response()->json(['message' => 'Гарын үсэг дутуу байна.'], 400);
+        }
+
+        $secretKey = env('BYL_WEBHOOK_SECRET');
+        $calculatedSignature = hash_hmac('sha256', $payload, $secretKey);
+
+        if ($calculatedSignature !== $signatureReceived) {
+            return response()->json(['message' => 'Гарын үсэг тохирохгүй байна.'], 403);
+        }
+
+        if (!isset($data['invoice_id'], $data['order_id'], $data['amount'], $data['status'])) {
+            return response()->json(['message' => 'Шаардлагатай өгөгдөл байхгүй байна.'], 400);
+        }
+
+        if ($data['status'] === 'paid') {
+            Payment::create([
+                'invoice_id' => $data['invoice_id'],
+                'order_id' => $data['order_id'],
+                'amount' => $data['amount'],
+                'status' => $data['status'],
+                'transaction_id' => $data['transaction_id'] ?? null,
+                'payment_date' => $data['payment_date'] ?? now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            Order::where('id', $data['order_id'])->update([
+                'status' => 'completed',
+            ]);
+            return response()->json(['message' => 'Төлбөр амжилттай бүртгэгдлээ.'], 200);
+        }
+        return response()->json(['message' => 'Төлбөр амжилтгүй байна.'], 400);
+    }
+
+
 
 
 
@@ -115,7 +159,6 @@ class OrderController extends Controller
             'products' => $products,
         ]);
     }
-
     public function index()
     {
         return inertia('Checkout');
