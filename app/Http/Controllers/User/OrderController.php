@@ -76,8 +76,7 @@ class OrderController extends Controller
         }
 
 
-            $phoneNumber = $order->id;
-
+            $phoneNumber = strval($order->id);
 
             $invoice = $this->payService->createInvoice($totalPrice, $phoneNumber, true);
 
