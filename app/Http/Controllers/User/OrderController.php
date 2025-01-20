@@ -95,42 +95,44 @@ class OrderController extends Controller
     {
         $payload = $request->getContent();
         $data = json_decode($payload, true);
+       // \Log::info('Webhook received:', $data);
 
         $signatureReceived = $request->header('Byl-Signature');
 
-        if (!$signatureReceived) {
-            return response()->json(['message' => 'Гарын үсэг дутуу байна.'], 400);
+
+        if ($signatureReceived && $this->isSignatureVaild($payload, $signatureReceived)) {
+            if (!isset($data['invoice_id'], $data['order_id'], $data['amount'], $data['status'])) {
+                return response()->json(['message' => 'Шаардлагатай өгөгдөл байхгүй байна.'], 400);
+            }
+
+            if ($data['status'] === 'paid') {
+                Payment::create([
+                    'invoice_id' => $data['invoice_id'],
+                    'order_id' => $data['order_id'],
+                    'amount' => $data['amount'],
+                    'status' => $data['status'],
+                    'transaction_id' => $data['transaction_id'] ?? null,
+                    'payment_date' => $data['payment_date'] ?? now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                Order::where('id', $data['order_id'])->update([
+                    'status' => 'completed',
+                ]);
+                return response()->json(['message' => 'Төлбөр амжилттай бүртгэгдлээ.'], 200);
+            }
         }
 
+
+        return response()->json(['message' => 'Төлбөр амжилтгүй байна.'], 400);
+    }
+
+    protected function isSignatureVaild($payload, $signatureReceived)
+    {
         $secretKey = env('BYL_WEBHOOK_SECRET');
         $calculatedSignature = hash_hmac('sha256', $payload, $secretKey);
-
-        if ($calculatedSignature !== $signatureReceived) {
-            return response()->json(['message' => 'Гарын үсэг тохирохгүй байна.'], 403);
-        }
-
-        if (!isset($data['invoice_id'], $data['order_id'], $data['amount'], $data['status'])) {
-            return response()->json(['message' => 'Шаардлагатай өгөгдөл байхгүй байна.'], 400);
-        }
-
-        if ($data['status'] === 'paid') {
-            Payment::create([
-                'invoice_id' => $data['invoice_id'],
-                'order_id' => $data['order_id'],
-                'amount' => $data['amount'],
-                'status' => $data['status'],
-                'transaction_id' => $data['transaction_id'] ?? null,
-                'payment_date' => $data['payment_date'] ?? now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            Order::where('id', $data['order_id'])->update([
-                'status' => 'completed',
-            ]);
-            return response()->json(['message' => 'Төлбөр амжилттай бүртгэгдлээ.'], 200);
-        }
-        return response()->json(['message' => 'Төлбөр амжилтгүй байна.'], 400);
+        return hash_equals($signatureReceived, $calculatedSignature);
     }
 
 
