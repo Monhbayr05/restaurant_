@@ -69,7 +69,6 @@ class TableController extends Controller
         )->get();
 
 
-        dd($product);
 
 
         if (!$table) {
