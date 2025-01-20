@@ -95,16 +95,11 @@ class OrderController extends Controller
     {
         $payload = $request->getContent();
         $data = json_decode($payload, true);
-       // \Log::info('Webhook received:', $data);
 
         $signatureReceived = $request->header('Byl-Signature');
 
 
         if ($signatureReceived && $this->isSignatureVaild($payload, $signatureReceived)) {
-            if (!isset($data['invoice_id'], $data['order_id'], $data['amount'], $data['status'])) {
-                return response()->json(['message' => 'Шаардлагатай өгөгдөл байхгүй байна.'], 400);
-            }
-
             if ($data['status'] === 'paid') {
                 Payment::create([
                     'invoice_id' => $data['invoice_id'],
