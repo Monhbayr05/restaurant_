@@ -76,7 +76,7 @@ class OrderController extends Controller
         }
 
 
-            $phoneNumber = $validatedData['phone'];
+            $phoneNumber = $order->id;
 
 
             $invoice = $this->payService->createInvoice($totalPrice, $phoneNumber, true);
@@ -102,9 +102,11 @@ class OrderController extends Controller
         if ($signatureReceived && $this->isSignatureVaild($payload, $signatureReceived)) {
             // `type` утга нь `invoice.paid` эсэхийг шалгах
             if (isset($data['type']) && $data['type'] === "invoice.paid") {
+                $order = Order::find($data['data']['object']['description']);
+
                 Payment::create([
                     'invoice_id' => $data['data']['object']['id'], // Corrected to access the nested data
-                    'order_id' => $data['data']['object']['description'], // Assuming description is the order_id
+                    'order_id' => $order->id, // Assuming description is the order_id
                     'amount' => $data['data']['object']['amount'],
                     'status' => $data['data']['object']['status'],
                     'transaction_id' => $data['data']['object']['url'] ?? null, // Using URL as an example
